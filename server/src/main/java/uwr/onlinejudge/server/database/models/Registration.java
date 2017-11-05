@@ -5,6 +5,7 @@ import uwr.onlinejudge.server.database.util.UserRole;
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "group_id"}))
 public class Registration {
     @Id
     @SequenceGenerator(name = "registrationSequence", sequenceName = "registration_sequence")

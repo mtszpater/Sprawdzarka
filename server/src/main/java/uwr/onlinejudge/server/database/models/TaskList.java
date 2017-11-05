@@ -1,15 +1,11 @@
 package uwr.onlinejudge.server.database.models;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class TaskList {
     @Id
-    @SequenceGenerator(name = "taskListSequence", sequenceName = "tasklist_sequence")
+    @SequenceGenerator(name = "taskListSequence", sequenceName = "task_list_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taskListSequence")
     private long id;
 
@@ -19,10 +15,6 @@ public class TaskList {
 
     @Column(nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "taskList")
-    @Cascade(CascadeType.DELETE)
-    private List<Task> tasks;
 
     public long getId() {
         return id;
@@ -46,13 +38,5 @@ public class TaskList {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 }

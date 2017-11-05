@@ -1,7 +1,6 @@
 package uwr.onlinejudge.server.database.models;
 
 import javax.persistence.*;
-import java.io.File;
 import java.util.Date;
 
 @Entity
@@ -21,8 +20,9 @@ public class Score {
 
     @Column(nullable = false)
     private String state;
-
-    private File score;
+    
+    @Lob
+    private String testResult;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date executionTime;
@@ -62,12 +62,12 @@ public class Score {
         this.state = state;
     }
 
-    public File getScore() {
-        return score;
+    public String getTestResult() {
+        return testResult;
     }
 
-    public void setScore(File score) {
-        this.score = score;
+    public void setTestResult(String testResult) {
+        this.testResult = testResult;
     }
 
     public Date getExecutionTime() {

@@ -16,7 +16,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private SharedTask sharedTask;
+    private TaskDescription taskDescription;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
@@ -40,12 +40,12 @@ public class Task {
         this.taskList = taskList;
     }
 
-    public SharedTask getSharedTask() {
-        return sharedTask;
+    public TaskDescription getTaskDescription() {
+        return taskDescription;
     }
 
-    public void setSharedTask(SharedTask sharedTask) {
-        this.sharedTask = sharedTask;
+    public void setTaskDescription(TaskDescription taskDescription) {
+        this.taskDescription = taskDescription;
     }
 
     public Date getDeadline() {

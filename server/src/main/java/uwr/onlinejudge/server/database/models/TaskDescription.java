@@ -1,12 +1,11 @@
 package uwr.onlinejudge.server.database.models;
 
 import javax.persistence.*;
-import java.io.File;
 
 @Entity
-public class SharedTask {
+public class TaskDescription {
     @Id
-    @SequenceGenerator(name = "sharedTaskSequence", sequenceName = "sharedtask_sequence")
+    @SequenceGenerator(name = "sharedTaskSequence", sequenceName = "shared_task_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sharedTaskSequence")
     private long id;
 
@@ -15,7 +14,8 @@ public class SharedTask {
     private User user;
 
     @Column(nullable = false)
-    private File content;
+    @Lob
+    private String content;
 
     @Column(nullable = false)
     private boolean isPrivate;
@@ -36,11 +36,11 @@ public class SharedTask {
         this.user = user;
     }
 
-    public File getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(File content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

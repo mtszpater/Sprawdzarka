@@ -1,13 +1,13 @@
 package uwr.onlinejudge.server.database.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "Users")
 public class User {
     @Id
-    private String login;
+    @SequenceGenerator(name = "userSequence", sequenceName = "users_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
+    private long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -21,12 +21,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public String getLogin() {
-        return login;
+    public long getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

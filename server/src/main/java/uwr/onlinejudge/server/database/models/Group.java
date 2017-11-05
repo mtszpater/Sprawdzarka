@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Group {
     @Id
     @SequenceGenerator(name = "groupSequence", sequenceName = "group_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupSequence")
     private long id;
 
     @ManyToOne

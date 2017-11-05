@@ -1,7 +1,6 @@
 package uwr.onlinejudge.server.database.models;
 
 import javax.persistence.*;
-import java.io.File;
 import java.util.Date;
 
 @Entity
@@ -20,7 +19,8 @@ public class Solution {
     private Task task;
 
     @Column(nullable = false)
-    private File solution;
+    @Lob
+    private String solution;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -59,11 +59,11 @@ public class Solution {
         this.task = task;
     }
 
-    public File getSolution() {
+    public String getSolution() {
         return solution;
     }
 
-    public void setSolution(File solution) {
+    public void setSolution(String solution) {
         this.solution = solution;
     }
 

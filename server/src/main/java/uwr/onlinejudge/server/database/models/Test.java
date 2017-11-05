@@ -3,7 +3,6 @@ package uwr.onlinejudge.server.database.models;
 import uwr.onlinejudge.server.database.util.TestType;
 
 import javax.persistence.*;
-import java.io.File;
 import java.util.Date;
 
 @Entity
@@ -17,15 +16,16 @@ public class Test {
     @JoinColumn(nullable = false)
     private Task task;
 
-    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeRequired;
 
     @Column(nullable = false)
-    private File inputArgument;
+    @Lob
+    private String inputArgument;
 
     @Column(nullable = false)
-    private File expectedAnswer;
+    @Lob
+    private String expectedAnswer;
 
     @Column(nullable = false)
     private int point;
@@ -57,19 +57,19 @@ public class Test {
         this.timeRequired = timeRequired;
     }
 
-    public File getInputArgument() {
+    public String getInputArgument() {
         return inputArgument;
     }
 
-    public void setInputArgument(File inputArgument) {
+    public void setInputArgument(String inputArgument) {
         this.inputArgument = inputArgument;
     }
 
-    public File getExpectedAnswer() {
+    public String getExpectedAnswer() {
         return expectedAnswer;
     }
 
-    public void setExpectedAnswer(File expectedAnswer) {
+    public void setExpectedAnswer(String expectedAnswer) {
         this.expectedAnswer = expectedAnswer;
     }
 
