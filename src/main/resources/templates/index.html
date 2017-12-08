@@ -1,10 +1,52 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
 <body>
-<p th:text="${title}" />
+
+<!-- Navigation -->
+<header>
+    <div th:replace="shared/header :: navigationGuest(${'home'})"></div>
+    <div th:replace="shared/header :: logo"></div>
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Strona główna</li>
+        </ol>
+    </div>
+
+</header>
+
+<!-- Page Content -->
+<main role="main" class="container">
+    <h1 class="my-4">Strona główna
+        <small>- sprawdzarka</small>
+    </h1>
+
+    <!-- Blog Post -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Otwarcie serwera</h2>
+            <p class="card-text"> Witamy w nowym systemie rozwiązywania zadań. W razie problemów proszę o kontakt pod
+                adresem -@ii.uni.wroc.pl </p>
+        </div>
+        <div class="card-footer text-muted">
+            Dodany: 3 grudzień 2017 przez
+            <a href="#">Admin</a>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div th:replace="shared/pagination :: home(${'Nowsze'},${'Starsze'})"></div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
 </body>
 </html>

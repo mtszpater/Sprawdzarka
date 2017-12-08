@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<!-- Pagination -->
+<ul class="pagination justify-content-center mb-4"
+    th:fragment="home (leftTxt,rightTxt)">
+    <li class="page-item disabled">
+        <a class="page-link" href="#" th:text="'&larr; ' + ${leftTxt}"></a>
+    </li>
+    <li class="page-item disabled">
+        <a class="page-link" href="#" th:text="${rightTxt} + ' &rarr;'"></a>
+    </li>
+</ul>
+
+</body>
+</html>

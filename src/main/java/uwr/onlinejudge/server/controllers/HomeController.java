@@ -33,9 +33,9 @@ public class HomeController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("user", new User()); //zamienic to na userform
+        model.addAttribute("user", new User()); //TODO zamienic to na userform
 
-        return "login";
+        return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)

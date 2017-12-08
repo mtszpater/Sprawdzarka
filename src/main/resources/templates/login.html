@@ -1,20 +1,77 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example </title>
-</head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
+
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+
+<!-- Navigation -->
+<header>
+    <div th:replace="shared/header :: navigationGuest(${' '})"></div>
+    <div th:replace="shared/header :: logo"></div>
+</header>
+
+
+<main role="main" class="container">
+    <div class="row">
+
+        <!-- Panel Login -->
+        <div class="col-md-8">
+
+            <div class="card my-4">
+                <h5 class="card-header">Logowanie</h5>
+                <div class="card-body">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger" role="alert">
+                            Niepoprawne hasło i login.
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-danger" role="alert">
+                            Zostałeś wylogowany.
+                        </div>
+                    </div>
+                    <form th:action="@{/login}" method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input class="form-control" type="text" placeholder="Adres Email" name="username"/>
+                        </div>
+                        <br/>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input class="form-control" type="password" name="password" placeholder="Hasło"/>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Zaloguj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <!-- Registration Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Konto</h5>
+                <div class="card-body">
+                    <a> Nie masz konta?</a> <br/>
+                    <ul>
+                        <li><a th:href="@{/registration}">Zarejestruj się</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
 </body>
 </html>

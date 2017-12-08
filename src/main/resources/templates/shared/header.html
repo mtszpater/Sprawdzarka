@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+     th:fragment="navigationGuest (active)">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="(${active} == 'home') ?'active'" th:href="@{/}">Sprawdzarka</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="(${user} == null)?'disabled':(${active} == 'group'?'active')"
+                       th:href="@{/grupy}">Grupy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="(${user} == null)?'disabled':(${active} == 'home' ?'history')">Historia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="(${user} == null)?'disabled':(${active} == 'home' ?'stats')">Statystyki</a>
+                </li>
+            </ul>
+            <a th:href="@{/login}" th:if="${user} == null">
+                <button class="btn btn-outline-primary btn-sm"> Zaloguj</button>
+            </a>
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" th:if="${user} != null">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ustawienia</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--Logo-->
+<div class="jumbotron" th:fragment="logo">
+    <div class="container">
+        <img th:src="@{/images/logo.jpg}" class="img-fluid" alt="Uniwersytet Wrocławski"/>
+    </div>
+</div>
+
+</body>
+</html>
