@@ -1,0 +1,13 @@
+.jumbotron {
+    background-color: #00709E !important;
+    padding-bottom: 0rem;
+    margin-bottom: 0rem;
+}
+
+.breadcrumb {
+    background-color: #fff !important;
+}
+
+.nav-link.disabled {
+    cursor: not-allowed;
+}
