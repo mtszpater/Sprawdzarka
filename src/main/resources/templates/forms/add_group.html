@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
+<body>
+
+<!-- Navigation -->
+<header>
+    <div th:replace="shared/header :: navigationGuest(${'group'})"></div>
+    <div th:replace="shared/header :: logo"></div>
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/grupy}">Grupy</a></li>
+            <li class="breadcrumb-item active">Nowa grupa</li>
+        </ol>
+    </div>
+
+</header>
+
+<main role="main" class="container">
+    <form th:action="@{/dodaj_grupe}" th:object="${group}">
+
+        <div class="form-group">
+            <label class="col-form-label" for="nameGroup">Nazwa:</label>
+            <input type="text" class="form-control" id="nameGroup" th:field="*{name}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="descriptionGroup">Opis grupy:</label>
+            <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="passwordGroup">Hasło:</label>
+            <input type="password" class="form-control" id="passwordGroup" th:field="*{password}"/>
+        </div>
+
+        <div class="form-check">
+            <label class="form-check-label" th:for="${#ids.next('isOpen')}">
+                <input class="form-check-input" type="checkbox" th:field="*{open}"/>
+                Ukryj grupę
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">Zarejestruj</button>
+    </form>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

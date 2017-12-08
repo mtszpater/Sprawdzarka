@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
+<body>
+
+<!-- Navigation -->
+<header>
+    <div th:replace="shared/header :: navigationGuest(${'group'})"></div>
+    <div th:replace="shared/header :: logo"></div>
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
+            <li class="breadcrumb-item active">Grupy</li>
+        </ol>
+    </div>
+
+</header>
+
+<!--Page Content-->
+<main role="main" class="container">
+    <div class="row">
+
+        <!-- Groups cards -->
+        <div class="col-md-8">
+            <div th:each="group,index:${groups}" role="tablist">
+                <div th:replace="shared/group_card :: title(${group},${index})"></div>
+                <div th:replace="shared/group_card :: description(${group},${index})"></div>
+                <div th:replace="shared/group_card :: author(${group},${index})"></div>
+            </div>
+
+            <!-- Pagination -->
+            <!--TODO: Przełączanie się na nastepne karty-->
+            <div th:replace="shared/pagination :: home(${'Poprzednie'},${'Następne'})"></div>
+        </div>
+
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Szukaj</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="Szukaj po..." type="text"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">
+                                <img src="files/searchIcon.png" height="20"
+                                     width="20" class="img-fluid"
+                                     alt="Idź!"/>
+                                <!--TODO: zmień ikone-->
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Ustawienia</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <ul>
+                            <li><a th:href="@{/grupy/dodaj_grupe}">Dodaj nową grupe</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- PasswordGroup -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Zamknij</span></button>
+                <h4 class="modal-title" id="myModalLabel">Zapis</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                <form role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                        <input class="form-control" type="password" placeholder="Hasło"/>
+                    </div>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Zaloguj</button>
+                </form>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

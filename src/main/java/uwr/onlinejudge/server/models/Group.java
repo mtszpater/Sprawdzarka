@@ -22,7 +22,7 @@ public class Group {
     private String password;
 
     @Column(nullable = false)
-    private boolean isOpen;
+    private Boolean open;
 
     public long getId() {
         return id;
@@ -56,19 +56,19 @@ public class Group {
         this.password = password;
     }
 
-    public boolean isOpen() {
-        return isOpen;
-    }
-
-    public void setOpen(boolean open) {
-        isOpen = open;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
     }
 }

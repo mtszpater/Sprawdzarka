@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.services.GroupService;
 
 @Controller
@@ -21,13 +22,13 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("title", "Example title");
-        return "index";
+        return "group";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
     public String addGroup(Model model) {
-        model.addAttribute("title", "Example title");
-        return "index";
+        model.addAttribute("group", new Group()); //TODO zamienic model
+        return "forms/add_group";
     }
 
     @RequestMapping(value = "/grupa", method = RequestMethod.GET)
