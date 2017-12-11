@@ -1,18 +1,20 @@
 package uwr.onlinejudge.server.controllers;
 
+import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.UserForm;
 import uwr.onlinejudge.server.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
+
 
 @Controller
 public class HomeController {
@@ -52,8 +54,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "welcome";
+    public String welcome(Model model, Principal principal) {
+        model.addAttribute("user", principal);
+        return "index";
     }
 
 

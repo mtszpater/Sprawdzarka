@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Imię</label>
+                            <label class="col-sm-2 col-form-label">Nazwisko</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control"  th:field="*{secondname}" placeholder="imie"/>
                                 <td th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}">username error</td>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hasło</label>
+                            <label class="col-sm-2 col-form-label">Powtórz hasło</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" th:field="*{passwordConfirm}" placeholder="Powtórz hasło"/>
                                 <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">passwordConfirm error</td>
