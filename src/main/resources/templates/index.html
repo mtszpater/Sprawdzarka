@@ -6,22 +6,12 @@
 
 <body>
 
-<!-- Navigation -->
-<header>
-    <div th:replace="shared/header :: navigationGuest(${'home'})"></div>
-    <div th:replace="shared/header :: logo"></div>
-
-    <div class="container">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Strona główna</li>
-        </ol>
-    </div>
-
-</header>
+<!--Navigation -->
+<div th:replace="shared/head :: header"></div>
 
 <!-- Page Content -->
 <main role="main" class="container">
-    <h1 class="my-4">Strona główna
+    <h1 class="my-4"> Strona główna
         <small>- sprawdzarka</small>
     </h1>
 zalogowany jako <span th:text="${user.name}">username</span>

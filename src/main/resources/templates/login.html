@@ -4,15 +4,10 @@
 <!-- Head -->
 <div th:replace="shared/head :: head"></div>
 
-
 <body>
 
 <!-- Navigation -->
-<header>
-    <div th:replace="shared/header :: navigationGuest(${' '})"></div>
-    <div th:replace="shared/header :: logo"></div>
-</header>
-
+<div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
     <div class="row">
@@ -51,7 +46,6 @@
         </div>
 
         <div class="col-md-4">
-
             <!-- Registration Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Konto</h5>

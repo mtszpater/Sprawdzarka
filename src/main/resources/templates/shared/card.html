@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+
+<!--List title-->
+<div th:fragment="listTitle(list, index)" class="card-header" role="tab" th:id="'heading' + ${index}">
+    <h5 class="mb-0">
+        <a data-toggle="collapse" th:href="'#collapse' + ${index}" aria-expanded="true" aria-controls="collapseOne">
+            <a th:text="${list.name}"></a>
+
+            <div th:if="${user.id} == ${group.user.id}" class="btn-group ml-1">
+                <button type="button" class="btn btn-primary btn-sm pull-right dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Ustawienia
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Edytuj</a>
+                    <a class="dropdown-item" href="#">Usuń</a>
+                </div>
+            </div>
+
+            <a href="#" class="btn btn-primary btn-sm pull-right ml-1">Wejdz &rarr;</a>
+        </a>
+    </h5>
+</div>
+
+<!--Group title-->
+<div th:fragment="groupTitle(group, index)" class="card-header" role="tab" id="headingOne">
+    <h5 class="mb-0">
+        <a data-toggle="collapse" th:href="'#collapse' + ${index}" aria-expanded="true" aria-controls="collapseOne">
+
+            <i th:if="${group.password} != null" class="icomoon icon-lock"></i>
+            <i th:if="${group.password} == null" class="icomoon icon-unlocked"></i>
+
+            <a th:text="${group.name}"></a>
+
+            <div th:if="${user.id} == ${group.user.id}" class="btn-group ml-1">
+                <button type="button" class="btn btn-primary btn-sm pull-right dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Ustawienia
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Edytuj</a>
+                    <a class="dropdown-item" href="#">Usuń</a>
+                </div>
+            </div>
+
+            <a th:if="${#lists.contains(${memberList},${group})}" href="#"
+               class="btn btn-primary btn-sm pull-right ml-1">Wejdz &rarr;</a>
+            <a th:if="${#lists.contains(${memberList},${group})}" href="#"
+               class="btn btn-primary btn-sm pull-right ml-1">Wypisz </a>
+
+            <a th:unless="${#lists.contains(${memberList},${group})}" href="#"
+               class="btn btn-primary btn-sm pull-right ml-1">Zapisz </a>
+        </a>
+    </h5>
+</div>
+
+<!-- Description -->
+<div th:fragment="description(object, index)" th:id="'collapse'+${index}" class="collapse" role="tabpanel"
+     aria-labelledby="headingOne">
+    <div class="card-body">
+        <p class="card-text" th:text="${object.description}"></p>
+    </div>
+</div>
+
+<!-- Author -->
+<div th:fragment="author(group, index)" class="card-footer text-muted">
+    Dodano przez: <a href="#" th:text="${group.user.name}"></a>
+</div>
+
+</body>
+</html>

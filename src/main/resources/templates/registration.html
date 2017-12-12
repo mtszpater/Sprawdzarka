@@ -7,60 +7,68 @@
 <body>
 
 <!-- Navigation -->
-<header>
-    <div th:replace="shared/header :: navigationGuest(${' '})"></div>
-    <div th:replace="shared/header :: logo"></div>
-</header>
-
+<div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
     <!-- Panel Registration -->
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-6">
             <div class="card mx-10 my-4">
                 <h5 class="card-header">Rejestracja</h5>
                 <div class="card-body">
                     <form th:action="@{/registration}" th:object="${userForm}" method="post">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Imię</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control"  th:field="*{firstname}" placeholder="imie"/>
-                                <td th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">username error</td>
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="firstName">Imię:</label>
+                            <input type="text" class="form-control" id="firstName" required="required"
+                                   th:field="*{firstname}"
+                                   th:classappend="(${#fields.hasErrors('firstname')})?' is-invalid':''"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nazwisko</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control"  th:field="*{secondname}" placeholder="imie"/>
-                                <td th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}">username error</td>
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="secondName">Nazwisko:</label>
+                            <input type="text" class="form-control" id="secondName" required="required"
+                                   th:field="*{secondname}"
+                                   th:classappend="(${#fields.hasErrors('secondname')})?' is-invalid':''"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}"></p>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" th:field="*{email}" placeholder="Email"/>
-                                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</td>
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="secondName">Email:</label>
+                            <input type="email" class="form-control" id="email" required="required"
+                                   th:field="*{email}"
+                                   th:classappend="(${#fields.hasErrors('email')})?' is-invalid':''"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hasło</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" th:field="*{password}" placeholder="Hasło"/>
-                                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</td>
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="secondName">Hasło:</label>
+                            <input type="password" class="form-control" id="password" required="required"
+                                   th:field="*{password}"
+                                   th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Powtórz hasło</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" th:field="*{passwordConfirm}" placeholder="Powtórz hasło"/>
-                                <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">passwordConfirm error</td>
+
+                        <div class="form-group">
+                            <label class="col-form-label" for="secondName">Hasło:</label>
+                            <input type="password" class="form-control" id="passwordConfirm" required="required"
+                                   th:field="*{passwordConfirm}"
+                                   th:classappend="(${#fields.hasErrors('passwordConfirm')})?' is-invalid':''"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary pull-right">Zarejestruj</button>
-                            </div>
-                        </div>
+
+                        <button type="submit" class="btn btn-primary">Zarejestruj</button>
                     </form>
                 </div>
             </div>

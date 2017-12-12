@@ -7,22 +7,10 @@
 <body>
 
 <!-- Navigation -->
-<header>
-    <div th:replace="shared/header :: navigationGuest(${'group'})"></div>
-    <div th:replace="shared/header :: logo"></div>
-
-    <div class="container">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/}">Strona główna</a></li>
-            <li class="breadcrumb-item"><a th:href="@{/grupy}">Grupy</a></li>
-            <li class="breadcrumb-item active">Nowa grupa</li>
-        </ol>
-    </div>
-
-</header>
+<div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
-    <form th:action="@{/dodaj_grupe}" th:object="${group}">
+    <form th:action="@{/grupy/dodaj_grupe}" th:object="${group}">
 
         <div class="form-group">
             <label class="col-form-label" for="nameGroup">Nazwa:</label>
@@ -40,13 +28,13 @@
         </div>
 
         <div class="form-check">
-            <label class="form-check-label" th:for="${#ids.next('isOpen')}">
+            <label class="form-check-label" th:for="${#ids.next('open')}">
                 <input class="form-check-input" type="checkbox" th:field="*{open}"/>
                 Ukryj grupę
             </label>
         </div>
 
-        <button type="submit" class="btn btn-primary pull-right">Zarejestruj</button>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
     </form>
 </main>
 
