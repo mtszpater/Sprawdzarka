@@ -6,6 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +32,14 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, Model model) {
-        //todo: zrobić Walidacje hasła & emaila
+    public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult) {
+
+        if( userService.findByEmail(userForm.getEmail()) != null ) {
+            bindingResult.addError(new FieldError("email", "email", userForm.getEmail(), true, null, null,"Email zajęty"));
+        }
+        if( userForm.getPassword().compareTo(userForm.getPasswordConfirm()) != 0) {
+            bindingResult.addError(new FieldError("password", "password", "Hasła nie są identyczne"));
+        }
 
         if (bindingResult.hasErrors()) {
             return "registration";
