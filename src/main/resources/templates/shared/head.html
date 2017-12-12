@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head th:fragment="head">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -30,36 +31,39 @@
                            th:href="@{/}">Sprawdzarka
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" th:unless="${user}" href="#">Grupy</a>
-                        <a class="nav-link" th:if="${user}" th:href="@{/grupy}"
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/grupy}"
                            th:classappend="${#strings.contains(url,'/grupy')} ? 'active'">
                             Grupy
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" th:unless="${user}" href="#">Historia</a>
-                        <a class="nav-link" th:if="${user}" th:href="@{/historia}"
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/historia}"
                            th:classappend="${#strings.contains(url,'/historia')} ? 'active'">
                             Historia
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" th:unless="${user}" href="#">Statystyki</a>
-                        <a class="nav-link" th:if="${user}" th:href="@{/statystyki}"
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/statystyki}"
                            th:classappend="${#strings.contains(url,'/statystyki')} ? 'active'">
                             Statystyki
                         </a>
                     </li>
                 </ul>
-                <a th:href="@{/login}" th:unless="${user}">
+
+                <a th:href="@{/login}" sec:authorize="isAuthenticated()">
                     <button class="btn btn-outline-primary btn-sm"> Zaloguj</button>
                 </a>
-                <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" th:if="${user}">
+
+                <ul class="navbar-nav inline">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Ustawienia</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Wyloguj</a>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </nav>
