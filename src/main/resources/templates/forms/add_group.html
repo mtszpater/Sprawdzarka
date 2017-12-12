@@ -10,28 +10,45 @@
 <div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
-    <form th:action="@{/grupy/dodaj_grupe}" th:object="${group}">
+    <form th:action="@{/grupy/dodaj_grupe}" th:object="${group}" method="post">
 
         <div class="form-group">
             <label class="col-form-label" for="nameGroup">Nazwa:</label>
-            <input type="text" class="form-control" id="nameGroup" th:field="*{name}"/>
+            <input type="text" class="form-control" id="nameGroup" th:field="*{name}"
+                   th:classappend="(${#fields.hasErrors('name')})?' is-invalid':''"/>
+            <div class="invalid-feedback">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="descriptionGroup">Opis grupy:</label>
-            <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"></textarea>
+            <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"
+                      th:classappend="(${#fields.hasErrors('description')})?' is-invalid':''">
+            </textarea>
+            <div class="invalid-feedback">
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="passwordGroup">Hasło:</label>
-            <input type="password" class="form-control" id="passwordGroup" th:field="*{password}"/>
+            <input type="password" class="form-control" id="passwordGroup" th:field="*{password}"
+                   th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
+            <div class="invalid-feedback">
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            </div>
         </div>
 
         <div class="form-check">
             <label class="form-check-label" th:for="${#ids.next('open')}">
-                <input class="form-check-input" type="checkbox" th:field="*{open}"/>
+                <input class="form-check-input" type="checkbox" th:field="*{open}"
+                       th:classappend="(${#fields.hasErrors('open')})?' is-invalid':''"/>
                 Ukryj grupę
             </label>
+            <div class="invalid-feedback">
+                <p th:if="${#fields.hasErrors('open')}" th:errors="*{open}"></p>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Dodaj</button>

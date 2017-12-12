@@ -15,13 +15,12 @@
 
         <!-- Groups cards -->
         <div class="col-md-8">
-            <div class="card my-4">
+
+            <div class="card my-4" th:each="group,iter:${groups}">
                 <div role="tablist">
-                    <div th:each="group,iter:${groups}">
-                        <div th:replace="shared/card :: groupTitle(${group},${iter.index})"></div>
-                        <div th:replace="shared/card :: description(${group},${iter.index})"></div>
-                        <div th:replace="shared/card :: author(${group},${iter.index})"></div>
-                    </div>
+                    <div th:replace="shared/card :: groupTitle(${group},${iter.index})"></div>
+                    <div th:replace="shared/card :: description(${group},${iter.index})"></div>
+                    <div th:replace="shared/card :: author(${group})"></div>
                 </div>
             </div>
 
@@ -30,26 +29,10 @@
         </div>
 
         <div class="col-md-4">
-
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Szukaj</h5>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" placeholder="Szukaj po..." type="text"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
             <!-- Settings Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Ustawienia</h5>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="list-group">
                         <a th:href="@{/grupy/dodaj_grupe}" class="list-group-item list-group-item-action">
                             Dodaj nową grupe
