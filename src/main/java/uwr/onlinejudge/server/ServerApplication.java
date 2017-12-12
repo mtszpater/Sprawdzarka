@@ -8,6 +8,8 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication
 public class ServerApplication  extends SpringBootServletInitializer {
 
+
+    //todo maybe can remove it?
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(ServerApplication.class);
