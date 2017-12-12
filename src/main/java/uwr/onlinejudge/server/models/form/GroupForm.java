@@ -7,7 +7,7 @@ public class GroupForm {
 
     private User user;
 
-    @NotEmpty
+    @NotEmpty(message = "To pole nie moze być puste")
     private String name;
 
     private String description;

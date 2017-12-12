@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
@@ -59,9 +60,14 @@ public class GroupController {
     }
 
 
-    @RequestMapping(value = "/grupa", method = RequestMethod.GET)
-    public String showGroup(Model model) {
-        model.addAttribute("title", "Example title");
-        return "indemovex";
+    @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
+    public String showGroup(@RequestParam("id") Long id, Model model) {
+
+        if(groupService.getGroup(id) == null)
+            return "error";
+
+        model.addAttribute("group", groupService.getGroup(id));
+
+        return "show_group";
     }
 }
