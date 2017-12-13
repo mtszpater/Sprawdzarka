@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<!--Page Content-->
+<main role="main" class="container">
+    <div class="row">
+
+        <!-- Groups cards -->
+        <div class="col-md-8">
+
+            <div class="card my-4">
+                <div class="list-group">
+                    <a th:each="task,iter:${tasks}" href="#" class="list-group-item list-group-item-action">
+                        <span th:text="'Zadanie' + ${iter.index}+' - '+${task.taskDescription.name}"></span>
+                        <span class="pull-right font-weight-light" th:text="'Termin:'+ ${task.deadline}"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div th:replace="shared/pagination :: home(${'Poprzednie'},${'Następne'})"></div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <!-- Settings Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Ustawienia</h5>
+                <div class="card-body p-0">
+                    <div class="list-group">
+                        <a th:href="@{/zadania/dodaj_zadanie}" class="list-group-item list-group-item-action">
+                            Dodaj nowe zadanie
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

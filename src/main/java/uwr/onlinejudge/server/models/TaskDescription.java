@@ -14,11 +14,14 @@ public class TaskDescription {
     private User user;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     @Lob
     private String content;
 
     @Column(nullable = false)
-    private boolean isPrivate;
+    private boolean personal;
 
     public long getId() {
         return id;
@@ -36,6 +39,14 @@ public class TaskDescription {
         this.user = user;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getContent() {
         return content;
     }
@@ -44,11 +55,11 @@ public class TaskDescription {
         this.content = content;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public boolean isPersonal() {
+        return personal;
     }
 
-    public void setPrivate(boolean aPrivate) {
-        isPrivate = aPrivate;
+    public void setPersonal(boolean personal) {
+        this.personal = personal;
     }
 }
