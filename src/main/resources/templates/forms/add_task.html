@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<main role="main" class="container">
+
+    <div class="card mx-10 my-4">
+        <h5 class="card-header">Nowe zadanie</h5>
+        <div class="card-body">
+            <form th:action="@{/zadania/dodaj_zadanie}" method="post" th:object="${task}">
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="selectionTask">Zadanie</label>
+                        <div class="form-row">
+                            <select id="selectionTask" th:field="${task.taskDescription}">
+                                <option th:each="selectedTask : ${tasks}"
+                                        th:value="${selectedTask}"
+                                        th:text="${selectedTask.name}"></option>
+                            </select>
+                            <a href="#" class="btn btn-primary btn-sm ml-1 ">Dodaj treść</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="commentTask">Komentarz do zadania</label>
+                    <textarea class="form-control" id="commentTask" rows="3" th:field="*{comment}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="deadline">Termin oddania</label>
+                    <input type="date" class="form-control" id="deadline" th:field="*{deadline}"/>
+                </div>
+
+                <!--TODO: store in the database-->
+                <div class="form-group">
+                    <label for="languages">Języki programowania</label>
+                    <select multiple="" class="form-control" id="languages">
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                        <option value="Python">Python</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Testy</label>
+
+                    <div th:each="test,testIter: ${tests}" class="card bg-light mx-10 my-4">
+                        <div class="card-header">
+                            Test1
+                            <a href="#" class="btn btn-primary btn-sm ml-1 pull-right">Usuń test</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label th:for="'arg'+${testIter.index}">Argumenty wejściowe</label>
+                                <textarea class="form-control" th:id="'arg'+${testIter.index}" rows="3"
+                                          th:field="${tests[__${testIter.index}__].inputArgument}"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label th:for="'exp'+${testIter.index}">Oczekiwany wynik</label>
+                                <textarea class="form-control" th:id="'exp'+${testIter.index}" rows="3"
+                                          th:field="${tests[__${testIter.index}__].expectedAnswer}"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-4">
+                                    <label th:for="'point'+${testIter.index}">Punkty</label>
+                                    <input type="number" class="form-control" th:id="'point'+${testIter.index}"
+                                           th:field="${tests[__${testIter.index}__].point}"/>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label th:for="'type'+${testIter.index}">Typ testu</label>
+                                    <div class="form-group">
+                                        <select th:id="'type'+${testIter.index}"
+                                                th:field="${tests[__${testIter.index}__].type}">
+                                            <option th:each="type : ${T(uwr.onlinejudge.server.util.TestType).values()}"
+                                                    th:value="${type}"
+                                                    th:text="${type}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <a href="#" class="btn btn-primary btn-sm">Dodaj test</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

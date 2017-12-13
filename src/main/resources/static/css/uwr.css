@@ -2,6 +2,10 @@
     background-color: #00709E !important;
 }
 
+.card-header {
+    background-color: #00709E33 !important;
+}
+
 .breadcrumb {
     background-color: #fff !important;
 }
