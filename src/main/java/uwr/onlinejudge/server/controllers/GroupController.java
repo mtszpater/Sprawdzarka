@@ -1,19 +1,18 @@
 package uwr.onlinejudge.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.models.form.UserForm;
 import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.UserService;
+import uwr.onlinejudge.server.util.UserRole;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -34,6 +33,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
         Collection<Group> groups = groupService.getGroups(userService.findByEmail(principal.getName()));
         model.addAttribute("groups", groups);
@@ -41,12 +41,14 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
     public String addGroup(Model model) {
         model.addAttribute("group", new GroupForm());
         return "forms/add_group";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.POST)
+    @PreAuthorize("isFullyAuthenticated()")
     public String saveGroup(@ModelAttribute("group") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
@@ -61,13 +63,33 @@ public class GroupController {
 
 
     @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
     public String showGroup(@RequestParam("id") Long id, Model model) {
 
-        if(groupService.getGroup(id) == null)
+        if (groupService.getGroup(id) == null)
             return "error";
 
         model.addAttribute("group", groupService.getGroup(id));
 
         return "show_group";
     }
+
+    @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String registerUser(@PathVariable("id") Long id, Model model, Principal principal) {
+        if (groupService.getGroup(id) == null) {
+            return "error_page";
+        }
+
+        Group group = groupService.getGroup(id);
+        User user = userService.findByEmail(principal.getName());
+
+        if (groupService.isUserRegistered(user, group)) {
+            return "error_page";
+        }
+
+        groupService.registerUser(user, group, UserRole.USER);
+        return "redirect:/grupy";
+    }
+
 }

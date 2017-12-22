@@ -2,6 +2,7 @@ package uwr.onlinejudge.server.controllers;
 
 import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import java.security.Principal;
 
 
 @Controller
-public class HomeController {
+public class HomeController implements ErrorController{
 
     @Autowired
     private UserService userService;
@@ -67,5 +68,13 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value = "/error")
+    public String error() {
+        return "error_page";
+    }
 
+    @Override
+    public String getErrorPath() {
+        return "/error";
+    }
 }
