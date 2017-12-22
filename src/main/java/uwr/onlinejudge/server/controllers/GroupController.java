@@ -76,7 +76,7 @@ public class GroupController {
 
     @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String registerUser(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String registerUser(@PathVariable("id") Long id, Principal principal) {
         if (groupService.getGroup(id) == null) {
             return "error_page";
         }
