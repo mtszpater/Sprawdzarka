@@ -4,12 +4,13 @@ package uwr.onlinejudge.server.models;
 import javax.persistence.*;
 import java.util.Set;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "role")
 public class Role {
     private Long id;
     private String name;
-    private Set<User> users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,12 +30,4 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles")
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 }

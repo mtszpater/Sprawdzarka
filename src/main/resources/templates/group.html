@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
 <div th:replace="shared/head :: head"></div>
@@ -27,14 +27,13 @@
             <!-- Pagination -->
             <div th:replace="shared/pagination :: home(${'Poprzednie'},${'Następne'})"></div>
         </div>
-
         <div class="col-md-4">
             <!-- Settings Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Ustawienia</h5>
                 <div class="card-body p-0">
                     <div class="list-group">
-                        <a th:href="@{/grupy/dodaj_grupe}" class="list-group-item list-group-item-action">
+                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" class="list-group-item list-group-item-action">
                             Dodaj nową grupe
                         </a>
                     </div>
