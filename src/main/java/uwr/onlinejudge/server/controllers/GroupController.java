@@ -52,7 +52,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated()")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveGroup(@ModelAttribute("group") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
