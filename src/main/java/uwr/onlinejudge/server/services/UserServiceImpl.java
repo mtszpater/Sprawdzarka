@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
         User user = objectMapper.convertValue(userForm, User.class);
 
+
         user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }

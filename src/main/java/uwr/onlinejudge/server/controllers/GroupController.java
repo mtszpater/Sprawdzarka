@@ -2,6 +2,8 @@ package uwr.onlinejudge.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,14 +37,16 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         Collection<Group> groups = groupService.getGroups(userService.findByEmail(principal.getName()));
         model.addAttribute("groups", groups);
         return "group";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated()")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addGroup(Model model) {
+
         model.addAttribute("group", new GroupForm());
         return "forms/add_group";
     }
@@ -85,7 +89,7 @@ public class GroupController {
         User user = userService.findByEmail(principal.getName());
 
         if (groupService.isUserRegistered(user, group)) {
-            return "error_page";
+            return "error_page"; //zamiast tego trzeba zwrocic jakis blad
         }
 
         groupService.registerUser(user, group, UserRole.USER);
