@@ -37,7 +37,6 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>)    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         Collection<Group> groups = groupService.getGroups(userService.findByEmail(principal.getName()));
         model.addAttribute("groups", groups);
         return "group";
@@ -60,8 +59,9 @@ public class GroupController {
         }
 
         groupForm.setUser(userService.findByEmail(principal.getName()));
-        groupService.save(groupForm);
+        Group savedGroup = groupService.save(groupForm);
 
+        groupService.registerUser(userService.findByEmail(principal.getName()), savedGroup, UserRole.ADMINISTRATOR);
         return "redirect:/grupy";
     }
 
@@ -89,11 +89,32 @@ public class GroupController {
         User user = userService.findByEmail(principal.getName());
 
         if (groupService.isUserRegistered(user, group)) {
-            return "error_page"; //zamiast tego trzeba zwrocic jakis blad
+            return "error_page";
         }
 
         groupService.registerUser(user, group, UserRole.USER);
         return "redirect:/grupy";
     }
+
+    @RequestMapping(value = "/wypisz_z_grupy/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String unregisterFromGroup(@PathVariable("id") Long id, Principal principal) {
+        if (groupService.getGroup(id) == null) {
+            return "error_page";
+        }
+
+        Group group = groupService.getGroup(id);
+        User user = userService.findByEmail(principal.getName());
+
+        if (!groupService.isUserRegistered(user, group)) {
+            return "error_page";
+        }
+
+        //todo: jeżeli jest adminem i sie wyrejestruje to co wtedy?
+
+        groupService.unregisterUser(user, group);
+        return "redirect:/grupy";
+    }
+
 
 }

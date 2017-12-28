@@ -13,9 +13,11 @@ public interface GroupService {
 
     Group getGroup(long groupId);
 
-    void save(GroupForm groupForm);
+    Group save(GroupForm groupForm);
 
     void registerUser(User user, Group group, UserRole userRole);
 
     boolean isUserRegistered(User user, Group group);
+
+    void unregisterUser(User user, Group group);
 }

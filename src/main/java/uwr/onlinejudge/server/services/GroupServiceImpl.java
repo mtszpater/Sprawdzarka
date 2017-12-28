@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.Registration;
-import uwr.onlinejudge.server.models.Role;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.repositories.GroupRepository;
 import uwr.onlinejudge.server.repositories.RegistrationRepository;
 import uwr.onlinejudge.server.util.UserRole;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
@@ -41,8 +41,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void save(GroupForm groupForm) {
-        groupRepository.save(objectMapper.convertValue(groupForm, Group.class));
+    public Group save(GroupForm groupForm) {
+        return groupRepository.save(objectMapper.convertValue(groupForm, Group.class));
     }
 
     @Override
@@ -58,6 +58,12 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public boolean isUserRegistered(User user, Group group) {
         return registrationRepository.findByGroup(group).stream().anyMatch( r -> r.getUser().equals(user) );
+    }
+
+    @Override
+    @Transactional
+    public void unregisterUser(User user, Group group) {
+        registrationRepository.deleteByUserAndGroup(user, group);
     }
 
 
