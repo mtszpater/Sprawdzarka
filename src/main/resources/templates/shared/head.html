@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns="http://www.w3.org/1999/xhtml">
-<head th:fragment="head">
+<head th:fragment="head (title)">
+    <title th:text="${title}">Sprawdzarka UWr</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content="System do rozwiązywania zadań online"/>
