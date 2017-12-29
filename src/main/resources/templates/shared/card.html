@@ -27,17 +27,18 @@
 </div>
 
 <!--Group title - My Groups-->
-<div th:fragment="myGroupTitle(group, index)" class="card-header tab" role="tab">
+<div th:fragment="myGroupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
         <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
         <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
 
-        <a class="text-dark" data-toggle="collapse" th:href="'#collapseMy'+${index}" th:text="${group.name}"></a>
+        <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
         <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz &rarr;</a>
-        <a th:unless="${#authentication.name} == ${group.user.email}" href="#"
+
+        <a th:unless="${#authentication.name} == ${group.user.email}"
+           th:href="@{/grupy/wypisz_z_grupy/{id}(id=${group.id})}"
            class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
-        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
 
         <div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">
             <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -53,19 +54,19 @@
 </div>
 
 <!--Group title - Available Group-->
-<div th:fragment="groupTitle(group, index)" class="card-header tab" role="tab">
+<div th:fragment="groupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
         <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
         <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
 
-        <a class="text-dark" data-toggle="collapse" th:href="'#collapseAvaiable'+${index}" th:text="${group.name}"></a>
+        <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
-        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
+        <a th:href="@{/grupy/zapisz_do_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
     </h5>
 </div>
 
 <!-- Description -->
-<div th:fragment="description(object, index, key)" th:id="'collapse'+${key}+${index}" class="collapse" role="tabpanel">
+<div th:fragment="description(object)" th:id="'collapse'+${object.id}" class="collapse" role="tabpanel">
     <div class="card-body">
         <p class="card-text" th:text="${object.description}"></p>
     </div>

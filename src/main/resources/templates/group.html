@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
-<div th:replace="shared/head :: head (${'Sprawdzarka UWr: Grupy'})"></div>
+<div th:replace="shared/head :: head (title='Sprawdzarka UWr: Grupy')"></div>
 
 <body>
 
@@ -15,9 +15,9 @@
     <div class="card mx-10 my-4">
         <h5 class="card-header">Przegląd grup</h5>
         <div class="card-body">
-            <button sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
-                    class="btn btn-primary pull-right btn-sm">Dodaj
-            </button>
+            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
+               class="btn btn-primary pull-right btn-sm">Dodaj
+            </a>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
@@ -30,21 +30,19 @@
             <div class="tab-content col-12 align-self-center">
                 <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
                     <a th:if="${#lists.isEmpty(myGroups)}">Brak wybranych grup </a>
-                    <div class="card my-4" th:each="group,iter:${myGroups}">
+                    <div class="card my-4" th:each="group:${myGroups}">
                         <div role="tablist">
-                            <div th:replace="shared/card :: myGroupTitle(${group},${iter.index})"></div>
-                            <div th:replace="shared/card :: description(${group},${iter.index},${'My'})"></div>
-                            <div th:replace="shared/card :: author(${group})"></div>
+                            <div th:replace="shared/card :: myGroupTitle(group=${group})"></div>
+                            <div th:replace="shared/card :: description(object=${group})"></div>
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="availableGroups" role="tabpanel">
                     <a th:if="${#lists.isEmpty(availableGroups)}">Brak dostępnych grup </a>
-                    <div class="card my-4" th:each="group,iter:${availableGroups}">
+                    <div class="card my-4" th:each="group:${availableGroups}">
                         <div role="tablist">
-                            <div th:replace="shared/card :: groupTitle(${group},${iter.index})"></div>
-                            <div th:replace="shared/card :: description(${group},${iter.index},${'Avaiable'})"></div>
-                            <div th:replace="shared/card :: author(${group})"></div>
+                            <div th:replace="shared/card :: groupTitle(group=${group})"></div>
+                            <div th:replace="shared/card :: description(object=${group})"></div>
                         </div>
                     </div>
                 </div>
