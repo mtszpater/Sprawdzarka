@@ -47,7 +47,7 @@
                     <label class="form-check-label" th:for="${#ids.next('open')}">
                         <input class="form-check-input" type="checkbox" th:field="*{open}"
                                th:classappend="(${#fields.hasErrors('open')})?' is-invalid':''"/>
-                        Ukryj grupę
+                        Zamknij grupę
                     </label>
                     <div class="invalid-feedback">
                         <p th:if="${#fields.hasErrors('open')}" th:errors="*{open}"></p>

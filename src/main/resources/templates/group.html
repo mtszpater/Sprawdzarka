@@ -15,9 +15,12 @@
     <div class="card mx-10 my-4">
         <h5 class="card-header">Przegląd grup</h5>
         <div class="card-body">
-            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
-               class="btn btn-primary pull-right btn-sm">Dodaj
-            </a>
+            <div class="clearfix">
+                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
+                   class="btn btn-primary float-right btn-sm">Dodaj
+                </a>
+            </div>
+
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
@@ -50,31 +53,6 @@
         </div>
     </div>
 </main>
-
-<!-- PasswordGroup -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Zamknij</span></button>
-                <h4 class="modal-title" id="myModalLabel">Zapis</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                <form role="form">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                        <input class="form-control" type="password" placeholder="Hasło"/>
-                    </div>
-                    <br/>
-                    <button type="submit" class="btn btn-primary">Zaloguj</button>
-                </form>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Footer -->
 <div th:replace="shared/footer :: copy"></div>

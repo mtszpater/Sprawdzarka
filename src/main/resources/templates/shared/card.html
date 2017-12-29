@@ -29,8 +29,10 @@
 <!--Group title - My Groups-->
 <div th:fragment="myGroupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
-        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
-        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
+        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true" data-toggle="tooltip"
+           data-placement="left" title="Grupa chroniona hasłem"></i>
+        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip"
+           data-placement="left" title="Grupa nie chroniona hasłem"></i>
 
         <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
@@ -56,8 +58,10 @@
 <!--Group title - Available Group-->
 <div th:fragment="groupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
-        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
-        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
+        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"
+           title="Grupa chroniona hasłem"></i>
+        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"
+           title="Grupa nie chroniona hasłem"></i>
 
         <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
