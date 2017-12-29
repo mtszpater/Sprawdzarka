@@ -36,12 +36,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Collection<Group> getAllGroups() {
+    public Collection<Group> getGroups() {
         return groupRepository.findAll();
     }
 
     @Override
-    public Collection<Group> getMyGroups(User user) {
+    public Collection<Group> getUserGroups(User user) {
         List<Registration> registrations = registrationRepository.findByUser(user);
         return registrations.stream().map(Registration::getGroup).collect(Collectors.toList());
     }

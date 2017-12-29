@@ -33,10 +33,10 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
-        Collection<Group> availableGroups = groupService.getAllGroups();
+        Collection<Group> availableGroups = groupService.getGroups();
 
         User user = userService.findByEmail(principal.getName());
-        Collection<Group> myGroups = groupService.getMyGroups(user);
+        Collection<Group> myGroups = groupService.getUserGroups(user);
         availableGroups.removeAll(myGroups);
 
         model.addAttribute("availableGroups", availableGroups);

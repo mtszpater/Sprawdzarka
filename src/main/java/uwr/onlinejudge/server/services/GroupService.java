@@ -11,9 +11,9 @@ public interface GroupService {
 
     Collection<Group> getOwnGroups(User user);
 
-    Collection<Group> getAllGroups();
+    Collection<Group> getGroups();
 
-    Collection<Group> getMyGroups(User user);
+    Collection<Group> getUserGroups(User user);
 
     Group getGroup(long groupId);
 
