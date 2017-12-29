@@ -13,6 +13,8 @@ import uwr.onlinejudge.server.util.UserRole;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -29,13 +31,23 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Collection<Group> getGroups(User user) {
+    public Collection<Group> getOwnGroups(User user) {
         return groupRepository.findByUser(user);
     }
 
     @Override
-    public Group getGroup(long groupId) {
+    public Collection<Group> getAllGroups() {
+        return groupRepository.findAll();
+    }
 
+    @Override
+    public Collection<Group> getMyGroups(User user) {
+        List<Registration> registrations = registrationRepository.findByUser(user);
+        return registrations.stream().map(Registration::getGroup).collect(Collectors.toList());
+    }
+
+    @Override
+    public Group getGroup(long groupId) {
         System.out.println(groupRepository.getOne(groupId).getDescription());
         return groupRepository.getOne(groupId);
     }

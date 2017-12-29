@@ -3,7 +3,11 @@
 }
 
 .card-header {
-    background-color: #00709E33 !important;
+    background-color: #EDEDED;
+}
+
+.card-header.tab {
+    background-color: #F7F7F7 !important;
 }
 
 .breadcrumb {

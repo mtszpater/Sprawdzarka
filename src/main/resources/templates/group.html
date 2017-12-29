@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
 <div th:replace="shared/head :: head (${'Sprawdzarka UWr: Grupy'})"></div>
@@ -11,35 +12,45 @@
 
 <!--Page Content-->
 <main role="main" class="container">
-    <div class="row">
-
-        <!-- Groups cards -->
-        <div class="col-md-8">
-
-            <div class="card my-4" th:each="group,iter:${groups}">
-                <div role="tablist">
-                    <div th:replace="shared/card :: groupTitle(${group},${iter.index})"></div>
-                    <div th:replace="shared/card :: description(${group},${iter.index})"></div>
-                    <div th:replace="shared/card :: author(${group})"></div>
+    <div class="card mx-10 my-4">
+        <h5 class="card-header">Przegląd grup</h5>
+        <div class="card-body">
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
+                    class="btn btn-primary pull-right btn-sm">Dodaj
+            </button>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
+                       aria-selected="true">Moje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#availableGroups" role="tab" aria-selected="false">Dostępne</a>
+                </li>
+            </ul>
+            <div class="tab-content col-12 align-self-center">
+                <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
+                    <a th:if="${#lists.isEmpty(myGroups)}">Brak wybranych grup </a>
+                    <div class="card my-4" th:each="group,iter:${myGroups}">
+                        <div role="tablist">
+                            <div th:replace="shared/card :: myGroupTitle(${group},${iter.index})"></div>
+                            <div th:replace="shared/card :: description(${group},${iter.index},${'My'})"></div>
+                            <div th:replace="shared/card :: author(${group})"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-        </div>
-        <div class="col-md-4">
-            <!-- Settings Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Ustawienia</h5>
-                <div class="card-body p-0">
-                    <div class="list-group">
-                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" class="list-group-item list-group-item-action">
-                            Dodaj nową grupe
-                        </a>
+                <div class="tab-pane fade" id="availableGroups" role="tabpanel">
+                    <a th:if="${#lists.isEmpty(availableGroups)}">Brak dostępnych grup </a>
+                    <div class="card my-4" th:each="group,iter:${availableGroups}">
+                        <div role="tablist">
+                            <div th:replace="shared/card :: groupTitle(${group},${iter.index})"></div>
+                            <div th:replace="shared/card :: description(${group},${iter.index},${'Avaiable'})"></div>
+                            <div th:replace="shared/card :: author(${group})"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 
 <!-- PasswordGroup -->

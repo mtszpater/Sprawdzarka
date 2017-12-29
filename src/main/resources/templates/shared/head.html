@@ -63,26 +63,27 @@
             </div>
         </div>
     </nav>
-
-    <!--Logo-->
-    <div class="jumbotron logo mb-0 pb-0">
-        <div class="container">
-            <img th:src="@{/images/logo.jpg}" class="img-fluid" alt="Uniwersytet Wrocławski"/>
+    <div class="mb-4">
+        <!--Logo-->
+        <div class="jumbotron logo mb-0 pb-0">
+            <div class="container">
+                <img th:src="@{/images/logo.jpg}" class="img-fluid" alt="Uniwersytet Wrocławski"/>
+            </div>
         </div>
-    </div>
 
-    <!--Breadcrumbs-->
-    <div th:if="${breadcrumbs}" class="container">
-        <ol class="breadcrumb">
-            <li th:each="breadcrumb, iterStatus : ${breadcrumbs}" class="breadcrumb-item"
-                th:classappend="(${iterStatus.last})?'active'">
-                <a th:href="@{${breadcrumb.link}}"
-                   th:text="${breadcrumb.text}"
-                   th:unless="${iterStatus.last}"></a>
-                <span th:text="${breadcrumb.text}"
-                      th:if="${iterStatus.last}"></span>
-            </li>
-        </ol>
+        <!--Breadcrumbs-->
+        <div th:if="${breadcrumbs}" class="container">
+            <ol class="breadcrumb">
+                <li th:each="breadcrumb, iterStatus : ${breadcrumbs}" class="breadcrumb-item"
+                    th:classappend="(${iterStatus.last})?'active'">
+                    <a th:href="@{${breadcrumb.link}}"
+                       th:text="${breadcrumb.text}"
+                       th:unless="${iterStatus.last}"></a>
+                    <span th:text="${breadcrumb.text}"
+                          th:if="${iterStatus.last}"></span>
+                </li>
+            </ol>
+        </div>
     </div>
 </header>
 

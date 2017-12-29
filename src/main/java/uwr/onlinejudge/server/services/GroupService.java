@@ -9,7 +9,11 @@ import java.util.Collection;
 
 public interface GroupService {
 
-    Collection<Group> getGroups(User user);
+    Collection<Group> getOwnGroups(User user);
+
+    Collection<Group> getAllGroups();
+
+    Collection<Group> getMyGroups(User user);
 
     Group getGroup(long groupId);
 

@@ -2,8 +2,6 @@ package uwr.onlinejudge.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
-import uwr.onlinejudge.server.models.form.UserForm;
 import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.UserService;
 import uwr.onlinejudge.server.util.UserRole;
@@ -19,7 +16,6 @@ import uwr.onlinejudge.server.util.UserRole;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping("/grupy")
@@ -37,15 +33,20 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
-        Collection<Group> groups = groupService.getGroups(userService.findByEmail(principal.getName()));
-        model.addAttribute("groups", groups);
+        Collection<Group> availableGroups = groupService.getAllGroups();
+
+        User user = userService.findByEmail(principal.getName());
+        Collection<Group> myGroups = groupService.getMyGroups(user);
+        availableGroups.removeAll(myGroups);
+
+        model.addAttribute("availableGroups", availableGroups);
+        model.addAttribute("myGroups", myGroups);
         return "group";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addGroup(Model model) {
-
         model.addAttribute("group", new GroupForm());
         return "forms/add_group";
     }
@@ -111,10 +112,9 @@ public class GroupController {
         }
 
         //todo: jeżeli jest adminem i sie wyrejestruje to co wtedy?
+        //todo: warunek:jeśli żałożyciel grupy chce się wypisać to error
 
         groupService.unregisterUser(user, group);
         return "redirect:/grupy";
     }
-
-
 }

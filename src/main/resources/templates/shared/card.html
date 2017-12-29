@@ -26,47 +26,55 @@
     </h5>
 </div>
 
-<!--Group title-->
-<div th:fragment="groupTitle(group, index)" class="card-header" role="tab" id="headingOne">
+<!--Group title - My Groups-->
+<div th:fragment="myGroupTitle(group, index)" class="card-header tab" role="tab">
     <h5 class="mb-0">
-        <a data-toggle="collapse" th:href="'#collapse' + ${index}" th:text="${group.name}" aria-expanded="true"
-           aria-controls="collapseOne"></a>
-            <i th:if="${group.password} != null" class="icomoon icon-lock"></i>
-            <i th:if="${group.password} == null" class="icomoon icon-unlocked"></i>
+        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
+        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
+
+        <a class="text-dark" data-toggle="collapse" th:href="'#collapseMy'+${index}" th:text="${group.name}"></a>
+
+        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz &rarr;</a>
+        <a th:unless="${#authentication.name} == ${group.user.email}" href="#"
+           class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
+        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
 
         <div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">
-            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    Ustawienia
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Edytuj</a>
-                    <a class="dropdown-item" href="#">Usuń</a>
-                </div>
+            <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Ustawienia
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Edytuj</a>
+                <a class="dropdown-item" href="#">Usuń</a>
             </div>
+        </div>
+    </h5>
+</div>
 
-        <!--<a th:if="${#lists.contains(${memberList},${group})}" href="#"-->
-        <!--class="btn btn-primary btn-sm pull-right ml-1">Wejdz &rarr;</a>-->
-        <!--<a th:if="${#lists.contains(${memberList},${group})}" href="#"-->
-        <!--class="btn btn-primary btn-sm pull-right ml-1">Wypisz </a>-->
+<!--Group title - Available Group-->
+<div th:fragment="groupTitle(group, index)" class="card-header tab" role="tab">
+    <h5 class="mb-0">
+        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"></i>
+        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"></i>
 
-        <!--<a th:unless="${#lists.contains(${memberList},${group})}" href="#"-->
-        <!--class="btn btn-primary btn-sm pull-right ml-1">Zapisz </a>-->
+        <a class="text-dark" data-toggle="collapse" th:href="'#collapseAvaiable'+${index}" th:text="${group.name}"></a>
+
+        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
     </h5>
 </div>
 
 <!-- Description -->
-<div th:fragment="description(object, index)" th:id="'collapse'+${index}" class="collapse" role="tabpanel"
-     aria-labelledby="headingOne">
+<div th:fragment="description(object, index, key)" th:id="'collapse'+${key}+${index}" class="collapse" role="tabpanel">
     <div class="card-body">
         <p class="card-text" th:text="${object.description}"></p>
     </div>
+    <!-- Author -->
+    <div class="card-footer text-muted">
+        Dodano przez: <a href="#" th:text="${group.user.firstname}"></a>
+    </div>
 </div>
 
-<!-- Author -->
-<div th:fragment="author(group)" class="card-footer text-muted">
-    Dodano przez: <a href="#" th:text="${group.user.firstname}"></a>
-</div>
 
 </body>
 </html>
