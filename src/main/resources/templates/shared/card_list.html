@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<body>
+
+<!--List title-->
+<div th:fragment="title(list)" class="card-header tab" role="tab">
+
+    <a th:text="'Lista: ' + ${list.name}" data-toggle="collapse" th:href="'#collapse' + ${list.id}" aria-expanded="true"
+       aria-controls="collapseOne"></a>
+
+    <div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">
+        <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Ustawienia
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Edytuj</a>
+            <a class="dropdown-item" href="#">Usuń</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Description -->
+<div th:fragment="description(list)" th:id="'collapse'+${list.id}" class="collapse" role="tabpanel">
+    <div class="card-body">
+
+        <p class="card-text" th:text="${list.description}"></p>
+
+        <ul>
+            <div th:each="task:${tasks}">
+                <li th:if="${task.taskList.id}==${list.id}" th:text="task.taskDescription.name" href="#"></li>
+            </div>
+        </ul>
+
+    </div>
+</div>
+
+
+</body>
+</html>

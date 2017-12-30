@@ -3,32 +3,10 @@
 >
 <body>
 
-
-<!--List title-->
-<div th:fragment="listTitle(list, index)" class="card-header" role="tab" th:id="'heading' + ${index}">
-    <h5 class="mb-0">
-        <a data-toggle="collapse" th:href="'#collapse' + ${index}" aria-expanded="true" aria-controls="collapseOne">
-            <a th:text="${list.name}"></a>
-
-            <div th:if="${user.id} == ${group.user.id}" class="btn-group ml-1">
-                <button type="button" class="btn btn-primary btn-sm pull-right dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    Ustawienia
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Edytuj</a>
-                    <a class="dropdown-item" href="#">Usuń</a>
-                </div>
-            </div>
-
-            <a href="#" class="btn btn-primary btn-sm pull-right ml-1">Wejdz &rarr;</a>
-        </a>
-    </h5>
-</div>
-
 <!--Group title - My Groups-->
 <div th:fragment="myGroupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
+
         <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true" data-toggle="tooltip"
            data-placement="left" title="Grupa chroniona hasłem"></i>
         <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip"
@@ -36,11 +14,10 @@
 
         <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
-        <a href="#" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz &rarr;</a>
+        <a th:href="@{/grupy/grupa/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz&rarr;</a>
 
         <a th:unless="${#authentication.name} == ${group.user.email}"
-           th:href="@{/grupy/wypisz_z_grupy/{id}(id=${group.id})}"
-           class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
+           th:href="@{/grupy/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
 
         <div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">
             <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -70,9 +47,9 @@
 </div>
 
 <!-- Description -->
-<div th:fragment="description(object)" th:id="'collapse'+${object.id}" class="collapse" role="tabpanel">
+<div th:fragment="description(group)" th:id="'collapse'+${group.id}" class="collapse" role="tabpanel">
     <div class="card-body">
-        <p class="card-text" th:text="${object.description}"></p>
+        <p class="card-text" th:text="${group.description}"></p>
     </div>
     <!-- Author -->
     <div class="card-footer text-muted">

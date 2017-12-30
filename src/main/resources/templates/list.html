@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
-<div th:replace="shared/head :: head(${'Sprawdzarka UWr: Listy zadań'})"></div>
+<div th:replace="shared/head :: head(title='Sprawdzarka UWr: Listy zadań')"></div>
 
 <body>
 
@@ -11,38 +11,54 @@
 
 <!--Page Content-->
 <main role="main" class="container">
-    <div class="row">
+    <div class="card mx-10 my-4">
 
-        <!-- Groups cards -->
-        <div class="col-md-8">
+        <h5 class="card-header" th:text="'Grupa: '+${group.name}">Grupa</h5>
 
-            <div class="card my-4">
-                <div role="tablist">
-                    <div th:each="list,iter:${lists}">
-                        <div th:replace="shared/card :: listTitle(${list},${iter.index})"></div>
-                        <div th:replace="shared/card :: description(${list},${iter.index})"></div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#descriptionGroup" role="tab"
+                       aria-selected="true">
+                        Opis
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskList" role="tab" aria-selected="true">
+                        Listy zadań
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <div class="col-md-4">
+        <div class="card-body">
+            <div class="tab-content col-12 align-self-center">
 
-            <!-- Settings Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Ustawienia</h5>
-                <div class="card-body p-0">
-                    <div class="list-group">
-                        <a th:href="@{/listy/dodaj_liste}" class="list-group-item list-group-item-action">
-                            Dodaj nową liste
+                <div class="tab-pane fade show active" id="descriptionGroup" role="tabpanel">
+                    <a th:text="${group.description}"></a>
+                </div>
+
+                <div class="tab-pane fade" id="taskList" role="tabpanel">
+
+                    <div class="clearfix">
+                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}" type="button"
+                           class="btn btn-primary float-right btn-sm">Dodaj
                         </a>
                     </div>
+
+                    <a th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </a>
+
+                    <div class="card my-4" th:each="list:${taskList}">
+                        <div role="tablist">
+                            <div th:replace="shared/card_list :: title(list=${list})"></div>
+                            <div th:replace="shared/card_list :: description(list=${list})"></div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
-
 </main>
 
 <!-- Footer -->
