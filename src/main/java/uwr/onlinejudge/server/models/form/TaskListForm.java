@@ -1,6 +1,7 @@
 package uwr.onlinejudge.server.models.form;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 
 public class TaskListForm {
@@ -11,6 +12,17 @@ public class TaskListForm {
     private String name;
 
     private String description;
+
+    private Group group;
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Group getGroup() {
+
+        return group;
+    }
 
     public User getUser() {
         return user;
