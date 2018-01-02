@@ -30,7 +30,7 @@
         <ol>
             <div th:each="task:${list.getTasks()}">
                 <li>Zadanie: <a th:text="${task.taskDescription.name}"
-                                th:href="@{/zadania/zadanie/{id} (id = ${task.id})">Nazwa zadania</a></li>
+                                th:href="@{/zadania/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a></li>
             </div>
         </ol>
 
