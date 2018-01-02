@@ -5,11 +5,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.services.GroupService;
+import uwr.onlinejudge.server.services.MyService;
 import uwr.onlinejudge.server.services.UserService;
 import uwr.onlinejudge.server.util.UserRole;
 
@@ -23,11 +27,13 @@ public class GroupController {
 
     private GroupService groupService;
     private UserService userService;
+    private MyService myService;
 
     @Autowired
-    public GroupController(GroupService groupService, UserService userService) {
+    public GroupController(GroupService groupService, UserService userService, MyService myService) {
         this.groupService = groupService;
         this.userService = userService;
+        this.myService = myService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -70,13 +76,13 @@ public class GroupController {
     @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String showGroup(@PathVariable("id") Long id, Model model) {
+        Group group = groupService.getGroup(id);
+        if (group == null)
+            return "error_page";
 
-        if (groupService.getGroup(id) == null)
-            return "error";
-
-        model.addAttribute("group", groupService.getGroup(id));
-
-        return "show_group";
+        model.addAttribute("group", group);
+        model.addAttribute("taskList", myService.getTaskLists(group));
+        return "list";
     }
 
     @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.GET)
