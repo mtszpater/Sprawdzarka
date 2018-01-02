@@ -67,9 +67,9 @@ public class GroupController {
     }
 
 
-    @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showGroup(@RequestParam("id") Long id, Model model) {
+    public String showGroup(@PathVariable("id") Long id, Model model) {
 
         if (groupService.getGroup(id) == null)
             return "error";
