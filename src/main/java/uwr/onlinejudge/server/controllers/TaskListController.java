@@ -45,7 +45,7 @@ public class TaskListController {
         TaskListForm taskListForm = new TaskListForm();
         taskListForm.setGroup(group);
 
-        model.addAttribute("taskList", new TaskListForm());
+        model.addAttribute("taskList", taskListForm);
         return "forms/add_list";
     }
 
@@ -60,7 +60,7 @@ public class TaskListController {
         taskListForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskListForm);
 
-        return "redirect:/listy";
+        return "redirect:/grupy/grupa/" + taskListForm.getGroup().getId();
     }
 
 }
