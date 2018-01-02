@@ -13,24 +13,25 @@
     <div class="card mx-10 my-4">
         <h5 class="card-header">Nowa lista</h5>
         <div class="card-body">
-            <form th:action="@{/listy/dodaj_liste}" th:object="${taskList}">
+            <form th:action="@{/listy/dodaj_liste}" th:object="${taskList}" method="post">
 
                 <div class="form-group">
-                    <label class="col-form-label" for="nameGroup">Nazwa:</label>
-                    <input type="text" class="form-control" id="nameGroup" th:field="*{name}"/>
+                    <label class="col-form-label" for="nameList">Nazwa:</label>
+                    <input type="text" class="form-control" id="nameList" th:field="*{name}"/>
                     <div class="invalid-feedback">
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="descriptionGroup">Opis listy:</label>
-                    <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"></textarea>
+                    <label for="descriptionList">Opis listy:</label>
+                    <textarea class="form-control" id="descriptionList" rows="3" th:field="*{description}"></textarea>
                     <div class="invalid-feedback">
                         <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                     </div>
                 </div>
 
+                <input type="hidden" th:field="*{group}"/>
                 <button type="submit" class="btn btn-primary">Dodaj</button>
             </form>
         </div>
