@@ -114,6 +114,10 @@ public class GroupController {
         //todo: jeżeli jest adminem i sie wyrejestruje to co wtedy?
         //todo: warunek:jeśli żałożyciel grupy chce się wypisać to error
 
+        if (groupService.getOwnGroups(user).contains(group)) {
+            return "error_page";
+        }
+
         groupService.unregisterUser(user, group);
         return "redirect:/grupy";
     }
