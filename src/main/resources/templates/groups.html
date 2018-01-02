@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Head -->
+<div th:replace="shared/head :: head (title='Sprawdzarka UWr: Grupy')"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<!--Page Content-->
+<main role="main" class="container">
+    <div class="card mx-10 my-4">
+        <h5 class="card-header">Przegląd grup</h5>
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
+                       aria-selected="true">Moje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#availableGroups" role="tab" aria-selected="false">Dostępne</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+
+            <div class="clearfix">
+                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}">
+                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
+                </a>
+            </div>
+
+            <div class="tab-content col-12 align-self-center">
+
+                <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
+                    <a th:if="${#lists.isEmpty(myGroups)}">Brak wybranych grup </a>
+                    <div class="card my-4" th:each="group:${myGroups}">
+                        <div role="tablist">
+                            <div th:replace="shared/card_group :: myGroupTitle(group=${group})"></div>
+                            <div th:replace="shared/card_group :: description(group=${group})"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="availableGroups" role="tabpanel">
+                    <a th:if="${#lists.isEmpty(availableGroups)}">Brak dostępnych grup </a>
+                    <div class="card my-4" th:each="group:${availableGroups}">
+                        <div role="tablist">
+                            <div th:replace="shared/card_group :: groupTitle(group=${group})"></div>
+                            <div th:replace="shared/card_group :: description(group=${group})"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

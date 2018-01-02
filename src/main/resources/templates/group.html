@@ -1,9 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
-      xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
-<div th:replace="shared/head :: head (title='Sprawdzarka UWr: Grupy')"></div>
+<div th:replace="shared/head :: head(title='Sprawdzarka UWr: Listy zadań')"></div>
 
 <body>
 
@@ -13,50 +12,51 @@
 <!--Page Content-->
 <main role="main" class="container">
     <div class="card mx-10 my-4">
-        <h5 class="card-header">Przegląd grup</h5>
+
+        <h5 class="card-header" th:text="'Grupa: '+${group.name}">Grupa</h5>
+
         <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
-                       aria-selected="true">Moje</a>
+                    <a class="nav-link active" data-toggle="tab" href="#descriptionGroup" role="tab"
+                       aria-selected="true">
+                        Opis
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#availableGroups" role="tab" aria-selected="false">Dostępne</a>
+                    <a class="nav-link" data-toggle="tab" href="#taskList" role="tab" aria-selected="true">
+                        Listy zadań
+                    </a>
                 </li>
             </ul>
         </div>
+
         <div class="card-body">
-
-            <div class="clearfix">
-                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/grupy/dodaj_grupe}">
-                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                </a>
-            </div>
-
             <div class="tab-content col-12 align-self-center">
 
-                <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
-                    <a th:if="${#lists.isEmpty(myGroups)}">Brak wybranych grup </a>
-                    <div class="card my-4" th:each="group:${myGroups}">
-                        <div role="tablist">
-                            <div th:replace="shared/card_group :: myGroupTitle(group=${group})"></div>
-                            <div th:replace="shared/card_group :: description(group=${group})"></div>
-                        </div>
-                    </div>
+                <div class="tab-pane fade show active" id="descriptionGroup" role="tabpanel">
+                    <a th:text="${group.description}"></a>
                 </div>
 
-                <div class="tab-pane fade" id="availableGroups" role="tabpanel">
-                    <a th:if="${#lists.isEmpty(availableGroups)}">Brak dostępnych grup </a>
-                    <div class="card my-4" th:each="group:${availableGroups}">
+                <div class="tab-pane fade" id="taskList" role="tabpanel">
+
+                    <div class="clearfix">
+                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/listy/dodaj_liste}" type="button"
+                           class="btn btn-primary float-right btn-sm">Dodaj
+                        </a>
+                    </div>
+
+                    <a th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </a>
+
+                    <div class="card my-4" th:each="list:${taskList}">
                         <div role="tablist">
-                            <div th:replace="shared/card_group :: groupTitle(group=${group})"></div>
-                            <div th:replace="shared/card_group :: description(group=${group})"></div>
+                            <div th:replace="shared/card_list :: title(list=${list})"></div>
+                            <div th:replace="shared/card_list :: description(list=${list})"></div>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </div>
     </div>
 </main>

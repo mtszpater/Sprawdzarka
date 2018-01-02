@@ -47,7 +47,7 @@ public class GroupController {
 
         model.addAttribute("availableGroups", availableGroups);
         model.addAttribute("myGroups", myGroups);
-        return "group";
+        return "groups";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
@@ -82,7 +82,7 @@ public class GroupController {
 
         model.addAttribute("group", group);
         model.addAttribute("taskList", taskService.getTaskLists(group));
-        return "list";
+        return "group";
     }
 
     @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.GET)
