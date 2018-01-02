@@ -67,7 +67,7 @@ public class GroupController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String showGroup(@PathVariable("id") Long id, Model model) {
 
