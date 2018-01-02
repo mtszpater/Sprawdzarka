@@ -27,11 +27,11 @@
 
         <p class="card-text" th:text="${list.description}"></p>
 
-        <ul>
-            <div th:each="task:${tasks}">
-                <li th:if="${task.taskList.id}==${list.id}" th:text="task.taskDescription.name" href="#"></li>
+        <ol>
+            <div th:each="task:${list.getTasks()}">
+                <li>Zadanie: <a th:text="${task.taskDescription.name}" th:href="#">Nazwa zadania</a></li>
             </div>
-        </ul>
+        </ol>
 
     </div>
 </div>
