@@ -13,7 +13,7 @@ import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.services.GroupService;
-import uwr.onlinejudge.server.services.MyService;
+import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
 import uwr.onlinejudge.server.util.UserRole;
 
@@ -27,13 +27,13 @@ public class GroupController {
 
     private GroupService groupService;
     private UserService userService;
-    private MyService myService;
+    private TaskService taskService;
 
     @Autowired
-    public GroupController(GroupService groupService, UserService userService, MyService myService) {
+    public GroupController(GroupService groupService, UserService userService, TaskService myService) {
         this.groupService = groupService;
         this.userService = userService;
-        this.myService = myService;
+        this.taskService = myService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -81,7 +81,7 @@ public class GroupController {
             return "error_page";
 
         model.addAttribute("group", group);
-        model.addAttribute("taskList", myService.getTaskLists(group));
+        model.addAttribute("taskList", taskService.getTaskLists(group));
         return "list";
     }
 

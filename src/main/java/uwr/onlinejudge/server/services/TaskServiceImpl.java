@@ -9,18 +9,22 @@ import uwr.onlinejudge.server.repositories.TaskListRepository;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class MyService {
-    @Autowired
+public class TaskServiceImpl implements TaskService {
     private TaskListRepository listRepository;
 
+    @Autowired
+    public TaskServiceImpl(TaskListRepository listRepository) {
+        this.listRepository = listRepository;
+    }
+
+    @Override
     public Collection<TaskList> getTaskLists(Group group) {
         return listRepository.findByGroup(group);
     }
-
-    public Collection<Task> getTasks(Group group) {
-        return Collections.EMPTY_LIST;
-    }
+    
 
 }
