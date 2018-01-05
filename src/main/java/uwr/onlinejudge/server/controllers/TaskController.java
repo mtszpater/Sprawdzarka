@@ -22,14 +22,13 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/listy")
-public class TaskListController {
-
+public class TaskController {
     private TaskService taskService;
     private UserService userService;
     private GroupService groupService;
 
     @Autowired
-    public TaskListController(TaskService taskService, UserService userService, GroupService groupService) {
+    public TaskController(TaskService taskService, UserService userService, GroupService groupService) {
         this.taskService = taskService;
         this.userService = userService;
         this.groupService = groupService;

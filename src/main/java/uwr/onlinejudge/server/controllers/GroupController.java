@@ -24,7 +24,6 @@ import java.util.Collection;
 @Controller
 @RequestMapping("/grupy")
 public class GroupController {
-
     private GroupService groupService;
     private UserService userService;
     private TaskService taskService;

@@ -18,9 +18,12 @@ import java.security.Principal;
 
 @Controller
 public class HomeController implements ErrorController {
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public HomeController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
