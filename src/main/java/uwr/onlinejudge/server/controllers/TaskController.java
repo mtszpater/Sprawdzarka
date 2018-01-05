@@ -77,7 +77,7 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addTaskDescription(@ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal) {
+    public String addTaskDescription(@ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "forms/add_task_description";
         }
@@ -85,6 +85,7 @@ public class TaskController {
         taskDescriptionForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskDescriptionForm);
 
+        redirectAttributes.addFlashAttribute("alertMesage", "Opis zadania został zdefiniowany");
         return "redirect:/dodaj_opis_zadania";
     }
 

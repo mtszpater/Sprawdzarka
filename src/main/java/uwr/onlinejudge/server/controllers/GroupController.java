@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
@@ -58,7 +59,7 @@ public class GroupController {
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveGroup(@ModelAttribute("group") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal) {
+    public String saveGroup(@ModelAttribute("group") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "forms/add_group";
@@ -68,6 +69,8 @@ public class GroupController {
         Group savedGroup = groupService.save(groupForm);
 
         groupService.registerUser(userService.findByEmail(principal.getName()), savedGroup, UserRole.ADMINISTRATOR);
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Grupa została dodana");
         return "redirect:/grupy";
     }
 
@@ -86,7 +89,7 @@ public class GroupController {
 
     @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String registerUser(@PathVariable("id") Long id, Principal principal) {
+    public String registerUser(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
         if (groupService.getGroup(id) == null) {
             return "error_page";
         }
@@ -99,12 +102,13 @@ public class GroupController {
         }
 
         groupService.registerUser(user, group, UserRole.USER);
+        redirectAttributes.addFlashAttribute("alertMessage", "Zostałeś zapisany do grupy");
         return "redirect:/grupy";
     }
 
     @RequestMapping(value = "/wypisz_z_grupy/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String unregisterFromGroup(@PathVariable("id") Long id, Principal principal) {
+    public String unregisterFromGroup(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
         if (groupService.getGroup(id) == null) {
             return "error_page";
         }
@@ -121,6 +125,7 @@ public class GroupController {
         }
 
         groupService.unregisterUser(user, group);
+        redirectAttributes.addFlashAttribute("alertMessage", "Zostałeś wypisany z grupy");
         return "redirect:/grupy";
     }
 }
