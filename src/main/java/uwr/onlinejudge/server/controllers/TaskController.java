@@ -21,7 +21,7 @@ import java.security.Principal;
 
 
 @Controller
-@RequestMapping("/listy")
+@RequestMapping
 public class TaskController {
     private TaskService taskService;
     private UserService userService;
@@ -51,7 +51,6 @@ public class TaskController {
     @RequestMapping(value = "/dodaj_liste", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveList(@ModelAttribute("taskList") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal) {
-
         if (bindingResult.hasErrors()) {
             return "forms/add_list";
         }
@@ -59,7 +58,6 @@ public class TaskController {
         taskListForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskListForm);
 
-        return "redirect:/grupy/grupa/" + taskListForm.getGroup().getId();
+        return "redirect:/grupa/" + taskListForm.getGroup().getId();
     }
-
 }

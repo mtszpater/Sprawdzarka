@@ -14,10 +14,10 @@
 
         <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
-        <a th:href="@{/grupy/grupa/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz&rarr;</a>
+        <a th:href="@{/grupa/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz&rarr;</a>
 
         <a th:unless="${#authentication.name} == ${group.user.email}"
-           th:href="@{/grupy/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
+           th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
     </h5>
 </div>
 
@@ -31,7 +31,7 @@
 
         <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
 
-        <a th:href="@{/grupy/zapisz_do_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
+        <a th:href="@{/zapisz_do_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
     </h5>
 </div>
 

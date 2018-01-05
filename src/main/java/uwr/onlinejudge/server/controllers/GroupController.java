@@ -22,7 +22,7 @@ import java.security.Principal;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/grupy")
+@RequestMapping
 public class GroupController {
     private GroupService groupService;
     private UserService userService;
@@ -35,7 +35,7 @@ public class GroupController {
         this.taskService = myService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/grupy", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String index(Model model, Principal principal) {
         Collection<Group> availableGroups = groupService.getGroups();
