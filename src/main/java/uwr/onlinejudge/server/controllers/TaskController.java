@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.Task;
@@ -108,9 +106,35 @@ public class TaskController {
         return "forms/add_task";
     }
 
+    @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String saveTask(
+            @PathVariable("taskListId") Long taskListId,
+            @PathVariable("taskDescriptionId") Long taskDescriptionId,
+            @ModelAttribute("task") @Valid TaskForm taskForm,
+            Model model,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+
+        TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
+        TaskList taskList = taskService.getTaskList(taskListId);
+
+        if (taskDescription == null || taskList == null)
+            return "error_page";
+
+        taskForm.setUser(userService.findByEmail(principal.getName()));
+        taskService.save(taskForm);
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało dodane");
+        model.addAttribute("task", taskForm);
+        return "forms/add_task";
+    }
+
+
+
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String index(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
+    public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
         TaskList taskList = taskService.getTaskList(taskListId);
 
         if(taskList == null)
@@ -121,6 +145,7 @@ public class TaskController {
         model.addAttribute("taskDescriptions", taskDescriptions);
         return "add_task_to_list";
     }
+
 
     @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")

@@ -5,6 +5,7 @@ import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
+import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
 
 import java.util.Collection;
@@ -23,4 +24,6 @@ public interface TaskService {
     Collection<TaskDescription> getTaskDescriptions();
 
     Task getTask(Long id);
+
+    void save(TaskForm taskForm);
 }

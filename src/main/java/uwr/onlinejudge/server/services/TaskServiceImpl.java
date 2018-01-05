@@ -8,6 +8,7 @@ import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
+import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
 import uwr.onlinejudge.server.repositories.TaskDescriptionRepository;
 import uwr.onlinejudge.server.repositories.TaskListRepository;
@@ -63,6 +64,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task getTask(Long id) {
         return taskRepository.getOne(id);
+    }
+
+    @Override
+    public void save(TaskForm taskForm) {
+        taskRepository.save(objectMapper.convertValue(taskForm, Task.class));
     }
 
 

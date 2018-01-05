@@ -14,7 +14,7 @@
     <div class="card mx-10 my-4">
         <h5 class="card-header">Nowe zadanie w liście: <span th:text="${task.taskList.name}"></span></h5>
         <div class="card-body">
-            <form th:action="@{/dodaj_zadanie}" method="post" th:object="${task}">
+            <form th:action="@{/dodaj_zadanie/{taskListId}(taskListId=${task.taskList.id})/{taskDescriptionId}(taskDescriptionId=${task.taskDescription.id})}" method="post" th:object="${task}">
 
                 Wybrane zadanie: <b><span th:text="${task.taskDescription.name}"></span></b>
                     <i><div th:text="${task.taskDescription.content}"></div></i>

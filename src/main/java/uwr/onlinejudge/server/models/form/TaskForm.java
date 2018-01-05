@@ -2,6 +2,7 @@ package uwr.onlinejudge.server.models.form;
 
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
+import uwr.onlinejudge.server.models.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ public class TaskForm {
     private TaskList taskList;
     private TaskDescription taskDescription;
     private Date deadline;
+    private User user;
     private String comment;
 
     public TaskList getTaskList() {
@@ -42,5 +44,13 @@ public class TaskForm {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
