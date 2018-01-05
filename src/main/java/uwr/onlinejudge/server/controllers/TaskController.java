@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Group;
+import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
@@ -120,5 +121,17 @@ public class TaskController {
         model.addAttribute("taskDescriptions", taskDescriptions);
         return "add_task_to_list";
     }
+
+    @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String showTask(@PathVariable("id") Long id, Model model) {
+        Task task = taskService.getTask(id);
+        if (task == null)
+            return "error_page";
+
+        model.addAttribute("task", task);
+        return "task";
+    }
+
 
 }

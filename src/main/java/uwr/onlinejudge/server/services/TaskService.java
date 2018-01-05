@@ -21,4 +21,6 @@ public interface TaskService {
     TaskList getTaskList(Long id);
 
     Collection<TaskDescription> getTaskDescriptions();
+
+    Task getTask(Long id);
 }
