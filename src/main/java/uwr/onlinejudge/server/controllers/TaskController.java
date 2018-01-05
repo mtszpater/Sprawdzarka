@@ -22,6 +22,7 @@ import uwr.onlinejudge.server.services.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collection;
 
 
 @Controller
@@ -101,6 +102,20 @@ public class TaskController {
 
         model.addAttribute("task", taskForm);
         return "forms/add_task";
+    }
+
+    @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String index(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
+        TaskList taskList = taskService.getTaskList(taskListId);
+
+        if(taskList == null)
+            return "error_page";
+
+
+        Collection<TaskDescription> taskDescriptions = taskService.getTaskDescriptions();
+        model.addAttribute("taskDescriptions", taskDescriptions);
+        return "add_task_to_list";
     }
 
 }

@@ -51,5 +51,10 @@ public class TaskServiceImpl implements TaskService {
         return taskListRepository.findOne(id);
     }
 
+    @Override
+    public Collection<TaskDescription> getTaskDescriptions() {
+        return taskDescriptionRepository.findAll();
+    }
+
 
 }
