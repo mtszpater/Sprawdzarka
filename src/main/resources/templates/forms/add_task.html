@@ -12,23 +12,12 @@
 <main role="main" class="container">
 
     <div class="card mx-10 my-4">
-        <h5 class="card-header">Nowe zadanie</h5>
+        <h5 class="card-header">Nowe zadanie w liście: <span th:text="${task.taskList.name}"></span></h5>
         <div class="card-body">
-            <form th:action="@{/zadania/dodaj_zadanie}" method="post" th:object="${task}">
+            <form th:action="@{/dodaj_zadanie}" method="post" th:object="${task}">
 
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="selectionTask">Zadanie</label>
-                        <div class="form-row">
-                            <select id="selectionTask" th:field="${task.taskDescription}">
-                                <option th:each="selectedTask : ${tasks}"
-                                        th:value="${selectedTask}"
-                                        th:text="${selectedTask.name}"></option>
-                            </select>
-                            <a href="#" class="btn btn-primary btn-sm ml-1 ">Dodaj treść</a>
-                        </div>
-                    </div>
-                </div>
+                Wybrane zadanie: <b><span th:text="${task.taskDescription.name}"></span></b>
+                    <i><div th:text="${task.taskDescription.content}"></div></i>
 
                 <div class="form-group">
                     <label for="commentTask">Komentarz do zadania</label>

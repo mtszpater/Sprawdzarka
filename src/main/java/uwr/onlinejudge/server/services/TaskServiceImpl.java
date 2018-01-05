@@ -41,5 +41,15 @@ public class TaskServiceImpl implements TaskService {
         taskDescriptionRepository.save(objectMapper.convertValue(taskDescriptionForm, TaskDescription.class));
     }
 
+    @Override
+    public TaskDescription getTaskDescription(Long id) {
+        return taskDescriptionRepository.findOne(id);
+    }
+
+    @Override
+    public TaskList getTaskList(Long id) {
+        return taskListRepository.findOne(id);
+    }
+
 
 }

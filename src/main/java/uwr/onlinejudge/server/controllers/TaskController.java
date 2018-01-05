@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uwr.onlinejudge.server.models.Group;
+import uwr.onlinejudge.server.models.TaskDescription;
+import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
+import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
 import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.TaskService;
@@ -82,5 +85,22 @@ public class TaskController {
         return "redirect:/dodaj_opis_zadania";
     }
 
+    @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String addTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, Model model)  {
+        TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
+        TaskList taskList = taskService.getTaskList(taskListId);
+
+        if(taskDescription == null || taskList == null)
+            return "error_page";
+
+        TaskForm taskForm = new TaskForm();
+        taskForm.setTaskDescription(taskDescription);
+        taskForm.setTaskList(taskList);
+
+
+        model.addAttribute("task", taskForm);
+        return "forms/add_task";
+    }
 
 }
