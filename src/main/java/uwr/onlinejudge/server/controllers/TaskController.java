@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Group;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
@@ -55,14 +57,14 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_liste", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveList(@ModelAttribute("taskList") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal) {
+    public String saveList(@ModelAttribute("taskList") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "forms/add_list";
         }
-
         taskListForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskListForm);
 
+        redirectAttributes.addFlashAttribute("alertMessage", "Lista została utworzona");
         return "redirect:/grupa/" + taskListForm.getGroup().getId();
     }
 

@@ -9,6 +9,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.form.UserForm;
 import uwr.onlinejudge.server.services.UserService;
 
@@ -33,7 +35,7 @@ public class HomeController implements ErrorController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if( userService.findByEmail(userForm.getEmail()) != null ) {
             bindingResult.addError(new FieldError("email", "email", userForm.getEmail(), true, null, null,"Email zajęty"));
@@ -47,6 +49,7 @@ public class HomeController implements ErrorController {
         }
 
         userService.save(userForm);
+        redirectAttributes.addFlashAttribute("alertMessage" , "Rejestracja przebiegła pomyślnie");
 
         return "redirect:/login";
     }

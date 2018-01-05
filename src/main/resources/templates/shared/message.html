@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+
+<div th:fragment="alert" >
+    <div class="container">
+        <div class="alert" th:classappend="${type} ? alert-success : alert-info">
+           <span th:text="${alertMessage}">Informacja</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
