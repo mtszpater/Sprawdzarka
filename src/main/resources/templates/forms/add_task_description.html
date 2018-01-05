@@ -14,7 +14,7 @@
     <div class="card mx-10 my-4">
         <h5 class="card-header">Utwórz opis zadania</h5>
         <div class="card-body">
-            <form th:action="@{/zadania/dodaj_opis_zadnia}" th:object="${taskDescription}">
+            <form method="POST" th:action="@{/dodaj_opis_zadania}" th:object="${taskDescription}">
 
                 <div class="form-group">
                     <label for="nameTask">Nazwa</label>
