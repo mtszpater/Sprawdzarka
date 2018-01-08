@@ -3,6 +3,26 @@
 >
 <body>
 
+<div th:fragment="example(group)">
+    <div class="bg-light">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${group.name}">Nazwa grupy</h5>
+            <h6 th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa
+                prywatna</h6>
+            <h6 th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</h6>
+            <p class="card-text" th:text="${group.description}">Opis grupy.</p>
+
+            <a th:href="@{/grupa/{id}(id=${group.id})}">Wejdz</a>
+            <a th:unless="${#authentication.name} == ${group.user.email}"
+               th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
+            <p class="card-text pull-right">
+                <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>
+            </p>
+        </div>
+    </div>
+
+</div>
+
 <!--Group title - My Groups-->
 <div th:fragment="myGroupTitle(group)" class="card-header tab" role="tab">
     <h5 class="mb-0">
