@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <!-- Head -->
 <div th:replace="shared/head :: head('Sprawdzarka UWr: Zadania')"></div>
@@ -11,38 +11,88 @@
 
 <!--Page Content-->
 <main role="main" class="container">
-    <div class="row">
+    <div class="card mx-10 my-4">
 
-        <!-- Groups cards -->
-        <div class="col-md-8">
+        <h5 class="card-header" th:text="'Zadanie: '+${task.taskDescription.name}">Grupa</h5>
 
-            <div class="card my-4">
-                <div class="list-group">
-                    <a th:each="task,iter:${tasks}" href="#" class="list-group-item list-group-item-action">
-                        <span th:text="'Zadanie' + ${iter.index}+' - '+${task.taskDescription.name}"></span>
-                        <span class="pull-right font-weight-light" th:text="'Termin:'+ ${task.deadline}"></span>
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
+                       aria-selected="true">
+                        Opis
                     </a>
-                </div>
-            </div>
-
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab"
+                       aria-selected="true">
+                        Rozwiązanie
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskComment" role="tab" aria-selected="true">
+                        Komentarz
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
+                        Testy
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <div class="col-md-4">
+        <div class="card-body">
+            <div class="tab-content col-12 align-self-center">
 
-            <!-- Settings Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Ustawienia</h5>
-                <div class="card-body p-0">
-                    <div class="list-group">
-                        <a th:href="@{/zadania/dodaj_zadanie}" class="list-group-item list-group-item-action">
-                            Dodaj nowe zadanie
-                        </a>
+                <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
+                    <div th:text="${task.taskDescription.content}" class="card-body"></div>
+                </div>
+
+                <div class="tab-pane fade" id="taskSolution" role="tabpanel">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+
+                            <form method="post" th:object="${solution}">
+                                <div class="form-group">
+                                    <label for="loadFile">Wybierz plik</label>
+                                    <input id="loadFile" class="form-control-file" type="file"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="language">Język programowania</label>
+                                    <select id="language" class="form-control">
+                                        <option th:each="selectedLanguage : ${languages}"
+                                                th:value="${selectedLanguage}"
+                                                th:text="${selectedLanguage}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comment">Komentarz:</label>
+                                    <textarea class="form-control" id="comment" rows="2"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Wyślij</button>
+                            </form>
+
+
+                        </div>
                     </div>
                 </div>
+
+                <div class="tab-pane fade" id="taskComment" role="tabpanel">
+                    <div th:text="${task.comment}" class="card-body"></div>
+                </div>
+
+
+                <div class="tab-pane fade" id="taskTest" role="tabpanel">
+
+                </div>
+
             </div>
         </div>
     </div>
-
 </main>
 
 <!-- Footer -->
