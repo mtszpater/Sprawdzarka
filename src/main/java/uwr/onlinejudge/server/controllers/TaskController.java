@@ -64,7 +64,7 @@ public class TaskController {
         return "redirect:/grupa/" + taskListForm.getGroup().getId();
     }
 
-    @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.GET)
+    @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.GET) //TODO: POBRAĆ SKĄD USER PRZYSZEDŁ, ABY GO TAM COFNĄĆ.
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addTaskDescription(Model model) {
         model.addAttribute("taskDescription", new TaskDescriptionForm());
@@ -127,8 +127,8 @@ public class TaskController {
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało dodane");
 
-        model.addAttribute("task", taskForm);
-        return "redirect:/dodaj_opis_zadania";
+        return "redirect:/grupa/" + taskList.getGroup().getId();
+
     }
 
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
