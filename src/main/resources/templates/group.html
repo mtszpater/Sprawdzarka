@@ -41,9 +41,10 @@
                 <div class="tab-pane fade" id="taskList" role="tabpanel">
 
                     <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                        <a th:href="@{/dodaj_liste/{id}(id = ${group.id})}">
-                            <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                        </a>
+                        <div th:href="@{/dodaj_liste/{id}(id = ${group.id})}"
+                             class="btn btn-primary float-right btn-sm">
+                            Dodaj
+                        </div>
                     </div>
 
                     <p th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </p>

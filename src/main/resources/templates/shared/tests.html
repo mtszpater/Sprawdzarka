@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="tests" class="tab-pane fade" id="taskTest" role="tabpanel">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Argumenty wejściowe</th>
+            <th scope="col">Argumenty wyjściowe</th>
+            <th scope="col">Wymagany czas</th>
+            <th scope="col">Punkty</th>
+            <th scope="col">Typ testu</th>
+            <th scope="col">Operacja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="test,testIter: ${tests}">
+            <th scope="row" th:text="${testIter.index}">0</th>
+            <td>
+                <div th:attrappend="data-val=${test.inputArgument}" data-id='Argumenty wejściowe'
+                     class="btn btn-light btn-sm" data-toggle="modal" data-target="#my-modal">Wyświetl
+                </div>
+            </td>
+            <td>
+                <div th:attrappend="data-val=${test.expectedAnswer}" data-id='Argumenty wyjściowe'
+                     class="btn btn-light btn-sm" data-toggle="modal" data-target="#my-modal">Wyświetl
+                </div>
+            </td>
+            <td th:text="${test.timeRequired}"></td>
+            <td th:text="${test.point}"></td>
+            <td th:text="${test.type}"></td>
+            <td>
+                <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Usuń</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Dodaj test</div>
+
+    <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="my-modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">My Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

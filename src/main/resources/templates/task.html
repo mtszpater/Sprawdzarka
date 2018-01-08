@@ -86,9 +86,7 @@
                 </div>
 
 
-                <div class="tab-pane fade" id="taskTest" role="tabpanel">
-
-                </div>
+                <div th:replace="shared/tests :: tests"></div>
 
             </div>
         </div>
@@ -100,6 +98,15 @@
 
 <!-- Bootstrap core JavaScript -->
 <div th:replace="shared/head :: script"></div>
+
+<script type="text/javascript">
+    $('#my-modal').on('show.bs.modal', function (event) {
+        var myVal = $(event.relatedTarget).data('val');
+        var myId = $(event.relatedTarget).data('id');
+        $(this).find(".modal-body").text(myVal);
+        $(this).find(".modal-title").text(myId);
+    });
+</script>
 
 </body>
 </html>

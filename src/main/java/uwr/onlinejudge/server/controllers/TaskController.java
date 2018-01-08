@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uwr.onlinejudge.server.models.Group;
-import uwr.onlinejudge.server.models.Task;
-import uwr.onlinejudge.server.models.TaskDescription;
-import uwr.onlinejudge.server.models.TaskList;
+import uwr.onlinejudge.server.models.*;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
 import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
@@ -126,6 +123,7 @@ public class TaskController {
         taskService.save(taskForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało dodane");
+
         model.addAttribute("task", taskForm);
         return "forms/add_task";
     }
@@ -149,10 +147,12 @@ public class TaskController {
     @PreAuthorize("isFullyAuthenticated()")
     public String showTask(@PathVariable("id") Long id, Model model) {
         Task task = taskService.getTask(id);
-        if (task == null)
+        if (task == null) {
             return "error_page";
-
+        }
+        Collection<Test> tests = taskService.getTests(task);
         model.addAttribute("task", task);
+        model.addAttribute("tests", tests);
         return "task";
     }
 
