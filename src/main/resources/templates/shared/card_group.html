@@ -3,69 +3,33 @@
 >
 <body>
 
-<div th:fragment="example(group)">
-    <div class="bg-light">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${group.name}">Nazwa grupy</h5>
-            <h6 th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa
-                prywatna</h6>
-            <h6 th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</h6>
-            <p class="card-text" th:text="${group.description}">Opis grupy.</p>
+<div th:fragment="card(group,myGroup)" class=" card bg-light">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${group.name}">Nazwa grupy</h5>
+        <h6 th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa
+            prywatna</h6>
+        <h6 th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</h6>
+        <p class="card-text"
+           th:text="${#strings.length(group.description)}>100 ? ${#strings.substring(group.description,0,99)} + '...': ${group.description}">
+            Opis grupy.</p>
 
+        <div th:if="${myGroup} == 'true' ">
             <a th:href="@{/grupa/{id}(id=${group.id})}">Wejdz</a>
             <a th:unless="${#authentication.name} == ${group.user.email}"
-               th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
-            <p class="card-text pull-right">
-                <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>
-            </p>
+               th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}">
+                Wypisz
+            </a>
         </div>
-    </div>
 
-</div>
+        <a th:unless="${myGroup} == 'true' " th:href="@{/zapisz_do_grupy/{id}(id=${group.id})}">
+            Zapisz
+        </a>
 
-<!--Group title - My Groups-->
-<div th:fragment="myGroupTitle(group)" class="card-header tab" role="tab">
-    <h5 class="mb-0">
-
-        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true" data-toggle="tooltip"
-           data-placement="left" title="Grupa chroniona hasłem"></i>
-        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip"
-           data-placement="left" title="Grupa nie chroniona hasłem"></i>
-
-        <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
-
-        <a th:href="@{/grupa/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wejdz&rarr;</a>
-
-        <a th:unless="${#authentication.name} == ${group.user.email}"
-           th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Wypisz </a>
-    </h5>
-</div>
-
-<!--Group title - Available Group-->
-<div th:fragment="groupTitle(group)" class="card-header tab" role="tab">
-    <h5 class="mb-0">
-        <i th:unless="${#strings.isEmpty(group.password)}" class="fa fa-lock" aria-hidden="true"
-           title="Grupa chroniona hasłem"></i>
-        <i th:if="${#strings.isEmpty(group.password)}" class="fa fa-unlock" aria-hidden="true"
-           title="Grupa nie chroniona hasłem"></i>
-
-        <a class="text-dark" data-toggle="collapse" th:href="'#collapse'+${group.id}" th:text="${group.name}"></a>
-
-        <a th:href="@{/zapisz_do_grupy/{id}(id=${group.id})}" class="btn btn-outline-dark btn-sm pull-right ml-1">Zapisz </a>
-    </h5>
-</div>
-
-<!-- Description -->
-<div th:fragment="description(group)" th:id="'collapse'+${group.id}" class="collapse" role="tabpanel">
-    <div class="card-body">
-        <p class="card-text" th:text="${group.description}"></p>
-    </div>
-    <!-- Author -->
-    <div class="card-footer text-muted">
-        Dodano przez: <a href="#" th:text="${group.user.firstname}"></a>
+        <p class="card-text pull-right">
+            <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>
+        </p>
     </div>
 </div>
-
 
 </body>
 </html>
