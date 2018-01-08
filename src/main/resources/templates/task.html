@@ -20,13 +20,13 @@
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
                        aria-selected="true">
-                        Opis
+                        Opis zadania
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab"
                        aria-selected="true">
-                        Rozwiązanie
+                        Prześlij rozwiązanie
                     </a>
                 </li>
                 <li class="nav-item">
@@ -37,6 +37,11 @@
                 <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
                         Testy
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskHistory" role="tab" aria-selected="true">
+                        Historia rozwiązań
                     </a>
                 </li>
             </ul>
