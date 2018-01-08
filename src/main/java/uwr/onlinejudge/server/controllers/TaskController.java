@@ -81,7 +81,7 @@ public class TaskController {
         taskDescriptionForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskDescriptionForm);
 
-        redirectAttributes.addFlashAttribute("alertMesage", "Opis zadania został zdefiniowany");
+        redirectAttributes.addFlashAttribute("alertMessage", "Opis zadania został zdefiniowany");
         return "redirect:/dodaj_opis_zadania";
     }
 
