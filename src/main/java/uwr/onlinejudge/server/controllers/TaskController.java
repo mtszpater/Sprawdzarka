@@ -130,8 +130,6 @@ public class TaskController {
         return "forms/add_task";
     }
 
-
-
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
     public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
@@ -140,8 +138,8 @@ public class TaskController {
         if(taskList == null)
             return "error_page";
 
-
         Collection<TaskDescription> taskDescriptions = taskService.getTaskDescriptions();
+        model.addAttribute("taskListId", taskListId);
         model.addAttribute("taskDescriptions", taskDescriptions);
         return "add_task_to_list";
     }
