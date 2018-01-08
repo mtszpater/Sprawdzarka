@@ -43,7 +43,7 @@
                     <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
                         <a th:href="@{/dodaj_liste/{id}(id = ${group.id})}">
                             <div class="btn btn-primary float-right btn-sm">
-                                Dodaj
+                                <i class="fa fa-plus" aria-hidden="true"></i> Dodaj
                             </div>
                         </a>
                     </div>

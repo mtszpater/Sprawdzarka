@@ -20,7 +20,7 @@
     </div>
     <a th:href="@{/dodaj_zadanie_do_listy/{id}(id=${list.id})}">
         <div th:if="${#authentication.name} == ${group.user.email}" class="btn btn-outline-dark btn-sm pull-right ml-1">
-            <i class="fa fa-plus" aria-hidden="true"></i> Dodaj zadanie
+            Dodaj zadanie
         </div>
     </a>
 
