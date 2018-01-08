@@ -10,33 +10,42 @@
 <div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
+    <div class="row justify-content-center">
+        <div class="col-7">
+            <div class="card mx-10 my-4">
+                <h5 class="card-header">Nowe zadanie w liście: <span th:text="${task.taskList.name}"></span></h5>
+                <div class="card-body">
+                    <form th:action="@{'/dodaj_zadanie/'+${task.taskList.id}+'/'+${task.taskDescription.id}}"
+                          method="post"
+                          th:object="${task}">
 
-    <div class="card mx-10 my-4">
-        <h5 class="card-header">Nowe zadanie w liście: <span th:text="${task.taskList.name}"></span></h5>
-        <div class="card-body">
-            <form th:action="@{'/dodaj_zadanie/'+${task.taskList.id}+'/'+${task.taskDescription.id}}" method="post"
-                  th:object="${task}">
+                        <div class="form-group">
+                            <label for="taskName" class="col-form-label">Wybrane zadanie:</label>
+                            <input type="text" class="form-control" id="taskName"
+                                   th:value="${task.taskDescription.name}"
+                                   th:readonly="true"/>
+                        </div>
 
-                Wybrane zadanie: <b><span th:text="${task.taskDescription.name}"></span></b>
+                        <div class="form-group">
+                            <label for="commentTask">Komentarz do zadania</label>
+                            <textarea class="form-control" id="commentTask" rows="3" th:field="*{comment}"></textarea>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></p>
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <label for="commentTask">Komentarz do zadania</label>
-                    <textarea class="form-control" id="commentTask" rows="3" th:field="*{comment}"></textarea>
-                    <div class="invalid-feedback">
-                        <p th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></p>
-                    </div>
+                        <div class="form-group">
+                            <label for="deadline">Termin oddania</label>
+                            <input type="date" class="form-control" id="deadline" th:field="*{deadline}"/>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    <label for="deadline">Termin oddania</label>
-                    <input type="date" class="form-control" id="deadline" th:field="*{deadline}"/>
-                    <div class="invalid-feedback">
-                        <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Dodaj</button>
-            </form>
+            </div>
         </div>
     </div>
 </main>
