@@ -131,7 +131,9 @@ public class GroupController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("group", group);
-            return "forms/check_password_group";
+            redirectAttributes.addFlashAttribute("alertMessage", "Hasło jest niepoprawne");
+            redirectAttributes.addFlashAttribute("type", "danger");
+            return "redirect:/zapisz_do_grupy/" + id;
         }
 
         User user = userService.findByEmail(principal.getName());
