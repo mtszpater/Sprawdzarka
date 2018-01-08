@@ -11,70 +11,76 @@
 
 <!--Page Content-->
 <main role="main" class="container">
-    <div class="card mx-10 my-4">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="card mx-10 my-4">
 
-        <h5 class="card-header">Opisy zadań</h5>
+                <h5 class="card-header">Opisy zadań</h5>
 
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#private" role="tab"
-                       aria-selected="true">
-                        Prywatne
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#public" role="tab" aria-selected="true">
-                        Publiczne
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card-body">
-            <div class="tab-content col-12 align-self-center">
-
-                <div class="tab-pane fade show active" id="private" role="tabpanel">
-
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                        <a th:href="@{/dodaj_opis_zadania}">
-                            <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                        </a>
-                    </div>
-
-                    <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email == #authentication.name])}">Brak prywatnych
-                        opisów zadań</p>
-
-                    <div class="card my-4" th:each="task:${taskDescriptions.?[user.email == #authentication.name]}">
-                        <div role="tablist">
-                            <div th:replace="shared/card_task_description :: title(task=${task})"></div>
-                            <div th:replace="shared/card_task_description :: description(task=${task})"></div>
-                        </div>
-                    </div>
-
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#private" role="tab"
+                               aria-selected="true">
+                                Prywatne
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#public" role="tab" aria-selected="true">
+                                Publiczne
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="tab-pane fade" id="public" role="tabpanel">
+                <div class="card-body">
+                    <div class="tab-content col-12 align-self-center">
 
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                        <a th:href="@{/dodaj_opis_zadania}">
-                            <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                        </a>
-                    </div>
+                        <div class="tab-pane fade show active" id="private" role="tabpanel">
 
-                    <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email != #authentication.name and not(personal)])}">
-                        Brak publicznych opisów zadań</p>
+                            <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
+                                <a th:href="@{/dodaj_opis_zadania}">
+                                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
+                                </a>
+                            </div>
 
-                    <div class="card my-4"
-                         th:each="task:${taskDescriptions.?[user.email != #authentication.name and not(personal)]}">
-                        <div role="tablist">
-                            <div th:replace="shared/card_task_description :: title(task=${task})"></div>
-                            <div th:replace="shared/card_task_description :: description(task=${task})"></div>
+                            <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email == #authentication.name])}">Brak
+                                prywatnych
+                                opisów zadań</p>
+
+                            <div class="card my-4"
+                                 th:each="task:${taskDescriptions.?[user.email == #authentication.name]}">
+                                <div role="tablist">
+                                    <div th:replace="shared/card_task_description :: title(task=${task})"></div>
+                                    <div th:replace="shared/card_task_description :: description(task=${task})"></div>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <div class="tab-pane fade" id="public" role="tabpanel">
+
+                            <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
+                                <a th:href="@{/dodaj_opis_zadania}">
+                                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
+                                </a>
+                            </div>
+
+                            <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email != #authentication.name and not(personal)])}">
+                                Brak publicznych opisów zadań</p>
+
+                            <div class="card my-4"
+                                 th:each="task:${taskDescriptions.?[user.email != #authentication.name and not(personal)]}">
+                                <div role="tablist">
+                                    <div th:replace="shared/card_task_description :: title(task=${task})"></div>
+                                    <div th:replace="shared/card_task_description :: description(task=${task})"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>

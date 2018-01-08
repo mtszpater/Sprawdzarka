@@ -14,7 +14,7 @@
             Opis grupy.</p>
 
         <div th:if="${myGroup} == 'true' ">
-            <a th:href="@{/grupa/{id}(id=${group.id})}">Wejdz</a>
+            <a class="mr-4" th:href="@{/grupa/{id}(id=${group.id})}">Wejdz</a>
             <a th:unless="${#authentication.name} == ${group.user.email}"
                th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}">
                 Wypisz

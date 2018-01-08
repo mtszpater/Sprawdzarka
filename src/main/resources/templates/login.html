@@ -10,56 +10,60 @@
 <div th:replace="shared/head :: header"></div>
 
 <main role="main" class="container">
-    <div class="row">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="row">
 
-        <!-- Panel Login -->
-        <div class="col-md-8">
+                <!-- Panel Login -->
+                <div class="col-md-8">
 
-            <div class="card my-4">
-                <h5 class="card-header">Logowanie</h5>
-                <div class="card-body">
-                    <div th:if="${param.error}">
-                        <div class="alert alert-danger" role="alert">
-                            Niepoprawne hasło i login.
+                    <div class="card my-4">
+                        <h5 class="card-header">Logowanie</h5>
+                        <div class="card-body">
+                            <div th:if="${param.error}">
+                                <div class="alert alert-danger" role="alert">
+                                    Niepoprawne hasło i login.
+                                </div>
+                            </div>
+                            <div th:if="${param.logout}">
+                                <div class="alert alert-success" role="alert">
+                                    Zostałeś wylogowany.
+                                </div>
+                            </div>
+                            <form th:action="@{/login}" method="post">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                    <input class="form-control" type="text" placeholder="Adres Email" name="username"
+                                           required="required"/>
+                                </div>
+                                <br/>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                                    <input class="form-control" type="password" name="password" placeholder="Hasło"
+                                           required="required"/>
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn btn-primary">Zaloguj</button>
+                            </form>
                         </div>
                     </div>
-                    <div th:if="${param.logout}">
-                        <div class="alert alert-success" role="alert">
-                            Zostałeś wylogowany.
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Registration Widget -->
+                    <div class="card my-4">
+                        <h5 class="card-header">Konto</h5>
+                        <div class="card-body">
+                            <a> Nie masz konta?</a> <br/>
+                            <ul>
+                                <li><a th:href="@{/registration}">Zarejestruj się</a></li>
+                            </ul>
                         </div>
                     </div>
-                    <form th:action="@{/login}" method="post">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-                            <input class="form-control" type="text" placeholder="Adres Email" name="username"
-                                   required="required"/>
-                        </div>
-                        <br/>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                            <input class="form-control" type="password" name="password" placeholder="Hasło"
-                                   required="required"/>
-                        </div>
-                        <br/>
-                        <button type="submit" class="btn btn-primary">Zaloguj</button>
-                    </form>
                 </div>
+
             </div>
         </div>
-
-        <div class="col-md-4">
-            <!-- Registration Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Konto</h5>
-                <div class="card-body">
-                    <a> Nie masz konta?</a> <br/>
-                    <ul>
-                        <li><a th:href="@{/registration}">Zarejestruj się</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
     </div>
 </main>
 

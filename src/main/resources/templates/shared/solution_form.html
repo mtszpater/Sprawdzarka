@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="form" class="row justify-content-center">
+    <div class="col-md-6">
+        <form method="post" th:object="${solution}">
+            <div class="form-group">
+                <label for="loadFile">Wybierz plik</label>
+                <input id="loadFile" class="form-control-file" type="file"/>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Język programowania</label>
+                <select id="language" class="form-control">
+                    <option th:each="selectedLanguage : ${languages}"
+                            th:value="${selectedLanguage}"
+                            th:text="${selectedLanguage}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Komentarz:</label>
+                <textarea class="form-control" id="comment" rows="2"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Wyślij</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

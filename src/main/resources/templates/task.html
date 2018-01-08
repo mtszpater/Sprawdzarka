@@ -11,88 +11,64 @@
 
 <!--Page Content-->
 <main role="main" class="container">
-    <div class="card mx-10 my-4">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="card mx-10 my-4">
 
-        <h5 class="card-header" th:text="'Zadanie: '+${task.taskDescription.name}">Grupa</h5>
+                <h5 class="card-header" th:text="'Zadanie: '+${task.taskDescription.name}">Grupa</h5>
 
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
-                       aria-selected="true">
-                        Opis zadania
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab"
-                       aria-selected="true">
-                        Prześlij rozwiązanie
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#taskComment" role="tab" aria-selected="true">
-                        Komentarz
-                    </a>
-                </li>
-                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
-                        Testy
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#taskHistory" role="tab" aria-selected="true">
-                        Historia rozwiązań
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card-body">
-            <div class="tab-content col-12 align-self-center">
-
-                <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
-                    <div th:text="${task.taskDescription.content}" class="card-body"></div>
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
+                               aria-selected="true">
+                                Opis zadania
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab"
+                               aria-selected="true">
+                                Prześlij rozwiązanie
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#taskComment" role="tab" aria-selected="true">
+                                Komentarz
+                            </a>
+                        </li>
+                        <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
+                                Testy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#taskHistory" role="tab" aria-selected="true">
+                                Historia rozwiązań
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="tab-pane fade" id="taskSolution" role="tabpanel">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
+                <div class="card-body">
+                    <div class="tab-content col-12 align-self-center">
 
-                            <form method="post" th:object="${solution}">
-                                <div class="form-group">
-                                    <label for="loadFile">Wybierz plik</label>
-                                    <input id="loadFile" class="form-control-file" type="file"/>
-                                </div>
+                        <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
+                            <div th:text="${task.taskDescription.content}" class="card-body"></div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="language">Język programowania</label>
-                                    <select id="language" class="form-control">
-                                        <option th:each="selectedLanguage : ${languages}"
-                                                th:value="${selectedLanguage}"
-                                                th:text="${selectedLanguage}"></option>
-                                    </select>
-                                </div>
+                        <div class="tab-pane fade" id="taskSolution" role="tabpanel">
+                            <div th:replace="shared/solution_form :: form"></div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="comment">Komentarz:</label>
-                                    <textarea class="form-control" id="comment" rows="2"></textarea>
-                                </div>
+                        <div class="tab-pane fade" id="taskComment" role="tabpanel">
+                            <div th:text="${task.comment}" class="card-body"></div>
+                        </div>
 
-                                <button type="submit" class="btn btn-primary">Wyślij</button>
-                            </form>
-
-
+                        <div class="tab-pane fade" id="taskTest" role="tabpanel">
+                            <div th:replace="shared/tests :: tests"></div>
                         </div>
                     </div>
                 </div>
-
-                <div class="tab-pane fade" id="taskComment" role="tabpanel">
-                    <div th:text="${task.comment}" class="card-body"></div>
-                </div>
-
-
-                <div th:replace="shared/tests :: tests"></div>
-
             </div>
         </div>
     </div>
