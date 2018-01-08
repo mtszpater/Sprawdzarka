@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.models.form;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.User;
@@ -8,8 +9,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 public class TaskForm {
+
     private TaskList taskList;
     private TaskDescription taskDescription;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date deadline;
     private User user;
     private String comment;

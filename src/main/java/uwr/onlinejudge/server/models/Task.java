@@ -1,5 +1,7 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private TaskList taskList;
 
     @ManyToOne

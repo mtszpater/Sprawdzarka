@@ -1,5 +1,7 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class TaskList {
     private String description;
 
     @OneToMany(mappedBy = "taskList")
+    @JsonManagedReference
     private List<Task> tasks;
 
     public long getId() {

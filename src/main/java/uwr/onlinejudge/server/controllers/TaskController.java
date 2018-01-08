@@ -119,13 +119,16 @@ public class TaskController {
         if (taskDescription == null || taskList == null)
             return "error_page";
 
+        taskForm.setTaskDescription(taskDescription);
         taskForm.setUser(userService.findByEmail(principal.getName()));
+        taskForm.setTaskList(taskList);
+
         taskService.save(taskForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało dodane");
 
         model.addAttribute("task", taskForm);
-        return "forms/add_task";
+        return "redirect:/dodaj_opis_zadania";
     }
 
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
