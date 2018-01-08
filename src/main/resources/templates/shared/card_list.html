@@ -18,10 +18,11 @@
             <a class="dropdown-item" href="#">Usuń</a>
         </div>
     </div>
-    <div th:if="${#authentication.name} == ${group.user.email}" th:href="@{/dodaj_zadanie_do_listy/{id}(id=${list.id})}"
-         class="btn btn-outline-dark btn-sm pull-right ml-1">
-        Dodaj zadanie
-    </div>
+    <a th:href="@{/dodaj_zadanie_do_listy/{id}(id=${list.id})}">
+        <div th:if="${#authentication.name} == ${group.user.email}" class="btn btn-outline-dark btn-sm pull-right ml-1">
+            Dodaj zadanie
+        </div>
+    </a>
 
 </div>
 
