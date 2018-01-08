@@ -5,7 +5,7 @@
 
 <div th:fragment="alert" >
     <div class="container">
-        <div class="alert" th:classappend="${type} ? alert-success : alert-info">
+        <div class="alert" th:classappend="${type} ? alert-danger : alert-info">
            <span th:text="${alertMessage}">Informacja</span>
         </div>
     </div>
