@@ -23,7 +23,11 @@
             <td th:text="${solution.dateOfSending}"></td>
 
             <td>
-
+                <a th:href="@{/rozwiazanie/{id}(id=${solution.id})}">
+                    <div class="btn btn-light btn-sm">
+                        Wyświetl
+                    </div>
+                </a>
             </td>
 
             <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
@@ -81,8 +85,8 @@
                         <td th:text="${score.point}"></td>
                         <td th:text="${score.state}"></td>
                         <td>
-                            <a th:href="@{/wynik/{id}(id=${score.id})}">
-                                <div class="btn btn-primary float-right btn-sm">
+                            <a th:href="@{/wynik_testu/{id}(id=${score.id})}">
+                                <div class="btn btn-primary btn-sm">
                                     Wyświetl
                                 </div>
                             </a>

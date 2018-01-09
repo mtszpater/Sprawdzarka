@@ -155,7 +155,7 @@ public class TaskController {
         }
         User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
-        Collection<Solution> solutions = taskService.getSolution(user, task);
+        Collection<Solution> solutions = taskService.getSolutions(user, task);
 
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
@@ -163,5 +163,28 @@ public class TaskController {
         return "task";
     }
 
+    @RequestMapping(value = "/wynik_testu/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String showTestResult(@PathVariable("id") Long id, Model model) {
+        Score score = taskService.getScore(id);
+        if (score == null)
+            return "error_page";
+
+        model.addAttribute("log", score.getTestResult());
+        model.addAttribute("title", "Wynik testu");
+        return "log";
+    }
+
+    @RequestMapping(value = "/rozwiazanie/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String showSolution(@PathVariable("id") Long id, Model model) {
+        Solution solution = taskService.getSolution(id);
+        if (solution == null)
+            return "error_page";
+
+        model.addAttribute("log", solution.getSolution());
+        model.addAttribute("title", "Rozwiązanie");
+        return "log";
+    }
 
 }

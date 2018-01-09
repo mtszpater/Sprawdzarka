@@ -19,6 +19,7 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
     private TestRepository testRepository;
     private SolutionRepository solutionRepository;
+    private ScoreRepository scoreRepository;
 
     @Autowired
     public TaskServiceImpl(TestRepository testRepository,
@@ -26,7 +27,8 @@ public class TaskServiceImpl implements TaskService {
                            ObjectMapper objectMapper,
                            TaskDescriptionRepository taskDescriptionRepository,
                            TaskRepository taskRepository,
-                           SolutionRepository solutionRepository) {
+                           SolutionRepository solutionRepository,
+                           ScoreRepository scoreRepository) {
 
         this.taskListRepository = taskListRepository;
         this.objectMapper = objectMapper;
@@ -34,6 +36,7 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
         this.testRepository = testRepository;
         this.solutionRepository = solutionRepository;
+        this.scoreRepository = scoreRepository;
     }
 
     @Override
@@ -82,8 +85,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Solution> getSolution(User user, Task task) {
+    public Collection<Solution> getSolutions(User user, Task task) {
         return solutionRepository.findByUserAndTask(user, task);
     }
+
+    @Override
+    public Score getScore(Long id) {
+        return scoreRepository.findOne(id);
+    }
+
+    @Override
+    public Solution getSolution(Long id) {
+        return solutionRepository.findOne(id);
+    }
+
 
 }

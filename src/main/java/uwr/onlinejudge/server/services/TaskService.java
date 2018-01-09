@@ -26,5 +26,9 @@ public interface TaskService {
 
     Collection<Test> getTests(Task task);
 
-    Collection<Solution> getSolution(User user, Task task);
+    Collection<Solution> getSolutions(User user, Task task);
+
+    Score getScore(Long id);
+
+    Solution getSolution(Long id);
 }
