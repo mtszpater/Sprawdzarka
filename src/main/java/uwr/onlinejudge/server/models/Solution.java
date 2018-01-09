@@ -1,7 +1,10 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Solution {
@@ -34,6 +37,10 @@ public class Solution {
     private String comment;
 
     private int bonus;
+
+    @OneToMany(mappedBy = "solution")
+    @JsonManagedReference
+    private List<Score> scores;
 
     public long getId() {
         return id;
@@ -97,5 +104,13 @@ public class Solution {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 }

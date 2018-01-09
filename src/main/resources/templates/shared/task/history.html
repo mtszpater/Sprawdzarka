@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div th:fragment="history">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Data wysłania</th>
+            <th scope="col">Rozwiązanie</th>
+            <th scope="col">Uzyskane punkty</th>
+            <th scope="col">Szczegóły</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="solution,solutionIter: ${solutions}">
+
+            <th scope="row" th:text="${solutionIter.index}">0</th>
+
+            <td th:text="${solution.dateOfSending}"></td>
+
+            <td>
+
+            </td>
+
+            <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
+                <div class="progress" data-toggle="tooltip" data-placement="right"
+                     th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
+                    <div th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
+                         role="progressbar" th:attrappend="style='width: ' + ${percent} + '%;'"
+                         th:aria-valuenow="${value}" aria-valuemin="0" th:aria-valuemax="${max}"></div>
+                </div>
+            </td>
+
+            <td>
+                <div class="btn btn-light btn-sm" data-toggle="modal"
+                     th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl
+                </div>
+
+                <div th:replace="shared/task/history :: modal"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Dodaj test</div>
+
+</div>
+
+<div th:fragment="modal" class="modal fade" th:id="'solution'+${solution.id}+'-modal'" tabindex="-1"
+     role="dialog"
+     aria-labelledby="solution-modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Testy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Czas wykonania</th>
+                        <th scope="col">Punkty</th>
+                        <th scope="col">Stan testu</th>
+                        <th scope="col">Wynik</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="score,scoreIter: ${solution.scores}">
+
+                        <th scope="row" th:text="${scoreIter.index}">0</th>
+                        <td th:text="${score.executionTime}"></td>
+                        <td th:text="${score.point}"></td>
+                        <td th:text="${score.state}"></td>
+                        <td>
+                            <a th:href="@{/wynik/{id}(id=${score.id})}">
+                                <div class="btn btn-primary float-right btn-sm">
+                                    Wyświetl
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

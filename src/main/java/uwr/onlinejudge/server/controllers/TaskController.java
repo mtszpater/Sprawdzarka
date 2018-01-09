@@ -148,14 +148,18 @@ public class TaskController {
 
     @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showTask(@PathVariable("id") Long id, Model model) {
+    public String showTask(@PathVariable("id") Long id, Model model, Principal principal) {
         Task task = taskService.getTask(id);
         if (task == null) {
             return "error_page";
         }
+        User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
+        Collection<Solution> solutions = taskService.getSolution(user, task);
+
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
+        model.addAttribute("solutions", solutions);
         return "task";
     }
 

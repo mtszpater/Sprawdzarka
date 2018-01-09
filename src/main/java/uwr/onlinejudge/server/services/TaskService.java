@@ -25,4 +25,6 @@ public interface TaskService {
     void save(TaskForm taskForm);
 
     Collection<Test> getTests(Task task);
+
+    Collection<Solution> getSolution(User user, Task task);
 }

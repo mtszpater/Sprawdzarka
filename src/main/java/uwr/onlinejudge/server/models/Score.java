@@ -1,5 +1,7 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class Score {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Solution solution;
 
     @ManyToOne

@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="taskSolution" role="tabpanel">
-                            <div th:replace="shared/solution_form :: form"></div>
+                            <div th:replace="shared/task/solution_form :: form"></div>
                         </div>
 
                         <div class="tab-pane fade" id="taskComment" role="tabpanel">
@@ -65,7 +65,11 @@
                         </div>
 
                         <div class="tab-pane fade" id="taskTest" role="tabpanel">
-                            <div th:replace="shared/tests :: tests"></div>
+                            <div th:replace="shared/task/tests :: tests"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="taskHistory" role="tabpanel">
+                            <div th:replace="shared/task/history :: history"></div>
                         </div>
                     </div>
                 </div>
@@ -81,12 +85,16 @@
 <div th:replace="shared/head :: script"></div>
 
 <script type="text/javascript">
-    $('#my-modal').on('show.bs.modal', function (event) {
+    $('#test-modal').on('show.bs.modal', function (event) {
         var myVal = $(event.relatedTarget).data('val');
         var myId = $(event.relatedTarget).data('id');
         $(this).find(".modal-body").text(myVal);
         $(this).find(".modal-title").text(myId);
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 
 </body>

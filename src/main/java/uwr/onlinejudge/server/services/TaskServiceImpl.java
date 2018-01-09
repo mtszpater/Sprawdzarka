@@ -7,10 +7,7 @@ import uwr.onlinejudge.server.models.*;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
 import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
-import uwr.onlinejudge.server.repositories.TaskDescriptionRepository;
-import uwr.onlinejudge.server.repositories.TaskListRepository;
-import uwr.onlinejudge.server.repositories.TaskRepository;
-import uwr.onlinejudge.server.repositories.TestRepository;
+import uwr.onlinejudge.server.repositories.*;
 
 import java.util.Collection;
 
@@ -21,14 +18,22 @@ public class TaskServiceImpl implements TaskService {
     private TaskDescriptionRepository taskDescriptionRepository;
     private TaskRepository taskRepository;
     private TestRepository testRepository;
+    private SolutionRepository solutionRepository;
 
     @Autowired
-    public TaskServiceImpl(TestRepository testRepository, TaskListRepository taskListRepository, ObjectMapper objectMapper, TaskDescriptionRepository taskDescriptionRepository, TaskRepository taskRepository) {
+    public TaskServiceImpl(TestRepository testRepository,
+                           TaskListRepository taskListRepository,
+                           ObjectMapper objectMapper,
+                           TaskDescriptionRepository taskDescriptionRepository,
+                           TaskRepository taskRepository,
+                           SolutionRepository solutionRepository) {
+
         this.taskListRepository = taskListRepository;
         this.objectMapper = objectMapper;
         this.taskDescriptionRepository = taskDescriptionRepository;
         this.taskRepository = taskRepository;
         this.testRepository = testRepository;
+        this.solutionRepository = solutionRepository;
     }
 
     @Override
@@ -74,6 +79,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Collection<Test> getTests(Task task) {
         return testRepository.findByTask(task);
+    }
+
+    @Override
+    public Collection<Solution> getSolution(User user, Task task) {
+        return solutionRepository.findByUserAndTask(user, task);
     }
 
 }

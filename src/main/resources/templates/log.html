@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head('Sprawdzarka UWr')"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<main role="main" class="container">
+    <div class="row justify-content-center">
+        <p th:text="log"></p>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>
