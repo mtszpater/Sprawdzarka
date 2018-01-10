@@ -182,9 +182,8 @@ public class TaskController {
         if (solution == null)
             return "error_page";
 
-        model.addAttribute("log", solution.getSolution());
-        model.addAttribute("title", "Rozwiązanie");
-        return "log";
+        model.addAttribute("sourceCode", solution.getSolution());
+        return "solution";
     }
 
 }

@@ -33,9 +33,12 @@
             <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
                 <div class="progress" data-toggle="tooltip" data-placement="right"
                      th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-                    <div th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
-                         role="progressbar" th:attrappend="style='width: ' + ${percent} + '%;'"
-                         th:aria-valuenow="${value}" aria-valuemin="0" th:aria-valuemax="${max}"></div>
+                    <div role="progressbar"
+                         th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
+                         th:attrappend="style='width: ' + ${percent} + '%;'"
+                         th:aria-valuenow="${value}" aria-valuemin="0"
+                         th:aria-valuemax="${max}">
+                    </div>
                 </div>
             </td>
 
@@ -83,7 +86,13 @@
                         <th scope="row" th:text="${scoreIter.index}">0</th>
                         <td th:text="${score.executionTime}"></td>
                         <td th:text="${score.point}"></td>
-                        <td th:text="${score.state}"></td>
+                        <th:block th:switch="${score.state}">
+                            <td th:case="'TLE'" th:text="${score.state}" class="text-info"></td>
+                            <td th:case="'RE'" th:text="${score.state}" class="text-danger"></td>
+                            <td th:case="'OK'" th:text="${score.state}" class="text-success"></td>
+                            <td th:case="*" th:text="${score.state}" class="text-muted"></td>
+                        </th:block>
+
                         <td>
                             <a th:href="@{/wynik_testu/{id}(id=${score.id})}">
                                 <div class="btn btn-primary btn-sm">

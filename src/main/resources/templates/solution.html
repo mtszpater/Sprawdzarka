@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head('Sprawdzarka UWr: Rozwiązanie zadania')"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<main role="main" class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="card mx-10 my-4">
+                <h5 class="card-header">Rozwiązanie zadania</h5>
+                <div class="card-body">
+                    <pre class="prettyprint border-0" th:text="${sourceCode}"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>
