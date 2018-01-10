@@ -7,7 +7,5 @@ import uwr.onlinejudge.server.models.Test;
 import java.util.List;
 
 public interface TestRepository extends JpaRepository<Test, Long> {
-    Test findById(long id);
-
     List<Test> findByTask(Task task);
 }
