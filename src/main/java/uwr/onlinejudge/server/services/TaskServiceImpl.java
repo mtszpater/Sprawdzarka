@@ -71,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTask(Long id) {
-        return taskRepository.getOne(id);
+        return taskRepository.findOne(id);
     }
 
     @Override

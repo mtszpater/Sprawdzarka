@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+<html xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 
@@ -48,13 +48,21 @@
             <td th:text="${test.point}"></td>
             <td th:text="${test.type}"></td>
             <td>
-                <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Usuń</div>
+                <a th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">
+                    <div class="btn btn-light btn-sm">
+                        Usuń
+                    </div>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Dodaj test</div>
+    <a th:href="@{'/dodaj_test/'+${task.id}}">
+        <div class="btn btn-primary btn-sm">
+            Dodaj test
+        </div>
+    </a>
 
     <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
         <div class="modal-dialog" role="document">

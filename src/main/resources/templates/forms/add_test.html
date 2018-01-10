@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<div th:replace="shared/head :: head('Sprawdzarka UWr: Nowy test')"></div>
+
+<body>
+
+<!-- Navigation -->
+<div th:replace="shared/head :: header"></div>
+
+<main role="main" class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="card mx-10 my-4">
+                <h5 class="card-header">Nowy test</h5>
+                <div class="card-body">
+
+                    <form th:action="@{/dodaj_test/{id}(id = ${task.id})}" th:object="${test}" method="post">
+
+                        <div class="form-group">
+                            <label for="taskName" th:readonly="true">Zadanie</label>
+                            <input type="text" class="form-control" id="taskName" th:value="${task.name}"
+                                   th:readonly="true"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputArgument">Argumenty wejściowe</label>
+                            <textarea class="form-control" id="inputArgument" rows="3"
+                                      th:field="*{inputArgument}">
+                            </textarea>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('inputArgument')}" th:errors="*{inputArgument}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expectedAnswer">Oczekiwana odpowiedź</label>
+                            <textarea class="form-control" id="expectedAnswer" rows="3"
+                                      th:field="*{expectedAnswer}">
+                            </textarea>
+                            <div class="invalid-feedback">
+                                <p th:if="${#fields.hasErrors('expectedAnswer')}" th:errors="*{expectedAnswer}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                <label for="point">Punkty</label>
+                                <input type="number" class="form-control" id="point" th:field="*{point}"/>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label for="testType">Typ testu</label>
+                                <div class="form-group">
+                                    <select id="testType" th:field="*{type}">
+                                        <option th:each="testType : ${T(uwr.onlinejudge.server.util.TestType).values()}"
+                                                th:value="${testType}"
+                                                th:text="${testType}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="shared/footer :: copy"></div>
+
+<!-- Bootstrap core JavaScript -->
+<div th:replace="shared/head :: script"></div>
+
+</body>
+</html>

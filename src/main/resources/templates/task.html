@@ -64,7 +64,8 @@
                             <div th:text="${task.comment}" class="card-body"></div>
                         </div>
 
-                        <div class="tab-pane fade" id="taskTest" role="tabpanel">
+                        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest"
+                             role="tabpanel">
                             <div th:replace="shared/task/tests :: tests"></div>
                         </div>
 
