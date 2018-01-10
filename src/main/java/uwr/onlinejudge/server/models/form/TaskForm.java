@@ -5,12 +5,12 @@ import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.User;
 
-import javax.persistence.*;
 import java.util.Date;
 
 public class TaskForm {
 
     private TaskList taskList;
+    private String name;
     private TaskDescription taskDescription;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date deadline;
@@ -55,5 +55,13 @@ public class TaskForm {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

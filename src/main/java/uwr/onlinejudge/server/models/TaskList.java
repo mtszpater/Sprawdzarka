@@ -19,6 +19,7 @@ public class TaskList {
     @Column(nullable = false)
     private String name;
 
+    @Lob
     private String description;
 
     @OneToMany(mappedBy = "taskList")

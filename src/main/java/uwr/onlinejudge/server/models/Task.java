@@ -21,6 +21,9 @@ public class Task {
     @JsonBackReference
     private TaskList taskList;
 
+    @Column(nullable = false)
+    private String name;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private TaskDescription taskDescription;
@@ -77,5 +80,13 @@ public class Task {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

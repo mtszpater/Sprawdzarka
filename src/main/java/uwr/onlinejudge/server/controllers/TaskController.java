@@ -97,6 +97,7 @@ public class TaskController {
         TaskForm taskForm = new TaskForm();
         taskForm.setTaskDescription(taskDescription);
         taskForm.setTaskList(taskList);
+        taskForm.setName(taskDescription.getName());
 
 
         model.addAttribute("task", taskForm);
