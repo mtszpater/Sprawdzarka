@@ -14,7 +14,11 @@ import uwr.onlinejudge.server.models.Test;
 import uwr.onlinejudge.server.models.form.TestForm;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.TestService;
+import uwr.onlinejudge.server.util.breadcrumbs.BreadCrumbs;
+import uwr.onlinejudge.server.util.breadcrumbs.Link;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -22,40 +26,51 @@ import javax.validation.Valid;
 public class TestController {
     TestService testService;
     TaskService taskService;
+    BreadCrumbs breadCrumbs;
 
     @Autowired
-    public TestController(TestService testService, TaskService taskService) {
+    public TestController(TestService testService, TaskService taskService, BreadCrumbs breadCrumbs) {
         this.testService = testService;
         this.taskService = taskService;
+        this.breadCrumbs = breadCrumbs;
     }
 
     @RequestMapping(value = "/testy/{id}/argumenty_wejsciowe", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showInputArguments(@PathVariable("id") Long id, Model model) {
+    public String showInputArguments(@PathVariable("id") Long id, Model model, HttpServletRequest request, HttpSession session) {
         Test test = testService.getTest(id);
         if (test == null)
             return "error_page";
 
         model.addAttribute("log", test.getInputArgument());
         model.addAttribute("title", "Argumenty wejściowe");
+        model.addAttribute("breadcrumb", true);
+
+        Link link = new Link("Argumenty wejściowe", "Grupy", "Zadanie", "Argumenty wejściowe");
+        breadCrumbs.add(request, session, link);
+
         return "log";
     }
 
     @RequestMapping(value = "/testy/{id}/argumenty_wyjsciowe", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showExpectedAnswer(@PathVariable("id") Long id, Model model) {
+    public String showExpectedAnswer(@PathVariable("id") Long id, Model model, HttpServletRequest request, HttpSession session) {
         Test test = testService.getTest(id);
         if (test == null)
             return "error_page";
 
         model.addAttribute("log", test.getExpectedAnswer());
         model.addAttribute("title", "Oczekiwana odpowiedź");
+
+        Link link = new Link("Argumenty wyjściowe", "Grupy", "Zadanie", "Argumenty wyjściowe");
+        breadCrumbs.add(request, session, link);
+
         return "log";
     }
 
     @RequestMapping(value = "/dodaj_test/{taskId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addTest(@PathVariable("taskId") Long taskId, Model model) {
+    public String addTest(@PathVariable("taskId") Long taskId, Model model, HttpServletRequest request, HttpSession session) {
         Task task = taskService.getTask(taskId);
         TestForm testForm = new TestForm();
 
@@ -64,6 +79,11 @@ public class TestController {
 
         model.addAttribute("task", task);
         model.addAttribute("test", testForm);
+        model.addAttribute("breadcrumb", true);
+
+        Link link = new Link("Dodaj test", "Grupy", "Zadanie", "Dodaj test");
+        breadCrumbs.add(request, session, link);
+
         return "forms/add_test";
     }
 
@@ -76,7 +96,6 @@ public class TestController {
             return "error_page";
 
         testForm.setTask(task);
-        System.out.println(task.getTaskDescription());
         testService.save(testForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Test został dodany");

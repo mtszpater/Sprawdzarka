@@ -19,7 +19,11 @@ import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
 import uwr.onlinejudge.server.util.UserRole;
+import uwr.onlinejudge.server.util.breadcrumbs.BreadCrumbs;
+import uwr.onlinejudge.server.util.breadcrumbs.Link;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
@@ -30,17 +34,19 @@ public class GroupController {
     private GroupService groupService;
     private UserService userService;
     private TaskService taskService;
+    private BreadCrumbs breadCrumbs;
 
     @Autowired
-    public GroupController(GroupService groupService, UserService userService, TaskService myService) {
+    public GroupController(GroupService groupService, UserService userService, TaskService myService, BreadCrumbs breadCrumbs) {
         this.groupService = groupService;
         this.userService = userService;
         this.taskService = myService;
+        this.breadCrumbs = breadCrumbs;
     }
 
     @RequestMapping(value = "/grupy", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String index(Model model, Principal principal) {
+    public String index(HttpServletRequest request, HttpSession session, Model model, Principal principal) {
         Collection<Group> availableGroups = groupService.getGroups();
 
         User user = userService.findByEmail(principal.getName());
@@ -49,13 +55,22 @@ public class GroupController {
 
         model.addAttribute("availableGroups", availableGroups);
         model.addAttribute("myGroups", myGroups);
+        model.addAttribute("breadcrumb", true);
+
+        Link link = new Link("Grupy", "Grupy", "", "Grupy");
+        breadCrumbs.add(request, session, link);
+
         return "groups";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addGroup(Model model) {
+    public String addGroup(HttpServletRequest request, HttpSession session, Model model) {
         model.addAttribute("group", new GroupForm());
+
+        Link link = new Link("Dodaj grupe", "Grupy", "Grupy", "Dodaj grupe");
+        breadCrumbs.add(request, session, link);
+
         return "forms/add_group";
     }
 
@@ -79,13 +94,18 @@ public class GroupController {
 
     @RequestMapping(value = "/grupa/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showGroup(@PathVariable("id") Long id, Model model) {
+    public String showGroup(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, Model model) {
         Group group = groupService.getGroup(id);
         if (group == null)
             return "error_page";
 
         model.addAttribute("group", group);
         model.addAttribute("taskList", taskService.getTaskLists(group));
+        model.addAttribute("breadcrumb", true);
+
+        Link link = new Link("Grupa: " + group.getName(), "Grupy", "Grupy", "Grupa");
+        breadCrumbs.add(request, session, link);
+
         return "group";
     }
 
