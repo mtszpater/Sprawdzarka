@@ -64,29 +64,30 @@
             </div>
         </div>
     </nav>
-    <!--Logo-->
-    <div class="jumbotron logo mb-0 pb-0">
-        <div class="container">
-            <a th:href="@{/}">
-                <img th:src="@{/images/logo.jpg}" class="img-fluid" alt="Uniwersytet Wrocławski"/>
-            </a>
+    <div class="mb-4">
+        <!--Logo-->
+        <div class="jumbotron logo mb-0 pb-0">
+            <div class="container">
+                <a th:href="@{/}">
+                    <img th:src="@{/images/logo.jpg}" class="img-fluid" alt="Uniwersytet Wrocławski"/>
+                </a>
+            </div>
+        </div>
+
+        <!--Breadcrumbs-->
+        <div th:if="${session.breadCrumb} and ${breadcrumb}" class="container">
+            <ol class="breadcrumb mb-0">
+                <li th:each="entry, iterStatus : ${session.breadCrumb}" class="breadcrumb-item"
+                    th:classappend="(${iterStatus.last})?'active'">
+                    <a th:href="@{${entry.url}}"
+                       th:text="${entry.label}"
+                       th:unless="${iterStatus.last}"></a>
+                    <span th:text="${entry.label}"
+                          th:if="${iterStatus.last}"></span>
+                </li>
+            </ol>
         </div>
     </div>
-
-    <!--Breadcrumbs-->
-    <div th:if="${session.breadCrumb} and ${breadcrumb}" class="container">
-        <ol class="breadcrumb">
-            <li th:each="entry, iterStatus : ${session.breadCrumb}" class="breadcrumb-item"
-                th:classappend="(${iterStatus.last})?'active'">
-                <a th:href="@{${entry.url}}"
-                   th:text="${entry.label}"
-                   th:unless="${iterStatus.last}"></a>
-                <span th:text="${entry.label}"
-                      th:if="${iterStatus.last}"></span>
-            </li>
-        </ol>
-    </div>
-
     <th:block th:if="${alertMessage != null}">
         <div th:replace="shared/message :: alert"></div>
     </th:block>
