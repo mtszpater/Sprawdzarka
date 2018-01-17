@@ -20,6 +20,7 @@ public class TaskServiceImpl implements TaskService {
     private TestRepository testRepository;
     private SolutionRepository solutionRepository;
     private ScoreRepository scoreRepository;
+    private LanguageRepository languageRepository;
 
     @Autowired
     public TaskServiceImpl(TestRepository testRepository,
@@ -28,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
                            TaskDescriptionRepository taskDescriptionRepository,
                            TaskRepository taskRepository,
                            SolutionRepository solutionRepository,
-                           ScoreRepository scoreRepository) {
+                           ScoreRepository scoreRepository, LanguageRepository languageRepository) {
 
         this.taskListRepository = taskListRepository;
         this.objectMapper = objectMapper;
@@ -37,6 +38,7 @@ public class TaskServiceImpl implements TaskService {
         this.testRepository = testRepository;
         this.solutionRepository = solutionRepository;
         this.scoreRepository = scoreRepository;
+        this.languageRepository = languageRepository;
     }
 
     @Override
@@ -97,6 +99,16 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Solution getSolution(Long id) {
         return solutionRepository.findOne(id);
+    }
+
+    @Override
+    public Collection<Language> getLanguages(Task task) {
+        return languageRepository.findByTask(task);
+    }
+
+    @Override
+    public Language getLanguage(Long id) {
+        return languageRepository.findOne(id);
     }
 
 

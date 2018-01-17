@@ -1,6 +1,7 @@
 package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,9 +28,10 @@ public class Solution {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date dateOfSending;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Language language;
 

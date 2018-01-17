@@ -38,6 +38,7 @@ public class TaskController {
     private BreadCrumbs breadCrumbs;
     private SolutionService solutionService;
 
+
     @Autowired
     public TaskController(TaskService taskService, UserService userService, GroupService groupService, BreadCrumbs breadCrumbs, SolutionService solutionService) {
         this.taskService = taskService;
@@ -191,6 +192,7 @@ public class TaskController {
         model.addAttribute("solutions", solutions);
         model.addAttribute("breadcrumb", true);
         model.addAttribute("solutionForm", new SolutionForm());
+        model.addAttribute("languages", taskService.getLanguages(task));
 
         Link link = new Link("Zadanie:" + task.getName(), "Grupy", "Grupa", "Zadanie");
         breadCrumbs.add(request, session, link);

@@ -31,4 +31,8 @@ public interface TaskService {
     Score getScore(Long id);
 
     Solution getSolution(Long id);
+
+    Collection<Language> getLanguages(Task task);
+
+    Language getLanguage(Long id);
 }

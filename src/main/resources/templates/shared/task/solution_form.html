@@ -5,24 +5,24 @@
 
 <div th:fragment="form" class="row justify-content-center">
     <div class="col-md-6">
-        <form method="post" th:object="${solution}">
+        <form th:action="@{/wyslij_zadanie/{id}(id=${task.id})}" method="post" th:object="${solutionForm}">
             <div class="form-group">
-                <label for="code">Wklej kod programu</label>
-                <textarea class="form-control" id="code" rows="2"></textarea>
+                <label for="solution">Wklej kod programu</label>
+                <textarea th:field="*{solution}" class="form-control" id="solution" rows="2"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="language">Język programowania</label>
-                <select id="language" class="form-control">
+                <select th:field="*{language}" id="language" class="form-control">
                     <option th:each="selectedLanguage : ${languages}"
-                            th:value="${selectedLanguage}"
-                            th:text="${selectedLanguage}"></option>
+                            th:value="${selectedLanguage.id}"
+                            th:text="${selectedLanguage.name}"></option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="comment">Komentarz:</label>
-                <textarea class="form-control" id="comment" rows="2"></textarea>
+                <textarea th:field="*{comment}" class="form-control" id="comment" rows="2"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Wyślij</button>
