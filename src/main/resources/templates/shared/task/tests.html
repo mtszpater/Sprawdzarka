@@ -8,18 +8,16 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Argumenty wejściowe</th>
-            <th scope="col">Argumenty wyjściowe</th>
-            <th scope="col">Wymagany czas</th>
-            <th scope="col">Punkty</th>
-            <th scope="col">Typ testu</th>
-            <th scope="col">Operacja</th>
+            <th scope="col">Input</th>
+            <th scope="col">Output</th>
+            <th scope="col">Timeout</th>
+            <th scope="col">Score</th>
+            <th scope="col">Type</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="test,testIter: ${tests}">
-            <th scope="row" th:text="${testIter.index}">0</th>
             <td>
                 <a th:if="${#strings.length(test.inputArgument)} > 100"
                    th:href="@{/testy/{id}/argumenty_wejsciowe (id = ${test.id})}">
@@ -46,7 +44,13 @@
             </td>
             <td th:text="${test.timeRequired}"></td>
             <td th:text="${test.point}"></td>
-            <td th:text="${test.type}"></td>
+            <td>
+                <th:block th:switch="${test.type}">
+                    <span th:case="'PUBLIC'" th:text="${test.type}" class="badge badge-primary">Public</span>
+                    <span th:case="'PRIVATE'" th:text="${test.type}" class="badge badge-secondary">Private</span>
+                    <span th:case="*" th:text="${test.type}" class="badge badge-dark">Hidden</span>
+                </th:block>
+            </td>
             <td>
                 <a th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">
                     <div class="btn btn-light btn-sm">

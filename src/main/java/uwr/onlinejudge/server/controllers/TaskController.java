@@ -23,6 +23,8 @@ import uwr.onlinejudge.server.services.UserService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -164,7 +166,11 @@ public class TaskController {
         User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
+        solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
+
         Collection<Language> languages = taskService.getLanguages(task);
+
+
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
