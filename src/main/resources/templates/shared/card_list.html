@@ -32,12 +32,17 @@
 
         <p class="card-text" th:text="${list.description}"></p>
 
-        <ol>
-            <div th:each="task:${list.getTasks()}">
-                <li>Zadanie: <a th:text="${task.name}"
-                                th:href="@{/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a></li>
+        <div th:each="task:${list.getTasks()}">
+            <div class="row">
+                <div class="col">
+                    Zadanie:
+                    <a th:text="${task.name}" th:href="@{/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a>
+                </div>
+                <div class="col">
+                    <p class="text-right text-primary" th:text="${task.deadline}"> 17.11.2015</p>
+                </div>
             </div>
-        </ol>
+        </div>
 
     </div>
 </div>
