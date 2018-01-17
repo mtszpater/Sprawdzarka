@@ -186,15 +186,15 @@ public class TaskController {
         User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
-
+        Collection<Language> languages = taskService.getLanguages(task);
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
         model.addAttribute("breadcrumb", true);
         model.addAttribute("solutionForm", new SolutionForm());
-        model.addAttribute("languages", taskService.getLanguages(task));
+        model.addAttribute("languages", languages);
 
-        if (tests.size() == 0) {
+        if (tests.isEmpty() || languages.isEmpty()) {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
         }
 

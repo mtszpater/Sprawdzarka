@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+<html xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 
@@ -23,11 +23,20 @@
             <td th:text="${solution.dateOfSending}"></td>
 
             <td>
-                <a th:href="@{/rozwiazanie/{id}(id=${solution.id})}">
-                    <div class="btn btn-light btn-sm">
-                        Wyświetl
+                <div class="modal fade bd-example-modal-lg" tabindex="-1"
+                     th:id="'solution_code'+${solution.id}+'-modal'" role="dialog" aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content p-3">
+                            <pre class="prettyprint border-0" th:text="${solution.solution}"></pre>
+                        </div>
                     </div>
-                </a>
+                </div>
+
+
+                <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
+                        th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
+                </button>
             </td>
 
             <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
@@ -52,8 +61,6 @@
         </tr>
         </tbody>
     </table>
-
-    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-primary btn-sm">Dodaj test</div>
 
 </div>
 
@@ -112,6 +119,6 @@
     </div>
 </div>
 
-
+<div th:replace="shared/head :: script"></div>
 </body>
 </html>

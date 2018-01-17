@@ -22,7 +22,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
                                aria-selected="true">
-                                Opis zadania
+                                Szczegóły zadania
                             </a>
                         </li>
                         <li class="nav-item">
@@ -31,19 +31,9 @@
                                 Prześlij rozwiązanie
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskComment" role="tab" aria-selected="true">
-                                Komentarz
-                            </a>
-                        </li>
                         <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
-                                Testy
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskHistory" role="tab" aria-selected="true">
-                                Historia rozwiązań
+                                Specyfikacja zadania
                             </a>
                         </li>
                     </ul>
@@ -53,24 +43,54 @@
                     <div class="tab-content col-12 align-self-center">
 
                         <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
+                            <div th:if="${task.comment != ''}" class="card">
+                                <div class="card-body">
+                                    <blockquote class="blockquote">
+                                        <div th:text="${task.comment}"></div>
+                                        <footer class="blockquote-footer text-right"><span
+                                                th:text="${task.user.firstname}">Admin</span></footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+
                             <div th:text="${task.taskDescription.content}" class="card-body"></div>
                         </div>
 
                         <div class="tab-pane fade" id="taskSolution" role="tabpanel">
-                            <div th:replace="shared/task/solution_form :: form"></div>
-                        </div>
 
-                        <div class="tab-pane fade" id="taskComment" role="tabpanel">
-                            <div th:text="${task.comment}" class="card-body"></div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Przesylanie nowego
+                                                zadania</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div th:replace="shared/task/solution_form :: form"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                Prześlij nowe zadanie
+                            </button>
+
+
+                            <div class="mt-4">
+                                <div th:replace="shared/task/history :: history"></div>
+                            </div>
                         </div>
 
                         <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest"
                              role="tabpanel">
                             <div th:replace="shared/task/tests :: tests"></div>
-                        </div>
-
-                        <div class="tab-pane fade" id="taskHistory" role="tabpanel">
-                            <div th:replace="shared/task/history :: history"></div>
                         </div>
                     </div>
                 </div>
@@ -96,6 +116,11 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
+
+
+
+
 </script>
 
 </body>
