@@ -5,10 +5,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uwr.onlinejudge.server.models.CodeToCompile;
 import uwr.onlinejudge.server.models.CompileResult;
 
+@Component
 public class CompileSenderImpl implements CompileSender {
     private static final String COMPILE_URL = "http://156.17.4.48/compile";
 
