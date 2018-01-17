@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.*;
+import uwr.onlinejudge.server.models.form.SolutionForm;
 import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
 import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
 import uwr.onlinejudge.server.services.GroupService;
+import uwr.onlinejudge.server.services.SolutionService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
 import uwr.onlinejudge.server.util.breadcrumbs.BreadCrumbs;
@@ -34,13 +36,15 @@ public class TaskController {
     private UserService userService;
     private GroupService groupService;
     private BreadCrumbs breadCrumbs;
+    private SolutionService solutionService;
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService, GroupService groupService, BreadCrumbs breadCrumbs) {
+    public TaskController(TaskService taskService, UserService userService, GroupService groupService, BreadCrumbs breadCrumbs, SolutionService solutionService) {
         this.taskService = taskService;
         this.userService = userService;
         this.groupService = groupService;
         this.breadCrumbs = breadCrumbs;
+        this.solutionService = solutionService;
     }
 
     @RequestMapping(value = "/dodaj_liste/{id}", method = RequestMethod.GET)
@@ -186,6 +190,7 @@ public class TaskController {
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
         model.addAttribute("breadcrumb", true);
+        model.addAttribute("solutionForm", new SolutionForm());
 
         Link link = new Link("Zadanie:" + task.getName(), "Grupy", "Grupa", "Zadanie");
         breadCrumbs.add(request, session, link);
@@ -225,5 +230,21 @@ public class TaskController {
 
         return "solution";
     }
+
+    @RequestMapping(value = "/wyslij_zadanie/{id}", method = RequestMethod.POST)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String saveSolution(@PathVariable("id") Long id, @ModelAttribute("solutionForm") @Valid SolutionForm solutionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+        Task task = taskService.getTask(id);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/zadanie/" + task.getId();
+        }
+        solutionForm.setTask(task);
+        solutionForm.setUser(userService.findByEmail(principal.getName()));
+        solutionService.save(solutionForm);
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
+        return "redirect:/zadanie/" + task.getId();
+    }
+
 
 }
