@@ -194,6 +194,10 @@ public class TaskController {
         model.addAttribute("solutionForm", new SolutionForm());
         model.addAttribute("languages", taskService.getLanguages(task));
 
+        if (tests.size() == 0) {
+            model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
+        }
+
         Link link = new Link("Zadanie:" + task.getName(), "Grupy", "Grupa", "Zadanie");
         breadCrumbs.add(request, session, link);
 

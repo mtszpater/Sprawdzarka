@@ -8,8 +8,7 @@ import java.util.Date;
 @Entity
 public class Test {
     @Id
-    @SequenceGenerator(name = "testSequence", sequenceName = "test_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "testSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

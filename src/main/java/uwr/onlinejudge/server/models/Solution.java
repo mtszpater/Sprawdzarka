@@ -10,8 +10,7 @@ import java.util.List;
 @Entity
 public class Solution {
     @Id
-    @SequenceGenerator(name = "solutionSequence", sequenceName = "solution_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "solutionSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

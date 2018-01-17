@@ -5,8 +5,7 @@ import javax.persistence.*;
 @Entity
 public class TaskDescription {
     @Id
-    @SequenceGenerator(name = "sharedTaskSequence", sequenceName = "shared_task_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sharedTaskSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

@@ -1,10 +1,10 @@
 package uwr.onlinejudge.server.models;
 
 
-import javax.persistence.*;
-import java.util.Set;
-
-import static javax.persistence.FetchType.LAZY;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
@@ -13,7 +13,7 @@ public class Role {
     private String name;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     public Long getId() {
         return id;
     }

@@ -8,8 +8,7 @@ import javax.persistence.*;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "group_id"}))
 public class Registration {
     @Id
-    @SequenceGenerator(name = "registrationSequence", sequenceName = "registration_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     private long id;
 
     @ManyToOne

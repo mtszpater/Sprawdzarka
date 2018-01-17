@@ -5,8 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Language {
     @Id
-    @SequenceGenerator(name = "languageSequence", sequenceName = "language_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "languageSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

@@ -8,8 +8,7 @@ import java.util.List;
 @Entity
 public class TaskList {
     @Id
-    @SequenceGenerator(name = "taskListSequence", sequenceName = "task_list_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taskListSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

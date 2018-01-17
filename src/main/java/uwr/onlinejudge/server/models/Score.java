@@ -8,8 +8,7 @@ import java.util.Date;
 @Entity
 public class Score {
     @Id
-    @SequenceGenerator(name = "scoreSequence", sequenceName = "score_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "scoreSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne

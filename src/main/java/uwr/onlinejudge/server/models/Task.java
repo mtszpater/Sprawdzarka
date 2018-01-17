@@ -8,8 +8,7 @@ import java.util.Date;
 @Entity
 public class Task {
     @Id
-    @SequenceGenerator(name = "taskSequence", sequenceName = "task_sequence")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "taskSequence")
+    @GeneratedValue
     private long id;
 
     @ManyToOne
