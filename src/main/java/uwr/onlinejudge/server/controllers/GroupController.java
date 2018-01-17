@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Group;
+import uwr.onlinejudge.server.models.Task;
+import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.models.form.PasswordGroup;
@@ -23,6 +25,8 @@ import uwr.onlinejudge.server.util.UserRole;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping
@@ -87,7 +91,11 @@ public class GroupController {
             return "error_page";
 
         model.addAttribute("group", group);
-        model.addAttribute("taskList", taskService.getTaskLists(group));
+        Collection<TaskList> taskList = taskService.getTaskLists(group);
+
+        taskList.forEach(t -> t.setTasks(t.getTasks().stream().sorted(Comparator.comparing(Task::getDeadline).reversed()).collect(Collectors.toList())));
+
+        model.addAttribute("taskList", taskList);
 
         return "group";
     }
