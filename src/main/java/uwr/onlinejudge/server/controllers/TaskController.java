@@ -19,11 +19,7 @@ import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.SolutionService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
-import uwr.onlinejudge.server.util.breadcrumbs.BreadCrumbs;
-import uwr.onlinejudge.server.util.breadcrumbs.Link;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
@@ -35,22 +31,20 @@ public class TaskController {
     private TaskService taskService;
     private UserService userService;
     private GroupService groupService;
-    private BreadCrumbs breadCrumbs;
     private SolutionService solutionService;
 
 
     @Autowired
-    public TaskController(TaskService taskService, UserService userService, GroupService groupService, BreadCrumbs breadCrumbs, SolutionService solutionService) {
+    public TaskController(TaskService taskService, UserService userService, GroupService groupService) {
         this.taskService = taskService;
         this.userService = userService;
         this.groupService = groupService;
-        this.breadCrumbs = breadCrumbs;
         this.solutionService = solutionService;
     }
 
     @RequestMapping(value = "/dodaj_liste/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addList(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, Model model) {
+    public String addList(@PathVariable("id") Long id, Model model) {
         Group group = groupService.getGroup(id);
         if (group == null)
             return "error_page";
@@ -59,10 +53,6 @@ public class TaskController {
         taskListForm.setGroup(group);
 
         model.addAttribute("taskList", taskListForm);
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Dodaj liste", "Grupy", "Grupa", "Dodaj liste");
-        breadCrumbs.add(request, session, link);
         return "forms/add_list";
     }
 
@@ -81,12 +71,8 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.GET) //TODO: POBRAĆ SKĄD USER PRZYSZEDŁ, ABY GO TAM COFNĄĆ.
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addTaskDescription(Model model, HttpServletRequest request, HttpSession session) {
+    public String addTaskDescription(Model model) {
         model.addAttribute("taskDescription", new TaskDescriptionForm());
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Dodaj opis zadania", "Grupy", "Wybór zadania", "Dodaj opis zadania");
-        breadCrumbs.add(request, session, link);
         return "forms/add_task_description";
     }
 
@@ -106,7 +92,7 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, Model model, HttpServletRequest request, HttpSession session) {
+    public String addTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, Model model) {
         TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
         TaskList taskList = taskService.getTaskList(taskListId);
 
@@ -120,10 +106,6 @@ public class TaskController {
 
 
         model.addAttribute("task", taskForm);
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Dodaj zadanie", "Grupy", "Dodaj opis zadania", "Dodaj zadanie");
-        breadCrumbs.add(request, session, link);
 
         return "forms/add_task";
     }
@@ -158,7 +140,7 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal, HttpServletRequest request, HttpSession session) {
+    public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
         TaskList taskList = taskService.getTaskList(taskListId);
 
         if(taskList == null)
@@ -167,10 +149,6 @@ public class TaskController {
         Collection<TaskDescription> taskDescriptions = taskService.getTaskDescriptions();
         model.addAttribute("taskListId", taskListId);
         model.addAttribute("taskDescriptions", taskDescriptions);
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Wybór zadania", "Grupy", "Grupa", "Wybór zadania");
-        breadCrumbs.add(request, session, link);
 
         return "add_task_to_list";
     }
@@ -178,7 +156,7 @@ public class TaskController {
 
     @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showTask(@PathVariable("id") Long id, Model model, Principal principal, HttpServletRequest request, HttpSession session) {
+    public String showTask(@PathVariable("id") Long id, Model model, Principal principal) {
         Task task = taskService.getTask(id);
         if (task == null) {
             return "error_page";
@@ -190,7 +168,6 @@ public class TaskController {
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
-        model.addAttribute("breadcrumb", true);
         model.addAttribute("solutionForm", new SolutionForm());
         model.addAttribute("languages", languages);
 
@@ -198,41 +175,31 @@ public class TaskController {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
         }
 
-        Link link = new Link("Zadanie:" + task.getName(), "Grupy", "Grupa", "Zadanie");
-        breadCrumbs.add(request, session, link);
 
         return "task";
     }
 
     @RequestMapping(value = "/wynik_testu/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showTestResult(@PathVariable("id") Long id, Model model, HttpServletRequest request, HttpSession session) {
+    public String showTestResult(@PathVariable("id") Long id, Model model) {
         Score score = taskService.getScore(id);
         if (score == null)
             return "error_page";
 
         model.addAttribute("log", score.getTestResult());
         model.addAttribute("title", "Wynik testu");
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Wynik testu", "Grupy", "Zadanie", "Wynik testu");
-        breadCrumbs.add(request, session, link);
 
         return "log";
     }
 
     @RequestMapping(value = "/rozwiazanie/{id}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String showSolution(@PathVariable("id") Long id, Model model, HttpServletRequest request, HttpSession session) {
+    public String showSolution(@PathVariable("id") Long id, Model model) {
         Solution solution = taskService.getSolution(id);
         if (solution == null)
             return "error_page";
 
         model.addAttribute("sourceCode", solution.getSolution());
-        model.addAttribute("breadcrumb", true);
-
-        Link link = new Link("Rozwiązanie", "Grupy", "Zadanie", "Rozwiązanie");
-        breadCrumbs.add(request, session, link);
 
         return "solution";
     }
