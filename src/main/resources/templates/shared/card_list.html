@@ -32,6 +32,10 @@
 
         <p class="card-text" th:text="${list.description}"></p>
 
+        <div th:if="${#lists.isEmpty(list.getTasks())}" class="alert alert-secondary" role="alert">
+            Brak dostępnych zadań
+        </div>
+
         <div th:each="task:${list.getTasks()}">
             <div class="row">
                 <div class="col">

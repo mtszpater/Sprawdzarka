@@ -17,46 +17,28 @@
 
                 <h5 class="card-header" th:text="'Grupa: '+${group.name}">Grupa</h5>
 
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#descriptionGroup" role="tab"
-                               aria-selected="true">
-                                Opis
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskList" role="tab" aria-selected="true">
-                                Listy zadań
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
                 <div class="card-body">
                     <div class="tab-content col-12 align-self-center">
 
-                        <div class="tab-pane fade show active" id="descriptionGroup" role="tabpanel">
-                            <a th:text="${group.description}"></a>
+                        <div class="row">
+                            <div class="col"><a th:text="${group.description}"></a></div>
+                            <div class="col">
+                                <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
+                                    <a th:href="@{/dodaj_liste/{id}(id = ${group.id})}">
+                                        <div class="btn btn-primary float-right btn-sm">
+                                            <i class="fa fa-plus" aria-hidden="true"></i> Dodaj listę
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="tab-pane fade" id="taskList" role="tabpanel">
+                        <p th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </p>
 
-                            <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                                <a th:href="@{/dodaj_liste/{id}(id = ${group.id})}">
-                                    <div class="btn btn-primary float-right btn-sm">
-                                        <i class="fa fa-plus" aria-hidden="true"></i> Dodaj
-                                    </div>
-                                </a>
-                            </div>
-
-                            <p th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </p>
-
-                            <div class="card my-4" th:each="list:${taskList}">
-                                <div role="tablist">
-                                    <div th:replace="shared/card_list :: title(list=${list})"></div>
-                                    <div th:replace="shared/card_list :: description(list=${list})"></div>
-                                </div>
+                        <div class="card my-4" th:each="list:${taskList}">
+                            <div role="tablist">
+                                <div th:replace="shared/card_list :: title(list=${list})"></div>
+                                <div th:replace="shared/card_list :: description(list=${list})"></div>
                             </div>
                         </div>
 
