@@ -32,9 +32,9 @@
 
         <p class="card-text" th:text="${list.description}"></p>
 
-        <div th:if="${#lists.isEmpty(list.getTasks())}" class="alert alert-secondary" role="alert">
-            Brak dostępnych zadań
-        </div>
+        <th:blockquote th:if="${#lists.isEmpty(list.getTasks())}">
+            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych zadań')"></div>
+        </th:blockquote>
 
         <div th:each="task:${list.getTasks()}">
             <div class="row">

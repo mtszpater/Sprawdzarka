@@ -33,7 +33,9 @@
                             </div>
                         </div>
 
-                        <p th:if="${#lists.isEmpty(taskList)}">Brak dostępnych list </p>
+                        <th:block th:if="${#lists.isEmpty(taskList)}">
+                            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych list')"></div>
+                        </th:block>
 
                         <div class="card my-4" th:each="list:${taskList}">
                             <div role="tablist">
