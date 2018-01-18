@@ -44,13 +44,13 @@
             <td th:text="${test.timeRequired}"></td>
             <td th:text="${test.point}"></td>
             <td>
-                <th:block th:switch="${test.type}">
-                    <span th:case="'PUBLIC'" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          title="Ten test jest publiczny" class="badge badge-primary">Public</span>
-                    <span th:case="'PRIVATE'" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          title="Ten test jest prywatny, argumenty wejściowe są widoczne" class="badge badge-secondary">Private</span>
+                <th:block th:switch="${test.type.id}">
+                    <span th:case="0" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
+                          th:title="${test.type.title}" class="badge badge-primary">Public</span>
+                    <span th:case="1" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
+                          th:title="${test.type.title}" class="badge badge-secondary">Private</span>
                     <span th:case="*" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          title="Ten test jest ukryty" class="badge badge-dark">Hidden</span>
+                          th:title="${test.type.title}" class="badge badge-dark">Hidden</span>
                 </th:block>
             </td>
             <td>

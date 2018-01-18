@@ -90,9 +90,9 @@
                         <td th:text="${score.point}"></td>
                         <th:block th:switch="${score.state.id}">
                             <td th:case="0" th:text="${score.state}" class="text-info"></td>
-                            <td th:case="1" th:text="${score.state}" class="text-danger"></td>
+                            <td th:case="1" th:text="${score.state}" class="text-warning"></td>
                             <td th:case="3" th:text="${score.state}" class="text-success"></td>
-                            <td th:case="*" th:text="${score.state}" class="text-muted"></td>
+                            <td th:case="*" th:text="${score.state}" class="text-danger"></td>
                         </th:block>
 
                         <td>
