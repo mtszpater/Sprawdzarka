@@ -23,6 +23,8 @@ import uwr.onlinejudge.server.util.Languages;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -155,14 +157,18 @@ public class TaskController {
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
         Collection<Languages> languages = task.getLanguages();
+        ArrayList<Languages> allPossibleLanguages = new ArrayList<>(Arrays.asList(Languages.values()));
 
         solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
+
 
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
         model.addAttribute("solutionForm", new SolutionForm());
         model.addAttribute("languages", languages);
+        model.addAttribute("allPossibleLanguages", allPossibleLanguages);
+
 
         if (tests.isEmpty() || languages.isEmpty()) {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
