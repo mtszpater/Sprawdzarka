@@ -8,16 +8,16 @@
     <a th:text="'Lista: ' + ${list.name}" data-toggle="collapse" th:href="'#collapse' + ${list.id}" aria-expanded="true"
        aria-controls="collapseOne"></a>
 
-    <div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">
-        <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Ustawienia
-        </button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Edytuj</a>
-            <a class="dropdown-item" href="#">Usuń</a>
-        </div>
-    </div>
+    <!--<div th:if="${#authentication.name} == ${group.user.email}" class="btn-group ml-1 pull-right">-->
+    <!--<button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"-->
+    <!--aria-haspopup="true" aria-expanded="false">-->
+    <!--Ustawienia-->
+    <!--</button>-->
+    <!--<div class="dropdown-menu">-->
+    <!--<a class="dropdown-item" href="#">Edytuj</a>-->
+    <!--<a class="dropdown-item" href="#">Usuń</a>-->
+    <!--</div>-->
+    <!--</div>-->
     <a th:href="@{/dodaj_zadanie_do_listy/{id}(id=${list.id})}">
         <div th:if="${#authentication.name} == ${group.user.email}" class="btn btn-outline-dark btn-sm pull-right ml-1">
             Dodaj zadanie

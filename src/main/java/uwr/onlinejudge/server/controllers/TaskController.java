@@ -35,7 +35,6 @@ public class TaskController {
     private GroupService groupService;
     private SolutionService solutionService;
 
-
     @Autowired
     public TaskController(TaskService taskService, UserService userService, GroupService groupService, SolutionService solutionService) {
         this.taskService = taskService;
@@ -96,9 +95,7 @@ public class TaskController {
         taskForm.setTaskList(taskList);
         taskForm.setName(taskDescription.getName());
 
-
         model.addAttribute("task", taskForm);
-
         return "forms/add_task";
     }
 
@@ -129,7 +126,7 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_zadanie_do_listy/{taskListId}", method = RequestMethod.GET)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
+    public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model) {
         TaskList taskList = taskService.getTaskList(taskListId);
 
         if (taskList == null)
@@ -148,16 +145,17 @@ public class TaskController {
     @PreAuthorize("isFullyAuthenticated()")
     public String showTask(@PathVariable("id") Long id, Model model, Principal principal) {
         Task task = taskService.getTask(id);
-        if (task == null) {
+
+        if (task == null)
             return "error_page";
-        }
+
+
         User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
-        solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
-
         Collection<Language> languages = taskService.getLanguages(task);
 
+        solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
 
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
@@ -168,7 +166,6 @@ public class TaskController {
         if (tests.isEmpty() || languages.isEmpty()) {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
         }
-
 
         return "task";
     }
@@ -186,18 +183,6 @@ public class TaskController {
         return "log";
     }
 
-    @RequestMapping(value = "/rozwiazanie/{id}", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated()")
-    public String showSolution(@PathVariable("id") Long id, Model model) {
-        Solution solution = taskService.getSolution(id);
-        if (solution == null)
-            return "error_page";
-
-        model.addAttribute("sourceCode", solution.getSolution());
-
-        return "solution";
-    }
-
     @RequestMapping(value = "/wyslij_zadanie/{id}", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
     public String saveSolution(@PathVariable("id") Long id, @ModelAttribute("solutionForm") @Valid SolutionForm solutionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
@@ -205,6 +190,7 @@ public class TaskController {
         if (bindingResult.hasErrors()) {
             return "redirect:/zadanie/" + task.getId();
         }
+
         solutionForm.setTask(task);
         solutionForm.setUser(userService.findByEmail(principal.getName()));
         solutionService.save(solutionForm);
