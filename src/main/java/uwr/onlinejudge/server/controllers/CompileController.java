@@ -11,6 +11,7 @@ import uwr.onlinejudge.server.util.CompileSender;
 import uwr.onlinejudge.server.util.TestState;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
 public class CompileController {
@@ -25,48 +26,44 @@ public class CompileController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/api/compile/{solutionId}/{testOrder}")
-    public CompileResult getCompileResult(@PathVariable("solutionId") Long solutionId, @PathVariable("testOrder") int testOrder) {
+    @GetMapping("/api/compile/{solutionId}")
+    public Collection<CompileResult> getCompileResult(@PathVariable("solutionId") Long solutionId) {
 
         Solution solution = solutionService.getSolution(solutionId);
         ArrayList<Test> tests = (ArrayList<Test>) taskService.getTests(solution.getTask());
+        Collection<CompileResult> compileResults = new ArrayList<>();
 
-        if (testOrder >= tests.size())
-            return null;
-
-        Test test = tests.get(testOrder);
-        Score score = solutionService.findScoreBySolutionAndTest(solution, test);
-
-        if (score != null)
-            return null;
-
-
-        CodeToCompile codeToCompile = new CodeToCompile("" + solution.getLanguage().getId(), solution.getSolution(), tests.get(testOrder).getInputArgument());
-
-        CompileResult compileResult = compileSender.send(codeToCompile);
-
-        score = new Score();
-        //score.setExecutionTime(compileResult.getTime());
-        score.setSolution(solution);
-        score.setTest(test);
-
-        if (compileResult.getErrors().isEmpty()) {
-            if (compileResult.getOutput().replace("\n", "").compareTo(test.getExpectedAnswer()) == 0) {
-                score.setPoint(test.getPoint());
-                score.setState(TestState.OK);
-            } else {
-                score.setState(TestState.WA);
+        for (Test test : tests) {
+            CodeToCompile codeToCompile = new CodeToCompile("" + solution.getLanguage().getId(), solution.getSolution(), test.getInputArgument());
+            CompileResult compileResult = null;
+            try {
+                compileResult = compileSender.send(codeToCompile);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                continue;
             }
-        } else {
-            score.setState(TestState.RE);
+            compileResults.add(compileResult);
+
+            Score score = new Score();
+            //score.setExecutionTime(compileResult.getTime());
+            score.setSolution(solution);
+            score.setTest(test);
+
+            if (compileResult.getErrors().isEmpty()) {
+                if (compileResult.getOutput().replace("\n", "").compareTo(test.getExpectedAnswer()) == 0) {
+                    score.setPoint(test.getPoint());
+                    score.setState(TestState.OK);
+                } else {
+                    score.setState(TestState.WA);
+                }
+            } else {
+                score.setState(TestState.RE);
+            }
+
+            score.setTestResult(compileResult.getOutput());
+            solutionService.save(score);
         }
 
-
-        score.setTestResult(compileResult.getOutput());
-
-        solutionService.save(score);
-
-        return compileResult;
+        return compileResults;
     }
-
 }
