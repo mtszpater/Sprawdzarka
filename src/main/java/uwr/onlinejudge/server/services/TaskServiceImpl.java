@@ -8,7 +8,10 @@ import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
 import uwr.onlinejudge.server.models.form.TaskForm;
 import uwr.onlinejudge.server.models.form.TaskListForm;
 import uwr.onlinejudge.server.repositories.*;
+import uwr.onlinejudge.server.util.Languages;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Service
@@ -78,7 +81,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void save(TaskForm taskForm) {
-        taskRepository.save(objectMapper.convertValue(taskForm, Task.class));
+        ArrayList<Languages> allPossibleLanguages = new ArrayList<>(Arrays.asList(Languages.values()));
+
+        Task task = objectMapper.convertValue(taskForm, Task.class);
+        task.setLanguages(allPossibleLanguages);
+
+        taskRepository.save(task);
     }
 
     @Override
