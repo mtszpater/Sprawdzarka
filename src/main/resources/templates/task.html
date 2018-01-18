@@ -43,7 +43,7 @@
                     <div class="tab-content col-12 align-self-center">
 
                         <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
-                            <div th:if="${task.comment != ''}" class="card">
+                            <div th:if="${task.comment != ''}" class="card mb-4">
                                 <div class="card-body">
                                     <blockquote class="blockquote">
                                         <div th:text="${task.comment}"></div>
@@ -53,7 +53,35 @@
                                 </div>
                             </div>
 
-                            <div th:text="${task.taskDescription.content}" class="card-body"></div>
+                            <div class="row">
+                                <div class="col-7">
+                                    <div th:text="${task.taskDescription.content}"></div>
+                                </div>
+                                <div class="col-5">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Termin <strong th:text="${task.deadline}">2018-02-01 17:23</strong>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Wysłanych rozwiązań
+                                            <span class="badge badge-primary badge-pill"
+                                                  th:text="${solutions.size()}">1</span>
+                                        </li>
+                                        <li class="list-group-item ">
+                                            <div class="progress" data-toggle="tooltip" data-placement="top"
+                                                 title="Zdobytych punktów">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                     style="width: 60%" aria-valuenow="30" aria-valuemin="0"
+                                                     aria-valuemax="100">60%
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+
                         </div>
 
                         <div class="tab-pane fade" id="taskSolution" role="tabpanel">
@@ -116,6 +144,8 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
+
 
 
 
