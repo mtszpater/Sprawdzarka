@@ -11,6 +11,7 @@
             <th scope="col">Data wysłania</th>
             <th scope="col">Rozwiązanie</th>
             <th scope="col">Uzyskane punkty</th>
+            <th scope="col">Język</th>
             <th scope="col">Szczegóły</th>
         </tr>
         </thead>
@@ -46,6 +47,10 @@
                          th:aria-valuemax="${max}">
                     </div>
                 </div>
+            </td>
+
+            <td>
+                <th:block th:text="${solution.language.name}"></th:block>
             </td>
 
             <td>
