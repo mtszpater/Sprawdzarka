@@ -33,7 +33,12 @@ public class CompileController {
         ArrayList<Test> tests = (ArrayList<Test>) taskService.getTests(solution.getTask());
         Collection<CompileResult> compileResults = new ArrayList<>();
 
+
         for (Test test : tests) {
+            if (solutionService.findScoreBySolutionAndTest(solution, test) != null) {
+                continue;
+            }
+
             CodeToCompile codeToCompile = new CodeToCompile("" + solution.getLanguage().getId(), solution.getSolution(), test.getInputArgument());
             CompileResult compileResult = null;
             try {
