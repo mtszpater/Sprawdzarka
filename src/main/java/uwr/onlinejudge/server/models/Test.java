@@ -30,7 +30,8 @@ public class Test {
     private int point;
 
     @Column(nullable = false)
-    private String type = TestType.HIDDEN.toString();
+    @Enumerated(EnumType.STRING)
+    private TestType type;
 
     public long getId() {
         return id;
@@ -80,11 +81,11 @@ public class Test {
         this.point = point;
     }
 
-    public String getType() {
+    public TestType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TestType type) {
         this.type = type;
     }
 }

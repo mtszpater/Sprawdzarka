@@ -2,7 +2,8 @@ package uwr.onlinejudge.server.util;
 
 public enum Languages {
     PYTHON("python", 0),
-    JAVA("java", 1);
+    C("C/C++", 7),
+    JAVA("java", 8);
 
     private String name;
     private int id;

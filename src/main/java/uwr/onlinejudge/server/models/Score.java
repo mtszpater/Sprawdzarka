@@ -1,6 +1,7 @@
 package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import uwr.onlinejudge.server.util.TestState;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +22,8 @@ public class Score {
     private Test test;
 
     @Column(nullable = false)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    private TestState state;
     
     @Lob
     private String testResult;
@@ -29,7 +31,6 @@ public class Score {
     @Temporal(TemporalType.TIMESTAMP)
     private Date executionTime;
 
-    @Column(nullable = false)
     private int point;
 
     public long getId() {
@@ -56,11 +57,11 @@ public class Score {
         this.test = test;
     }
 
-    public String getState() {
+    public TestState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(TestState state) {
         this.state = state;
     }
 

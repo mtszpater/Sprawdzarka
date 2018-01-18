@@ -88,10 +88,10 @@
                     <tr th:each="score,scoreIter: ${solution.scores}">
                         <td th:text="${score.executionTime}"></td>
                         <td th:text="${score.point}"></td>
-                        <th:block th:switch="${score.state}">
-                            <td th:case="'TLE'" th:text="${score.state}" class="text-info"></td>
-                            <td th:case="'RE'" th:text="${score.state}" class="text-danger"></td>
-                            <td th:case="'OK'" th:text="${score.state}" class="text-success"></td>
+                        <th:block th:switch="${score.state.id}">
+                            <td th:case="0" th:text="${score.state}" class="text-info"></td>
+                            <td th:case="1" th:text="${score.state}" class="text-danger"></td>
+                            <td th:case="3" th:text="${score.state}" class="text-success"></td>
                             <td th:case="*" th:text="${score.state}" class="text-muted"></td>
                         </th:block>
 
@@ -113,6 +113,7 @@
         </div>
     </div>
 </div>
+
 
 <div th:replace="shared/head :: script"></div>
 </body>
