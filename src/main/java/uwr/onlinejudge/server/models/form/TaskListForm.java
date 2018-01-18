@@ -20,7 +20,6 @@ public class TaskListForm {
     }
 
     public Group getGroup() {
-
         return group;
     }
 

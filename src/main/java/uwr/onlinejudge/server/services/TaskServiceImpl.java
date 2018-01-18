@@ -101,15 +101,5 @@ public class TaskServiceImpl implements TaskService {
         return solutionRepository.findOne(id);
     }
 
-    @Override
-    public Collection<Language> getLanguages(Task task) {
-        return languageRepository.findByTask(task);
-    }
-
-    @Override
-    public Language getLanguage(Long id) {
-        return languageRepository.findOne(id);
-    }
-
 
 }

@@ -19,6 +19,7 @@ import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.SolutionService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
+import uwr.onlinejudge.server.util.Languages;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -153,7 +154,7 @@ public class TaskController {
         User user = userService.findByEmail(principal.getName());
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
-        Collection<Language> languages = taskService.getLanguages(task);
+        Collection<Languages> languages = task.getLanguages();
 
         solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
 

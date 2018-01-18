@@ -42,7 +42,9 @@
                     <div class="tab-content col-12 align-self-center">
 
                         <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
-                            <a th:if="${#lists.isEmpty(myGroups)}">Brak wybranych grup </a>
+                            <th:block th:if="${#lists.isEmpty(myGroups)}">
+                                <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
+                            </th:block>
                             <div class="my-4" th:each="group:${myGroups}">
                                 <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
                             </div>

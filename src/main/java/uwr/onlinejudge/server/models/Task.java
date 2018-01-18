@@ -1,8 +1,10 @@
 package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import uwr.onlinejudge.server.util.Languages;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -32,6 +34,11 @@ public class Task {
 
     @Lob
     private String comment;
+
+    @ElementCollection(targetClass = Languages.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "task_languages")
+    private Collection<Languages> languages;
 
     public long getId() {
         return id;
@@ -87,5 +94,13 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<Languages> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Collection<Languages> languages) {
+        this.languages = languages;
     }
 }

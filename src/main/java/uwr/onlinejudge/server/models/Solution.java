@@ -2,6 +2,7 @@ package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
+import uwr.onlinejudge.server.util.Languages;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,9 +31,8 @@ public class Solution {
     @CreationTimestamp
     private Date dateOfSending;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false)
-    private Language language;
+    @Enumerated(EnumType.STRING)
+    private Languages language;
 
     @Lob
     private String comment;
@@ -83,14 +83,6 @@ public class Solution {
         this.dateOfSending = dateOfSending;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -113,5 +105,13 @@ public class Solution {
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public Languages getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Languages language) {
+        this.language = language;
     }
 }

@@ -14,7 +14,7 @@
             <label for="language">Język programowania</label>
             <select th:field="*{language}" id="language" class="form-control">
                 <option th:each="selectedLanguage : ${languages}"
-                        th:value="${selectedLanguage.id}"
+                        th:value="${selectedLanguage}"
                         th:text="${selectedLanguage.name}"></option>
             </select>
         </div>
