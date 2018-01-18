@@ -205,7 +205,8 @@ public class TaskController {
 
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
-        return "redirect:/zadanie/" + task.getId() + "?send=" + lastId;
+        redirectAttributes.addFlashAttribute("onlineJudge", true);
+        return "redirect:/zadanie/" + task.getId() + "?s=" + lastId;
     }
 
 

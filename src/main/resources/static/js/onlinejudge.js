@@ -13,12 +13,12 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-var send = getUrlParameter('send');
+var s = getUrlParameter('s');
 
 $(function(){
-    if( send ) {
+    if( s ) {
         $.ajax({
-          url: "http://localhost:8080/api/compile/" + send,
+          url: "http://localhost:8080/api/compile/" + s,
           context: document.body
         }).done(function(data) {
           if( data ){
