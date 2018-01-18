@@ -42,8 +42,9 @@
                     Zadanie:
                     <a th:text="${task.name}" th:href="@{/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a>
                 </div>
-                <div class="col">
-                    <p class="text-right text-primary" th:text="${task.deadline}"> 17.11.2015</p>
+                <div data-toggle="tooltip" data-placement="top" th:title="${task.deadline}" class="col">
+                    <p class="text-right text-primary" th:text="${#calendars.format(task.deadline,'hh:mm dd-MM-yyyy')}">
+                        17.11.2015</p>
                 </div>
             </div>
         </div>

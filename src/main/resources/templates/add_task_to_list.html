@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Head -->
 <div th:replace="shared/head :: head(title='Sprawdzarka UWr: Opisy zadań')"></div>
@@ -15,7 +15,7 @@
         <div class="col-10">
             <div class="card mx-10">
 
-                <h5 class="card-header">Opisy zadań</h5>
+                <h5 class="card-header">Gotowe opisy zadań</h5>
 
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -33,16 +33,25 @@
                     </ul>
                 </div>
 
+
                 <div class="card-body">
                     <div class="tab-content col-12 align-self-center">
 
-                        <div class="tab-pane fade show active" id="private" role="tabpanel">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-light" role="alert">
 
-                            <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                                <a th:href="@{/dodaj_opis_zadania}">
-                                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                                </a>
+                                    Poniżej znajdują się gotowe treści zadań zdefiniowane wcześniej przez kogoś innego.
+                                    W tym momencie możesz wybrać jedno z gotowych zadań znajdujących się na dole lub
+                                    dodać własną treść zadania
+                                    przechodząc do
+                                    <a th:href="@{/dodaj_opis_zadania}">tego okna</a>.
+                                    Ten tekst jest oczywiście do zmiany.
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="tab-pane fade show active" id="private" role="tabpanel">
 
                             <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email == #authentication.name])}">Brak
                                 prywatnych
@@ -59,12 +68,6 @@
                         </div>
 
                         <div class="tab-pane fade" id="public" role="tabpanel">
-
-                            <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                                <a th:href="@{/dodaj_opis_zadania}">
-                                    <div class="btn btn-primary float-right btn-sm">Dodaj</div>
-                                </a>
-                            </div>
 
                             <p th:if="${#lists.isEmpty(taskDescriptions.?[user.email != #authentication.name and not(personal)])}">
                                 Brak publicznych opisów zadań</p>

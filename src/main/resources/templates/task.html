@@ -60,7 +60,9 @@
                                 <div class="col-5">
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Termin <strong th:text="${task.deadline}">2018-02-01 17:23</strong>
+                                            Termin <strong
+                                                th:text="${#calendars.format(task.deadline,'dd MMMM hh:mm')}">2018-02-01
+                                            17:23</strong>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Wysłanych rozwiązań

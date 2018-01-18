@@ -72,14 +72,14 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.GET) //TODO: POBRAĆ SKĄD USER PRZYSZEDŁ, ABY GO TAM COFNĄĆ.
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isFullyAuthenticated()")
     public String addTaskDescription(Model model) {
         model.addAttribute("taskDescription", new TaskDescriptionForm());
         return "forms/add_task_description";
     }
 
     @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isFullyAuthenticated()")
     public String addTaskDescription(@ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "forms/add_task_description";

@@ -6,7 +6,7 @@
 <div th:fragment="history">
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-dark">
         <tr>
             <th scope="col">Data wysłania</th>
             <th scope="col">Rozwiązanie</th>
@@ -17,7 +17,7 @@
         <tbody>
         <tr th:each="solution,solutionIter: ${solutions}">
 
-            <td th:text="${solution.dateOfSending}"></td>
+            <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
 
             <td>
                 <div class="modal fade bd-example-modal-lg" tabindex="-1"
@@ -74,10 +74,9 @@
             </div>
             <div class="modal-body">
 
-                <table class="table table-hover">
-                    <thead>
+                <table class="table table-hover ">
+                    <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Czas wykonania</th>
                         <th scope="col">Punkty</th>
                         <th scope="col">Stan testu</th>
@@ -86,8 +85,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="score,scoreIter: ${solution.scores}">
-
-                        <th scope="row" th:text="${scoreIter.index}">0</th>
                         <td th:text="${score.executionTime}"></td>
                         <td th:text="${score.point}"></td>
                         <th:block th:switch="${score.state}">
