@@ -71,25 +71,15 @@ public class TaskController {
         return "redirect:/grupa/" + taskListForm.getGroup().getId();
     }
 
-    @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.GET) //TODO: POBRAĆ SKĄD USER PRZYSZEDŁ, ABY GO TAM COFNĄĆ.
+    @RequestMapping(value = "/dodaj_opis_zadania/{id}", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskDescription(Model model) {
-        model.addAttribute("taskDescription", new TaskDescriptionForm());
-        return "forms/add_task_description";
-    }
-
-    @RequestMapping(value = "/dodaj_opis_zadania", method = RequestMethod.POST)
-    @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskDescription(@ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "forms/add_task_description";
-        }
+    public String addTaskDescription(@PathVariable("id") Long id, @ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, Principal principal, RedirectAttributes redirectAttributes) {
 
         taskDescriptionForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskDescriptionForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Opis zadania został zdefiniowany");
-        return "redirect:/dodaj_opis_zadania";
+        return "redirect:/dodaj_zadanie_do_listy/" + id;
     }
 
     @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.GET)
@@ -98,7 +88,7 @@ public class TaskController {
         TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
         TaskList taskList = taskService.getTaskList(taskListId);
 
-        if(taskDescription == null || taskList == null)
+        if (taskDescription == null || taskList == null)
             return "error_page";
 
         TaskForm taskForm = new TaskForm();
@@ -114,13 +104,10 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveTask(
-            @PathVariable("taskListId") Long taskListId,
-            @PathVariable("taskDescriptionId") Long taskDescriptionId,
-            @ModelAttribute("task") @Valid TaskForm taskForm,
-            Model model,
-            Principal principal,
-            RedirectAttributes redirectAttributes) {
+    public String saveTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, @ModelAttribute("task") @Valid TaskForm taskForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/dodaj_zadanie/" + taskListId + "/" + taskDescriptionId;
+        }
 
         TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
         TaskList taskList = taskService.getTaskList(taskListId);
@@ -145,12 +132,13 @@ public class TaskController {
     public String addTaskToTaskList(@PathVariable("taskListId") Long taskListId, Model model, Principal principal) {
         TaskList taskList = taskService.getTaskList(taskListId);
 
-        if(taskList == null)
+        if (taskList == null)
             return "error_page";
 
         Collection<TaskDescription> taskDescriptions = taskService.getTaskDescriptions();
         model.addAttribute("taskListId", taskListId);
         model.addAttribute("taskDescriptions", taskDescriptions);
+        model.addAttribute("taskDescription", new TaskDescriptionForm());
 
         return "add_task_to_list";
     }

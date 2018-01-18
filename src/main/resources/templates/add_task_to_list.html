@@ -45,8 +45,26 @@
                                     W tym momencie możesz wybrać jedno z gotowych zadań znajdujących się na dole lub
                                     dodać własną treść zadania
                                     przechodząc do
-                                    <a th:href="@{/dodaj_opis_zadania}">tego okna</a>.
+                                    <a href="#" data-toggle="modal" data-target=".bd-example-modal-sm">tego okna</a>.
                                     Ten tekst jest oczywiście do zmiany.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+                             aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Zdefiniuj treść nowego
+                                            zadania</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div th:replace="forms/add_task_description :: form"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
