@@ -19,7 +19,6 @@
         <tr th:each="solution,solutionIter: ${solutions}">
 
             <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
-
             <td>
                 <div class="modal fade bd-example-modal-lg" tabindex="-1"
                      th:id="'solution_code'+${solution.id}+'-modal'" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -30,7 +29,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
                         th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
@@ -57,13 +55,11 @@
                 <div class="btn btn-light btn-sm" data-toggle="modal"
                      th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl
                 </div>
-
                 <div th:replace="shared/task/history :: modal"></div>
             </td>
         </tr>
         </tbody>
     </table>
-
 </div>
 
 <div th:fragment="modal" class="modal fade" th:id="'solution'+${solution.id}+'-modal'" tabindex="-1"
