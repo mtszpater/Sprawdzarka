@@ -21,6 +21,6 @@ skompilowania programu i otrzymania wyników.
 
 ### Compilebox
 Za pomocą [compilebox](https://github.com/remoteinterview/compilebox) korzystającego z dockera 
-możemy skompilować nasz program na całkowicie odrębnej wirtualnej maszynie dzięki czemu nie musimy obawiać się o
-niebezpieczne fragmentu kodu w dostarczonym przez użytkownika programie. Po wszystkim wysyłamy wyniki programu
-spowrotem do aplikacji WWW.
+możemy skompilować nasz program na całkowicie odrębnej wirtualnej maszynie dzięki czemu nie musimy obawiać się
+niebezpiecznych fragmentów kodu w dostarczonym przez użytkownika programie. Po wszystkim wysyłamy wyniki wyprodukowane przez program
+z powrotem do aplikacji WWW.
