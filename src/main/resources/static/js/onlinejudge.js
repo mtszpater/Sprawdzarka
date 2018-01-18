@@ -15,22 +15,15 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 var send = getUrlParameter('send');
 
-var myFunction = (function(i) {
-
-    $.ajax({
-      url: "http://localhost:8080/api/compile/" + send + "/" + i,
-      context: document.body
-    }).done(function(data) {
-      console.log(data);
-      if( data ){
-        console.log("Uruchamiam " + i+1)
-        myFunction(i+1);
-      }
-    });
-
-} );
-
-
 $(function(){
-   // myFunction(1);
+    if( send ) {
+        $.ajax({
+          url: "http://localhost:8080/api/compile/" + send,
+          context: document.body
+        }).done(function(data) {
+          if( data ){
+            console.log(data);
+          }
+        });
+    }
 });

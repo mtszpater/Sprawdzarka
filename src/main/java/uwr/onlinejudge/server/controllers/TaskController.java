@@ -200,10 +200,12 @@ public class TaskController {
 
         solutionForm.setTask(task);
         solutionForm.setUser(userService.findByEmail(principal.getName()));
-        solutionService.save(solutionForm);
+        long lastId = solutionService.save(solutionForm).getId();
+
+
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
-        return "redirect:/zadanie/" + task.getId();
+        return "redirect:/zadanie/" + task.getId() + "?send=" + lastId;
     }
 
 

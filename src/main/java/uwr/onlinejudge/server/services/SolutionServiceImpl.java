@@ -29,8 +29,8 @@ public class SolutionServiceImpl implements SolutionService {
     }
 
     @Override
-    public void save(SolutionForm solutionForm) {
-        solutionRepository.save(objectMapper.convertValue(solutionForm, Solution.class));
+    public Solution save(SolutionForm solutionForm) {
+        return solutionRepository.save(objectMapper.convertValue(solutionForm, Solution.class));
     }
 
     @Override
@@ -42,4 +42,5 @@ public class SolutionServiceImpl implements SolutionService {
     public void save(Score score) {
         scoreRepository.save(score);
     }
+
 }

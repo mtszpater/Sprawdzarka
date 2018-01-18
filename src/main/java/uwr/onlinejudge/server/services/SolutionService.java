@@ -9,7 +9,7 @@ public interface SolutionService {
 
     Solution getSolution(long solutionId);
 
-    void save(SolutionForm solutionForm);
+    Solution save(SolutionForm solutionForm);
 
     Score findScoreBySolutionAndTest(Solution solution, Test test);
 
