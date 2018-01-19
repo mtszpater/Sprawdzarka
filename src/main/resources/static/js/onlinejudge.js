@@ -22,6 +22,7 @@ $(function(){
           context: document.body
         }).done(function(data) {
           if( data ){
+
             console.log(data);
           }
         });
