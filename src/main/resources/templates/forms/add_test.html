@@ -13,10 +13,32 @@
 
     <form th:action="@{/dodaj_test/{id}(id = ${task.id})}" th:object="${test}" method="post">
 
-        <div class="form-group">
-            <label for="taskName" th:readonly="true">Zadanie</label>
-            <input type="text" class="form-control" id="taskName" th:value="${task.name}"
-                   th:readonly="true"/>
+        <div class="form-group row">
+            <label for="taskName" class="col-3 col-form-label" th:readonly="true">Zadanie</label>
+            <div class="col-6">
+                <input type="text" class="form-control" id="taskName" th:value="${task.name}"
+                       th:readonly="true"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group row col-6">
+                <label for="point" class="col-5 col-form-label">Punkty</label>
+                <div class="col-6">
+                    <input type="number" class="form-control" id="point" th:field="*{point}"/>
+                </div>
+            </div>
+            <div class="form-group row col-6">
+                <label class="col-4 col-form-label" for="testType">Typ</label>
+                <div class="col-8">
+                    <select class="custom-select" id="testType" th:field="*{type}">
+                        <option th:each="testType : ${T(uwr.onlinejudge.server.util.TestType).values()}"
+                                th:value="${testType}"
+                                th:text="${testType}">
+                        </option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -36,24 +58,6 @@
                             </textarea>
             <div class="invalid-feedback">
                 <p th:if="${#fields.hasErrors('expectedAnswer')}" th:errors="*{expectedAnswer}"></p>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-sm-4">
-                <label for="point">Punkty</label>
-                <input type="number" class="form-control" id="point" th:field="*{point}"/>
-            </div>
-            <div class="form-group col-sm-4">
-                <label for="testType">Typ testu</label>
-                <div class="form-group">
-                    <select id="testType" th:field="*{type}">
-                        <option th:each="testType : ${T(uwr.onlinejudge.server.util.TestType).values()}"
-                                th:value="${testType}"
-                                th:text="${testType}">
-                        </option>
-                    </select>
-                </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Dodaj</button>
