@@ -17,7 +17,7 @@ var s = getUrlParameter('s');
 
 $(function(){
 $( "#loader" ).removeClass("hidden");
-$( "#last_solution" ).text("W trakcie kompilowania...");
+$( "#last_solution" ).text("Kompiluję...");
 
 
     if( s ) {
@@ -27,14 +27,8 @@ $( "#last_solution" ).text("W trakcie kompilowania...");
         }).done(function(data) {
           if( data ){
             $( "#last_solution" ).text("Gotowe, odśwież stronę");
-            $(".alert").text("Program został skompilowany. Za sekundę strona zostanie odświeżona.");
-            $(".alert").removeClass("alert-info");
-            $(".alert").addClass("alert-success");
             $( "#loader" ).addClass("hidden");
-            console.log(data);
-
-            setTimeout(location.reload(), 2000);
-
+            location.reload();
           }
         });
     }
