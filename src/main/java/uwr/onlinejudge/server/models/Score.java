@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import uwr.onlinejudge.server.util.TestState;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Score {
@@ -28,8 +27,7 @@ public class Score {
     @Lob
     private String testResult;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date executionTime;
+    private int executionTime;
 
     private int point;
 
@@ -73,11 +71,11 @@ public class Score {
         this.testResult = testResult;
     }
 
-    public Date getExecutionTime() {
+    public int getExecutionTime() {
         return executionTime;
     }
 
-    public void setExecutionTime(Date executionTime) {
+    public void setExecutionTime(int executionTime) {
         this.executionTime = executionTime;
     }
 

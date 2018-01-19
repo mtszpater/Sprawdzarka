@@ -3,7 +3,6 @@ package uwr.onlinejudge.server.models;
 import uwr.onlinejudge.server.util.TestType;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Test {
@@ -15,8 +14,7 @@ public class Test {
     @JoinColumn(nullable = false)
     private Task task;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeRequired;
+    private int timeRequired;
 
     @Column(nullable = false)
     @Lob
@@ -49,11 +47,11 @@ public class Test {
         this.task = task;
     }
 
-    public Date getTimeRequired() {
+    public int getTimeRequired() {
         return timeRequired;
     }
 
-    public void setTimeRequired(Date timeRequired) {
+    public void setTimeRequired(int timeRequired) {
         this.timeRequired = timeRequired;
     }
 
