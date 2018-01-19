@@ -13,23 +13,15 @@
 
     <form th:action="@{/dodaj_test/{id}(id = ${task.id})}" th:object="${test}" method="post">
 
-        <div class="form-group row">
-            <label for="taskName" class="col-3 col-form-label" th:readonly="true">Zadanie</label>
-            <div class="col-6">
-                <input type="text" class="form-control" id="taskName" th:value="${task.name}"
-                       th:readonly="true"/>
-            </div>
-        </div>
-
         <div class="form-row">
             <div class="form-group row col-6">
-                <label for="point" class="col-5 col-form-label">Punkty</label>
+                <label for="point" class="col-5 col-form-label">Score</label>
                 <div class="col-6">
                     <input type="number" class="form-control" id="point" th:field="*{point}"/>
                 </div>
             </div>
             <div class="form-group row col-6">
-                <label class="col-4 col-form-label" for="testType">Typ</label>
+                <label class="col-4 col-form-label" for="testType">Type</label>
                 <div class="col-8">
                     <select class="custom-select" id="testType" th:field="*{type}">
                         <option th:each="testType : ${T(uwr.onlinejudge.server.util.TestType).values()}"
@@ -42,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            <label for="inputArgument">Argumenty wejściowe</label>
+            <label for="inputArgument">Input</label>
             <textarea class="form-control" id="inputArgument" rows="3"
                       th:field="*{inputArgument}">
                             </textarea>
@@ -52,7 +44,7 @@
         </div>
 
         <div class="form-group">
-            <label for="expectedAnswer">Oczekiwana odpowiedź</label>
+            <label for="expectedAnswer">Output</label>
             <textarea class="form-control" id="expectedAnswer" rows="3"
                       th:field="*{expectedAnswer}">
                             </textarea>
@@ -60,6 +52,14 @@
                 <p th:if="${#fields.hasErrors('expectedAnswer')}" th:errors="*{expectedAnswer}"></p>
             </div>
         </div>
+
+        <div class="form-group row">
+            <label for="point" class="col-3 col-form-label">Timeout</label>
+            <div class="col-3">
+                <input type="number" class="form-control" id="timeRequired" th:field="*{timeRequired}"/>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Dodaj</button>
     </form>
 </div>

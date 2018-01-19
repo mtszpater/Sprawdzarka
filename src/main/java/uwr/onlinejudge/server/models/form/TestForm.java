@@ -1,13 +1,10 @@
 package uwr.onlinejudge.server.models.form;
 
 import uwr.onlinejudge.server.models.Task;
-import uwr.onlinejudge.server.util.TestType;
-
-import java.util.Date;
 
 public class TestForm {
     private Task task;
-    private Date timeRequired;
+    private int timeRequired;
     private String inputArgument;
     private String expectedAnswer;
     private int point;
@@ -21,11 +18,11 @@ public class TestForm {
         this.task = task;
     }
 
-    public Date getTimeRequired() {
+    public int getTimeRequired() {
         return timeRequired;
     }
 
-    public void setTimeRequired(Date timeRequired) {
+    public void setTimeRequired(int timeRequired) {
         this.timeRequired = timeRequired;
     }
 
