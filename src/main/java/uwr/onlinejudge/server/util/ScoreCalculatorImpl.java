@@ -10,16 +10,19 @@ import uwr.onlinejudge.server.models.Test;
 @Component
 public class ScoreCalculatorImpl implements ScoreCalculator {
     AnswerChecker answerChecker;
+    CompileResultTimeConverter compileResultTimeConverter;
 
     @Autowired
-    public ScoreCalculatorImpl(AnswerChecker answerChecker) {
+    public ScoreCalculatorImpl(AnswerChecker answerChecker, CompileResultTimeConverter compileResultTimeConverter) {
         this.answerChecker = answerChecker;
+        this.compileResultTimeConverter = compileResultTimeConverter;
     }
 
     public Score calculate(Solution solution, Test test, CompileResult compileResult) {
 
-        String[] timeSplit = compileResult.getTime().split("\\.");
-        Score score = new Score(solution, test, compileResult.getOutput(), Integer.parseInt(timeSplit[1].replace("\n", "")));
+        int executionTime = compileResultTimeConverter.convert(compileResult.getTime());
+
+        Score score = new Score(solution, test, compileResult.getOutput(), executionTime);
 
         TestState testState = answerChecker.check(compileResult, test);
 

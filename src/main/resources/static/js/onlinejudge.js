@@ -16,6 +16,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var s = getUrlParameter('s');
 
 $(function(){
+
+
+
     if( s ) {
         $.ajax({
           url: "http://localhost:8080/api/compile/" + s,
