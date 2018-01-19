@@ -53,16 +53,9 @@ public class GroupController {
 
         model.addAttribute("availableGroups", availableGroups);
         model.addAttribute("myGroups", myGroups);
-
-        return "groups";
-    }
-
-    @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addGroup(Model model) {
         model.addAttribute("group", new GroupForm());
 
-        return "forms/add_group";
+        return "groups";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.POST)

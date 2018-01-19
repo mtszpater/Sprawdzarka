@@ -30,38 +30,53 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="clearfix" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                        <a th:href="@{/dodaj_grupe}">
-                            <div class="btn btn-primary float-right btn-sm">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                Dodaj
+                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#test-modal">
+                            Dodaj grupę
+                        </button>
+
+                        <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Tworzenie nowej grupy</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div th:replace="forms/add_group :: form"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content col-12 align-self-center">
+
+                    <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
+                        <th:block th:if="${#lists.isEmpty(myGroups)}">
+                            <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
+                        </th:block>
+                        <div class="mb-4" th:each="group:${myGroups}">
+                            <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
+                        </div>
                     </div>
 
-                    <div class="tab-content col-12 align-self-center">
-
-                        <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
-                            <th:block th:if="${#lists.isEmpty(myGroups)}">
-                                <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
-                            </th:block>
-                            <div class="my-4" th:each="group:${myGroups}">
-                                <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
-                            </div>
+                    <div class="tab-pane fade" id="availableGroups" role="tabpanel">
+                        <th:block th:if="${#lists.isEmpty(availableGroups)}">
+                            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
+                        </th:block>
+                        <div class="mb-4" th:each="group:${availableGroups}">
+                            <div th:replace="shared/card_group :: card(group=${group}, myGroup='false')"></div>
                         </div>
-
-                        <div class="tab-pane fade" id="availableGroups" role="tabpanel">
-                            <th:block th:if="${#lists.isEmpty(availableGroups)}">
-                                <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
-                            </th:block>
-                            <div class="my-4" th:each="group:${availableGroups}">
-                                <div th:replace="shared/card_group :: card(group=${group}, myGroup='false')"></div>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>
