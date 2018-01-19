@@ -18,8 +18,6 @@ var s = getUrlParameter('s');
 $(function(){
 $( "#loader" ).removeClass("hidden");
 $( "#last_solution" ).text("Kompiluję...");
-
-
     if( s ) {
         $.ajax({
           url: "http://localhost:8080/api/compile/" + s,

@@ -7,12 +7,15 @@
     <form th:action="@{/wyslij_zadanie/{id}(id=${task.id})}" method="post" th:object="${solutionForm}">
         <div class="form-group">
             <label for="solution">Wklej kod programu</label>
-            <textarea th:field="*{solution}" class="form-control" id="solution" rows="2"></textarea>
+            <textarea th:field="*{solution}" class="form-control" data-code="#output" id="solution"
+                      rows="10"></textarea>
+
+            <pre class="prettyprint" id="output"></pre>
         </div>
 
         <div class="form-group row">
-            <label for="language" class="col-5 col-form-label">Język programowania</label>
-            <div class="col-5">
+            <label for="language" class="col-4 col-form-label">Język programowania</label>
+            <div class="col-4">
                 <select th:field="*{language}" id="language" class="form-control">
                     <option th:each="selectedLanguage : ${languages}"
                             th:value="${selectedLanguage}"
@@ -32,3 +35,4 @@
 
 </body>
 </html>
+
