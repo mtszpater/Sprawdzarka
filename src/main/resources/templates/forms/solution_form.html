@@ -10,17 +10,19 @@
             <textarea th:field="*{solution}" class="form-control" id="solution" rows="2"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="language">Język programowania</label>
-            <select th:field="*{language}" id="language" class="form-control">
-                <option th:each="selectedLanguage : ${languages}"
-                        th:value="${selectedLanguage}"
-                        th:text="${selectedLanguage.name}"></option>
-            </select>
+        <div class="form-group row">
+            <label for="language" class="col-5 col-form-label">Język programowania</label>
+            <div class="col-5">
+                <select th:field="*{language}" id="language" class="form-control">
+                    <option th:each="selectedLanguage : ${languages}"
+                            th:value="${selectedLanguage}"
+                            th:text="${selectedLanguage.name}"></option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="comment">Komentarz:</label>
+            <label for="comment">Komentarz</label>
             <textarea th:field="*{comment}" class="form-control" id="comment" rows="2"></textarea>
         </div>
 
