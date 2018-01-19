@@ -27,16 +27,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="descriptionGroup">Opis grupy:</label>
-                            <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"
-                                      th:classappend="(${#fields.hasErrors('description')})?' is-invalid':''">
-            </textarea>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="passwordGroup">Hasło:</label>
                             <input type="password" class="form-control" id="passwordGroup" th:field="*{password}"
                                    th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
@@ -45,14 +35,24 @@
                             </div>
                         </div>
 
-                        <div class="form-check">
-                            <label class="form-check-label" th:for="${#ids.next('open')}">
-                                <input class="form-check-input" type="checkbox" th:field="*{open}"
-                                       th:classappend="(${#fields.hasErrors('open')})?' is-invalid':''"/>
-                                Zamknij grupę
-                            </label>
+                        <!--<div class="form-check">-->
+                        <!--<label class="form-check-label" th:for="${#ids.next('open')}">-->
+                        <!--<input class="form-check-input" type="checkbox" th:field="*{open}"-->
+                        <!--th:classappend="(${#fields.hasErrors('open')})?' is-invalid':''"/>-->
+                        <!--Zamknij grupę-->
+                        <!--</label>-->
+                        <!--<div class="invalid-feedback">-->
+                        <!--<p th:if="${#fields.hasErrors('open')}" th:errors="*{open}"></p>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label for="descriptionGroup">Opis grupy:</label>
+                            <textarea class="form-control" id="descriptionGroup" rows="3" th:field="*{description}"
+                                      th:classappend="(${#fields.hasErrors('description')})?' is-invalid':''">
+            </textarea>
                             <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('open')}" th:errors="*{open}"></p>
+                                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                             </div>
                         </div>
 
@@ -70,18 +70,6 @@
 <!-- Bootstrap core JavaScript -->
 <div th:replace="shared/head :: script"></div>
 
-<script>
-$(function() {
-$("#descriptionGroup").wysibb();
-})
-
-
-</script>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-<script src="http://cdn.wysibb.com/js/jquery.wysibb.min.js"></script>
-<link rel="stylesheet" href="http://cdn.wysibb.com/css/default/wbbtheme.css"/>
 
 </body>
 </html>

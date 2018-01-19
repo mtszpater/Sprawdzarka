@@ -161,6 +161,7 @@ public class TaskController {
 
         solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
 
+        Solution lastSolution = solutions.stream().findFirst().orElse(null);
 
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
@@ -168,6 +169,7 @@ public class TaskController {
         model.addAttribute("solutionForm", new SolutionForm());
         model.addAttribute("languages", languages);
         model.addAttribute("allPossibleLanguages", allPossibleLanguages);
+        model.addAttribute("lastSolution", lastSolution);
 
 
         if (tests.isEmpty() || languages.isEmpty()) {
