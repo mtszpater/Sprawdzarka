@@ -4,62 +4,64 @@
 <body>
 
 <div th:fragment="history">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Data wysłania</th>
+                <th scope="col">Rozwiązanie</th>
+                <th scope="col">Uzyskane punkty</th>
+                <th scope="col">Język</th>
+                <th scope="col">Szczegóły</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="solution,solutionIter: ${solutions}">
 
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Data wysłania</th>
-            <th scope="col">Rozwiązanie</th>
-            <th scope="col">Uzyskane punkty</th>
-            <th scope="col">Język</th>
-            <th scope="col">Szczegóły</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="solution,solutionIter: ${solutions}">
-
-            <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
-            <td>
-                <div class="modal fade bd-example-modal-lg" tabindex="-1"
-                     th:id="'solution_code'+${solution.id}+'-modal'" role="dialog" aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content p-3">
-                            <pre class="prettyprint border-0" th:text="${solution.solution}"></pre>
+                <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
+                <td>
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1"
+                         th:id="'solution_code'+${solution.id}+'-modal'" role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content p-3">
+                                <pre class="prettyprint border-0" th:text="${solution.solution}"></pre>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
-                        th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
-                </button>
-            </td>
+                    <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
+                            th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
+                    </button>
+                </td>
 
-            <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
-                <div class="progress" data-toggle="tooltip" data-placement="right"
-                     th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-                    <div role="progressbar"
-                         th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
-                         th:attrappend="style='width: ' + ${percent} + '%;'"
-                         th:aria-valuenow="${value}" aria-valuemin="0"
-                         th:aria-valuemax="${max}">
+                <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
+                    <div class="progress" data-toggle="tooltip" data-placement="right"
+                         th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
+                        <div role="progressbar"
+                             th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
+                             th:attrappend="style='width: ' + ${percent} + '%;'"
+                             th:aria-valuenow="${value}" aria-valuemin="0"
+                             th:aria-valuemax="${max}">
+                        </div>
                     </div>
-                </div>
-            </td>
+                </td>
 
-            <td>
-                <th:block th:text="${solution.language.name}"></th:block>
-            </td>
+                <td>
+                    <th:block th:text="${solution.language.name}"></th:block>
+                </td>
 
-            <td>
-                <div class="btn btn-light btn-sm" data-toggle="modal"
-                     th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl
-                </div>
-                <div th:replace="shared/task/history :: modal"></div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <td>
+                    <div class="btn btn-light btn-sm" data-toggle="modal"
+                         th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl
+                    </div>
+                    <div th:replace="shared/task/history :: modal"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div th:fragment="modal" class="modal fade" th:id="'solution'+${solution.id}+'-modal'" tabindex="-1"
@@ -88,12 +90,12 @@
                     <tr th:each="score,scoreIter: ${solution.scores}">
                         <td th:text="${score.executionTime}"></td>
                         <td th:text="${score.point}"></td>
-                        <th:block th:switch="${score.state.id}">
+                        <div th:switch="${score.state.id}" class="font-weight: 500;">
                             <td th:case="0" th:text="${score.state}" class="text-info"></td>
                             <td th:case="1" th:text="${score.state}" class="text-warning"></td>
                             <td th:case="3" th:text="${score.state}" class="text-success"></td>
                             <td th:case="*" th:text="${score.state}" class="text-danger"></td>
-                        </th:block>
+                        </div>
 
                         <td>
                             <a th:href="@{/wynik_testu/{id}(id=${score.id})}">

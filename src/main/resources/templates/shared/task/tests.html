@@ -4,65 +4,67 @@
 <body>
 
 <div th:fragment="tests">
-    <table class="table table-hover">
-        <thead class="thead-dark">
-        <tr>
-            <th scope="col">Input</th>
-            <th scope="col">Output</th>
-            <th scope="col">Timeout</th>
-            <th scope="col">Score</th>
-            <th scope="col">Type</th>
-            <th scope="col">Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="test,testIter: ${tests}">
-            <td>
-                <a th:if="${#strings.length(test.inputArgument)} > 100"
-                   th:href="@{/testy/{id}/argumenty_wejsciowe (id = ${test.id})}">
-                    <div class="btn btn-light btn-sm">
-                        Wyświetl
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Input</th>
+                <th scope="col">Output</th>
+                <th scope="col">Timeout</th>
+                <th scope="col">Score</th>
+                <th scope="col">Type</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="test,testIter: ${tests}">
+                <td>
+                    <a th:if="${#strings.length(test.inputArgument)} > 100"
+                       th:href="@{/testy/{id}/argumenty_wejsciowe (id = ${test.id})}">
+                        <div class="btn btn-light btn-sm">
+                            Wyświetl
+                        </div>
+                    </a>
+                    <div th:unless="${#strings.length(test.inputArgument)} > 100"
+                         th:attrappend="data-val=${test.inputArgument}" data-id='Argumenty wejściowe'
+                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
                     </div>
-                </a>
-                <div th:unless="${#strings.length(test.inputArgument)} > 100"
-                     th:attrappend="data-val=${test.inputArgument}" data-id='Argumenty wejściowe'
-                     class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
-                </div>
-            </td>
-            <td>
-                <a th:if="${#strings.length(test.expectedAnswer)} > 100"
-                   th:href="@{/testy/{id}/oczekiwana_odpowiedz (id = ${test.id})}">
-                    <div class="btn btn-light btn-sm">
-                        Wyświetl
+                </td>
+                <td>
+                    <a th:if="${#strings.length(test.expectedAnswer)} > 100"
+                       th:href="@{/testy/{id}/oczekiwana_odpowiedz (id = ${test.id})}">
+                        <div class="btn btn-light btn-sm">
+                            Wyświetl
+                        </div>
+                    </a>
+                    <div th:unless="${#strings.length(test.expectedAnswer)} > 100"
+                         th:attrappend="data-val=${test.expectedAnswer}" data-id='Oczekiwana odpowiedź'
+                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
                     </div>
-                </a>
-                <div th:unless="${#strings.length(test.expectedAnswer)} > 100"
-                     th:attrappend="data-val=${test.expectedAnswer}" data-id='Oczekiwana odpowiedź'
-                     class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
-                </div>
-            </td>
-            <td th:text="${test.timeRequired}"></td>
-            <td th:text="${test.point}"></td>
-            <td>
-                <th:block th:switch="${test.type.id}">
+                </td>
+                <td th:text="${test.timeRequired}"></td>
+                <td th:text="${test.point}"></td>
+                <td>
+                    <th:block th:switch="${test.type.id}">
                     <span th:case="0" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
                           th:title="${test.type.title}" class="badge badge-primary">Public</span>
-                    <span th:case="1" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          th:title="${test.type.title}" class="badge badge-secondary">Private</span>
-                    <span th:case="*" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          th:title="${test.type.title}" class="badge badge-dark">Hidden</span>
-                </th:block>
-            </td>
-            <td>
-                <a th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">
-                    <div class="btn btn-light btn-sm">
-                        Usuń
-                    </div>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                        <span th:case="1" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
+                              th:title="${test.type.title}" class="badge badge-secondary">Private</span>
+                        <span th:case="*" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
+                              th:title="${test.type.title}" class="badge badge-dark">Hidden</span>
+                    </th:block>
+                </td>
+                <td>
+                    <a th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">
+                        <div class="btn btn-light btn-sm">
+                            Usuń
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <a th:href="@{'/dodaj_test/'+${task.id}}" class="btn btn-primary mb-4">Dodaj test</a>
 
     <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
