@@ -43,23 +43,9 @@ public class TaskController {
         this.solutionService = solutionService;
     }
 
-    @RequestMapping(value = "/dodaj_liste/{id}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addList(@PathVariable("id") Long id, Model model) {
-        Group group = groupService.getGroup(id);
-        if (group == null)
-            return "error_page";
-
-        TaskListForm taskListForm = new TaskListForm();
-        taskListForm.setGroup(group);
-
-        model.addAttribute("taskList", taskListForm);
-        return "forms/add_list";
-    }
-
     @RequestMapping(value = "/dodaj_liste", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveList(@ModelAttribute("taskList") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String saveList(@ModelAttribute("taskListForm") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "forms/add_list";
         }

@@ -21,14 +21,32 @@
                     <div class="tab-content col-12 align-self-center">
 
                         <div class="row">
-                            <div class="col"><a th:text="${group.description}"></a></div>
-                            <div class="col">
-                                <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="clearfix">
-                                    <a th:href="@{/dodaj_liste/{id}(id = ${group.id})}">
-                                        <div class="btn btn-primary float-right btn-sm">
-                                            <i class="fa fa-plus" aria-hidden="true"></i> Dodaj listę
+                            <div class="col-10"><a th:text="${group.description}"></a></div>
+                            <div class="col-2">
+                                <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#test-modal">
+                                        Dodaj listę
+                                    </button>
+
+                                    <div class="modal fade" id="test-modal" tabindex="-1" role="dialog"
+                                         aria-labelledby="test-modal"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Tworzenie nowej listy</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div th:replace="forms/add_list :: form"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

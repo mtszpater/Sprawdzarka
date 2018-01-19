@@ -17,6 +17,7 @@ import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.models.form.GroupForm;
 import uwr.onlinejudge.server.models.form.PasswordGroup;
+import uwr.onlinejudge.server.models.form.TaskListForm;
 import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.UserService;
@@ -89,6 +90,10 @@ public class GroupController {
         taskList.forEach(t -> t.setTasks(t.getTasks().stream().sorted(Comparator.comparing(Task::getDeadline).reversed()).collect(Collectors.toList())));
 
         model.addAttribute("taskList", taskList);
+
+        TaskListForm taskListForm = new TaskListForm();
+        taskListForm.setGroup(group);
+        model.addAttribute("taskListForm", taskListForm);
 
         return "group";
     }
