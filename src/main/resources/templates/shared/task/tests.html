@@ -65,21 +65,22 @@
             </tbody>
         </table>
     </div>
-    <a th:href="@{'/dodaj_test/'+${task.id}}" class="btn btn-primary mb-4">Dodaj test</a>
+    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#test-modal">
+        Dodaj test
+    </button>
+
 
     <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal</h5>
+                    <h5 class="modal-title">Dodawanie testu</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <div th:replace="forms/add_test :: form"></div>
                 </div>
             </div>
         </div>

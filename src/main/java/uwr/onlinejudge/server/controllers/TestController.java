@@ -55,21 +55,6 @@ public class TestController {
         return "log";
     }
 
-    @RequestMapping(value = "/dodaj_test/{taskId}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addTest(@PathVariable("taskId") Long taskId, Model model) {
-        Task task = taskService.getTask(taskId);
-        TestForm testForm = new TestForm();
-
-        if (task == null)
-            return "error_page";
-
-        model.addAttribute("task", task);
-        model.addAttribute("test", testForm);
-
-        return "forms/add_test";
-    }
-
     @RequestMapping(value = "/dodaj_test/{taskId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveTest(@PathVariable("taskId") Long taskId, @ModelAttribute("test") @Valid TestForm testForm, RedirectAttributes redirectAttributes) {

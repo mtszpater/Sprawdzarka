@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.*;
-import uwr.onlinejudge.server.models.form.SolutionForm;
-import uwr.onlinejudge.server.models.form.TaskDescriptionForm;
-import uwr.onlinejudge.server.models.form.TaskForm;
-import uwr.onlinejudge.server.models.form.TaskListForm;
+import uwr.onlinejudge.server.models.form.*;
 import uwr.onlinejudge.server.services.GroupService;
 import uwr.onlinejudge.server.services.SolutionService;
 import uwr.onlinejudge.server.services.TaskService;
@@ -170,7 +167,7 @@ public class TaskController {
         model.addAttribute("languages", languages);
         model.addAttribute("allPossibleLanguages", allPossibleLanguages);
         model.addAttribute("lastSolution", lastSolution);
-
+        model.addAttribute("test", new TestForm());
 
         if (tests.isEmpty() || languages.isEmpty()) {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
