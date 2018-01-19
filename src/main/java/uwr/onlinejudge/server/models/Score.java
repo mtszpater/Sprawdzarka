@@ -31,6 +31,16 @@ public class Score {
 
     private int point;
 
+    public Score() {
+    }
+
+    public Score(Solution solution, Test test, String output, int executionTime) {
+        this.solution = solution;
+        this.test = test;
+        this.testResult = output;
+        this.executionTime = executionTime;
+    }
+
     public long getId() {
         return id;
     }
