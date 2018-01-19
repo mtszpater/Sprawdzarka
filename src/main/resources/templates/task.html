@@ -71,53 +71,57 @@
                                         </li>
                                         <li class="list-group-item text-center" th:if="${lastSolution}">
                                             <h4 class="card-title">Ostatnie rozwiązanie</h4>
-                                            <p class="card-text">
-                                                <span th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></span>
-                                                <span th:text="${lastSolution.language.name}">php</span>
-                                            </p>
+                                            <img id="loader" class="hidden" th:src="@{/images/loader.gif}"/>
+                                            <div id="last_solution">
+                                                <p class="card-text">
+                                                    <span th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></span>
+                                                    <span th:text="${lastSolution.language.name}">php</span>
+                                                </p>
 
-                                            <th:block
-                                                    th:with="value=${#aggregates.sum(lastSolution.scores.![point])},max=${#aggregates.sum(lastSolution.scores.![test.point])}">
-                                                <div class="progress mb-4" data-toggle="tooltip" data-placement="right"
-                                                     th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-                                                    <div role="progressbar"
-                                                         th:with="percent = ${max} ? ${value} * 100 / ${max} : 0"
-                                                         class="progress-bar text-dark"
-                                                         th:attrappend="style='width: ' + ${percent} + '%;'"
-                                                         th:aria-valuenow="${value}" aria-valuemin="0"
-                                                         th:aria-valuemax="${max}">
+                                                <th:block
+                                                        th:with="value=${#aggregates.sum(lastSolution.scores.![point])},max=${#aggregates.sum(lastSolution.scores.![test.point])}">
+                                                    <div class="progress mb-4" data-toggle="tooltip"
+                                                         data-placement="right"
+                                                         th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
+                                                        <div role="progressbar"
+                                                             th:with="percent = ${max} ? ${value} * 100 / ${max} : 0"
+                                                             class="progress-bar text-dark"
+                                                             th:attrappend="style='width: ' + ${percent} + '%;'"
+                                                             th:aria-valuenow="${value}" aria-valuemin="0"
+                                                             th:aria-valuemax="${max}">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </th:block>
+                                                </th:block>
 
-                                            <table class="table table-hover text-center">
-                                                <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">Czas</th>
-                                                    <th scope="col">Punkty</th>
-                                                    <th scope="col">Stan</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="score,scoreIter: ${lastSolution.scores}">
-                                                    <td th:text="${score.executionTime}"></td>
-                                                    <td th:text="${score.point}"></td>
-                                                    <div th:switch="${score.state.id}" class="font-weight: 500;">
-                                                        <td th:case="0" th:text="${score.state}" class="text-info"></td>
-                                                        <td th:case="1" th:text="${score.state}"
-                                                            class="text-warning"></td>
-                                                        <td th:case="3" th:text="${score.state}"
-                                                            class="text-success"></td>
-                                                        <td th:case="*" th:text="${score.state}"
-                                                            class="text-danger"></td>
-                                                    </div>
+                                                <table class="table table-hover text-center">
+                                                    <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">Czas</th>
+                                                        <th scope="col">Punkty</th>
+                                                        <th scope="col">Stan</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="score,scoreIter: ${lastSolution.scores}">
+                                                        <td th:text="${score.executionTime}"></td>
+                                                        <td th:text="${score.point}"></td>
+                                                        <div th:switch="${score.state.id}" class="font-weight: 500;">
+                                                            <td th:case="0" th:text="${score.state}"
+                                                                class="text-info"></td>
+                                                            <td th:case="1" th:text="${score.state}"
+                                                                class="text-warning"></td>
+                                                            <td th:case="3" th:text="${score.state}"
+                                                                class="text-success"></td>
+                                                            <td th:case="*" th:text="${score.state}"
+                                                                class="text-danger"></td>
+                                                        </div>
 
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
 
-                                            <a href="#" class="btn btn-primary">Wyświetl kod</a>
-
+                                                <a href="#" class="btn btn-primary">Wyświetl kod</a>
+                                            </div>
 
                                         </li>
                                     </ul>
@@ -214,6 +218,7 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
 </script>
 
 </body>
