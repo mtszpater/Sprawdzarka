@@ -18,6 +18,14 @@ public class TestForm {
     private int point;
     private TestType type;
 
+    public TestForm() {
+    }
+
+    public TestForm(Task task) {
+        this.task = task;
+    }
+
+
     public Task getTask() {
         return task;
     }

@@ -15,6 +15,13 @@ public class TaskListForm {
 
     private Group group;
 
+    public TaskListForm() {
+    }
+
+    public TaskListForm(Group group) {
+        this.group = group;
+    }
+
     public void setGroup(Group group) {
         this.group = group;
     }

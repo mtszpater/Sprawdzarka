@@ -43,6 +43,44 @@ public class TaskController {
         this.solutionService = solutionService;
     }
 
+    @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String showTask(@PathVariable("id") Long id, Model model, Principal principal) {
+        Task task = taskService.getTask(id);
+
+        if (task == null)
+            return "error_page";
+
+
+        User user = userService.findByEmail(principal.getName());
+        Collection<Test> tests = taskService.getTests(task);
+        Collection<Solution> solutions = taskService.getSolutions(user, task);
+        Collection<Languages> languages = task.getLanguages();
+        ArrayList<Languages> allPossibleLanguages = new ArrayList<>(Arrays.asList(Languages.values()));
+        SolutionForm solutionForm = new SolutionForm(task);
+        TestForm testForm = new TestForm(task);
+
+        solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
+        Solution lastSolution = solutions.stream().findFirst().orElse(null);
+
+
+        model.addAttribute("solutionForm", solutionForm);
+        model.addAttribute("testForm", testForm);
+        model.addAttribute("task", task);
+        model.addAttribute("tests", tests);
+        model.addAttribute("solutions", solutions);
+        model.addAttribute("languages", languages);
+        model.addAttribute("allPossibleLanguages", allPossibleLanguages);
+        model.addAttribute("lastSolution", lastSolution);
+
+
+        if (tests.isEmpty() || languages.isEmpty()) {
+            model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
+        }
+
+        return "task";
+    }
+
     @RequestMapping(value = "/dodaj_liste", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveList(@ModelAttribute("taskListForm") @Valid TaskListForm taskListForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
@@ -79,11 +117,7 @@ public class TaskController {
         if (taskDescription == null || taskList == null)
             return "error_page";
 
-        TaskForm taskForm = new TaskForm();
-        taskForm.setTaskDescription(taskDescription);
-        taskForm.setTaskList(taskList);
-        taskForm.setName(taskDescription.getName());
-
+        TaskForm taskForm = new TaskForm(taskDescription, taskList, taskDescription.getName());
         model.addAttribute("taskForm", taskForm);
         return "forms/add_task";
     }
@@ -118,46 +152,6 @@ public class TaskController {
         model.addAttribute("taskDescription", new TaskDescriptionForm());
 
         return "add_task_to_list";
-    }
-
-
-    @RequestMapping(value = "/zadanie/{id}", method = RequestMethod.GET)
-    @PreAuthorize("isFullyAuthenticated()")
-    public String showTask(@PathVariable("id") Long id, Model model, Principal principal) {
-        Task task = taskService.getTask(id);
-
-        if (task == null)
-            return "error_page";
-
-
-        User user = userService.findByEmail(principal.getName());
-        Collection<Test> tests = taskService.getTests(task);
-        Collection<Solution> solutions = taskService.getSolutions(user, task);
-        Collection<Languages> languages = task.getLanguages();
-        ArrayList<Languages> allPossibleLanguages = new ArrayList<>(Arrays.asList(Languages.values()));
-
-        solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
-
-        Solution lastSolution = solutions.stream().findFirst().orElse(null);
-
-        model.addAttribute("task", task);
-        model.addAttribute("tests", tests);
-        model.addAttribute("solutions", solutions);
-        SolutionForm solutionForm = new SolutionForm();
-        solutionForm.setTask(task);
-        model.addAttribute("solutionForm", solutionForm);
-        model.addAttribute("languages", languages);
-        model.addAttribute("allPossibleLanguages", allPossibleLanguages);
-        model.addAttribute("lastSolution", lastSolution);
-        TestForm testForm = new TestForm();
-        testForm.setTask(task);
-        model.addAttribute("testForm", testForm);
-
-        if (tests.isEmpty() || languages.isEmpty()) {
-            model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");
-        }
-
-        return "task";
     }
 
     @RequestMapping(value = "/wynik_testu/{id}", method = RequestMethod.GET)

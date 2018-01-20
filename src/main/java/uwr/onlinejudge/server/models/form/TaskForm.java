@@ -23,6 +23,17 @@ public class TaskForm {
     private User user;
     private String comment;
 
+    public TaskForm() {
+
+    }
+
+    public TaskForm(TaskDescription taskDescription, TaskList taskList, String name) {
+        this.taskDescription = taskDescription;
+        this.taskList = taskList;
+        this.name = name;
+    }
+
+
     public TaskList getTaskList() {
         return taskList;
     }

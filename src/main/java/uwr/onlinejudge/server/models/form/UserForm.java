@@ -4,16 +4,12 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Min;
-
 public class UserForm {
 
     @Length(min = 3, message = "Nazwisko powinno posiadać conajmniej 3 litery")
-    @NotEmpty(message = "To pole nie moze być puste")
     private String secondname;
 
     @Length(min = 3, message = "Imie powinno posiadać conajmniej 3 litery")
-    @NotEmpty(message = "To pole nie moze być puste")
     private String firstname;
 
     @Email
@@ -21,7 +17,6 @@ public class UserForm {
     private String email;
 
     @Length(min = 3, message = "Hasło powinno posiadać conajmniej 3 litery")
-    @NotEmpty(message = "To pole nie moze być puste")
     private String password;
 
     @NotEmpty(message = "To pole nie moze być puste")

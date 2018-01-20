@@ -14,6 +14,13 @@ public class SolutionForm {
     private Languages language;
     private String comment;
 
+    public SolutionForm(Task task) {
+        this.task = task;
+    }
+
+    public SolutionForm() {
+    }
+
     public User getUser() {
         return user;
     }

@@ -54,14 +54,14 @@ public class GroupController {
 
         model.addAttribute("availableGroups", availableGroups);
         model.addAttribute("myGroups", myGroups);
-        model.addAttribute("group", new GroupForm());
+        model.addAttribute("groupForm", new GroupForm());
 
         return "groups";
     }
 
     @RequestMapping(value = "/dodaj_grupe", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveGroup(@ModelAttribute("group") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String saveGroup(@ModelAttribute("groupForm") @Valid GroupForm groupForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "forms/add_group";
@@ -84,16 +84,13 @@ public class GroupController {
         if (group == null)
             return "error_page";
 
-        model.addAttribute("group", group);
         Collection<TaskList> taskList = taskService.getTaskLists(group);
-
         taskList.forEach(t -> t.setTasks(t.getTasks().stream().sorted(Comparator.comparing(Task::getDeadline).reversed()).collect(Collectors.toList())));
+        TaskListForm taskListForm = new TaskListForm(group);
 
-        model.addAttribute("taskList", taskList);
-
-        TaskListForm taskListForm = new TaskListForm();
-        taskListForm.setGroup(group);
         model.addAttribute("taskListForm", taskListForm);
+        model.addAttribute("taskList", taskList);
+        model.addAttribute("group", group);
 
         return "group";
     }
@@ -125,13 +122,7 @@ public class GroupController {
 
     @RequestMapping(value = "/zapisz_do_grupy/{id}", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String registerToGroupWithPassword(
-            @PathVariable("id") Long id,
-            @ModelAttribute("passwordGroup") @Valid PasswordGroup passwordGroup,
-            BindingResult bindingResult,
-            Principal principal,
-            Model model,
-            RedirectAttributes redirectAttributes) {
+    public String registerToGroupWithPassword(@PathVariable("id") Long id, @ModelAttribute("passwordGroup") @Valid PasswordGroup passwordGroup, BindingResult bindingResult, Principal principal, Model model, RedirectAttributes redirectAttributes) {
 
         Group group = groupService.getGroup(id);
         if (!group.getPassword().equals(passwordGroup.getPassword())) {
