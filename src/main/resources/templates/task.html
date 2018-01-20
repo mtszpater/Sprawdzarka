@@ -1,60 +1,42 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-<!-- Head -->
-<div th:replace="shared/head :: head('Sprawdzarka UWr: Zadania')"></div>
-<body>
-<!-- Navigation -->
-<div th:replace="shared/head :: header"></div>
 
-<!--Page Content-->
-<main role="main" class="container">
-    <div class="row justify-content-center">
-        <div class="col-10">
-            <div class="card mx-10">
-                <h5 class="card-header" th:text="${task.name}">Grupa</h5>
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab" aria-selected="true">
-                                Szczegóły zadania
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab" aria-selected="true">
-                                Prześlij rozwiązanie
-                            </a>
-                        </li>
-                        <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
-                                Specyfikacja zadania
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content col-12 align-self-center">
-                        <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
-                            <th:block th:include="shared/task/description :: tab(task = ${task}, solutions = ${solutions})"/>
-                        </div>
-                        <div class="tab-pane fade" id="taskSolution" role="tabpanel">
-                            <th:block th:include="shared/task/history :: tab(solutions = ${solutions})"/>
-                        </div>
-                        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest" role="tabpanel">
-                            <th:block th:include="shared/task/tests :: tab(tests = ${tests}, allPossibleLanguages = ${allPossibleLanguages})"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+    <div id="header" th:remove="tag">
+        <h5 class="card-header" th:text="${task.name}">Grupa</h5>
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab" aria-selected="true">
+                        Szczegóły zadania
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab" aria-selected="true">
+                        Prześlij rozwiązanie
+                    </a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#taskTest" role="tab" aria-selected="true">
+                        Specyfikacja zadania
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-</main>
 
-<!-- Footer -->
-<div th:replace="shared/footer :: copy"></div>
+    <div id="body" th:remove="tag">
+        <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
+            <th:block th:include="shared/task/description :: tab(task = ${task}, solutions = ${solutions})"/>
+        </div>
+        <div class="tab-pane fade" id="taskSolution" role="tabpanel">
+            <th:block th:include="shared/task/history :: tab(solutions = ${solutions})"/>
+        </div>
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest" role="tabpanel">
+            <th:block th:include="shared/task/tests :: tab(tests = ${tests}, allPossibleLanguages = ${allPossibleLanguages})"/>
+        </div>
+    </div>
+</th:block>
 
-<!-- Bootstrap core JavaScript -->
-<div th:replace="shared/head :: script"></div>
-
-</body>
 </html>

@@ -1,86 +1,64 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!-- Head -->
-<div th:replace="shared/head :: head('Zarejestruj się do Sprawdzarka UWr')"></div>
+<th:block th:replace="shared/container :: common_container(header = ~{},body = ~{::div#body})">
+    <div id="body" th:remove="tag">
+        <h5 class="card-header">Rejestracja</h5>
 
-<body>
+        <form th:action="@{/registration}" th:object="${userForm}" method="post">
 
-<!-- Navigation -->
-<div th:replace="shared/head :: header"></div>
-
-<main role="main" class="container">
-    <!-- Panel Registration -->
-    <div class="row justify-content-center">
-        <div class="col-6">
-            <div class="card mx-10">
-                <h5 class="card-header">Rejestracja</h5>
-                <div class="card-body">
-                    <form th:action="@{/registration}" th:object="${userForm}" method="post">
-
-                        <div class="form-group">
-                            <label class="col-form-label" for="firstName">Imię:</label>
-                            <input type="text" class="form-control" id="firstName" required="required"
-                                   th:field="*{firstname}"
-                                   th:classappend="(${#fields.hasErrors('firstname')})?' is-invalid':''"/>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-form-label" for="secondName">Nazwisko:</label>
-                            <input type="text" class="form-control" id="secondName" required="required"
-                                   th:field="*{secondname}"
-                                   th:classappend="(${#fields.hasErrors('secondname')})?' is-invalid':''"/>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-form-label" for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" required="required"
-                                   th:field="*{email}"
-                                   th:classappend="(${#fields.hasErrors('email')})?' is-invalid':''"/>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-form-label" for="password">Hasło:</label>
-                            <input type="password" class="form-control" id="password" required="required"
-                                   th:field="*{password}"
-                                   th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-form-label" for="passwordConfirm">Hasło:</label>
-                            <input type="password" class="form-control" id="passwordConfirm" required="required"
-                                   th:field="*{passwordConfirm}"
-                                   th:classappend="(${#fields.hasErrors('passwordConfirm')})?' is-invalid':''"/>
-                            <div class="invalid-feedback">
-                                <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Zarejestruj</button>
-                    </form>
+            <div class="form-group">
+                <label class="col-form-label" for="firstName">Imię</label>
+                <input type="text" class="form-control" id="firstName" required="required"
+                       th:field="*{firstname}"
+                       th:classappend="(${#fields.hasErrors('firstname')})?' is-invalid':''"/>
+                <div class="invalid-feedback">
+                    <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
                 </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="secondName">Nazwisko</label>
+                <input type="text" class="form-control" id="secondName" required="required"
+                       th:field="*{secondname}"
+                       th:classappend="(${#fields.hasErrors('secondname')})?' is-invalid':''"/>
+                <div class="invalid-feedback">
+                    <p th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" required="required"
+                       th:field="*{email}"
+                       th:classappend="(${#fields.hasErrors('email')})?' is-invalid':''"/>
+                <div class="invalid-feedback">
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="password">Hasło</label>
+                <input type="password" class="form-control" id="password" required="required"
+                       th:field="*{password}"
+                       th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
+                <div class="invalid-feedback">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="passwordConfirm">Hasło</label>
+                <input type="password" class="form-control" id="passwordConfirm" required="required"
+                       th:field="*{passwordConfirm}"
+                       th:classappend="(${#fields.hasErrors('passwordConfirm')})?' is-invalid':''"/>
+                <div class="invalid-feedback">
+                    <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Zarejestruj</button>
+        </form>
     </div>
-</main>
-
-<!-- Footer -->
-<div th:replace="shared/footer :: copy"></div>
-
-<!-- Bootstrap core JavaScript -->
-<div th:replace="shared/head :: script"></div>
-
-</body>
+</th:block>
 </html>

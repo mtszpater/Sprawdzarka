@@ -2,91 +2,58 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns="http://www.w3.org/1999/xhtml">
 
-<!-- Head -->
-<div th:replace="shared/head :: head (title='Sprawdzarka UWr: Grupy')"></div>
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
 
-<body>
+    <div id="header" th:remove="tag">
+        <h5 class="card-header">Przegląd grup</h5>
+    </div>
 
-<!-- Navigation -->
-<div th:replace="shared/head :: header"></div>
+    <div id="body" th:remove="tag">
 
-<!--Page Content-->
-<main role="main" class="container">
-    <div class="row justify-content-center">
-        <div class="col-10">
-            <div class="card mx-10">
-                <h5 class="card-header">Przegląd grup</h5>
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#myGroup" role="tab"
-                               aria-selected="true">Moje</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#availableGroups" role="tab"
-                               aria-selected="false">Dostępne</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
+        <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+                    data-target="#test-modal">
+                Dodaj grupę
+            </button>
 
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#test-modal">
-                            Dodaj grupę
-                        </button>
-
-                        <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Tworzenie nowej grupy</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div th:replace="forms/add_group :: form"></div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tworzenie nowej grupy</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div th:replace="forms/add_group :: form"></div>
                         </div>
                     </div>
                 </div>
-
-                <div class="tab-content col-12 align-self-center">
-
-                    <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
-                        <th:block th:if="${#lists.isEmpty(myGroups)}">
-                            <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
-                        </th:block>
-                        <div class="mb-4" th:each="group:${myGroups}">
-                            <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="availableGroups" role="tabpanel">
-                        <th:block th:if="${#lists.isEmpty(availableGroups)}">
-                            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
-                        </th:block>
-                        <div class="mb-4" th:each="group:${availableGroups}">
-                            <div th:replace="shared/card_group :: card(group=${group}, myGroup='false')"></div>
-                        </div>
-                    </div>
-
-                </div>
-
             </div>
         </div>
+
+        <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
+            <th:block th:if="${#lists.isEmpty(myGroups)}">
+                <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
+            </th:block>
+            <div class="mb-4" th:each="group:${myGroups}">
+                <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="availableGroups" role="tabpanel">
+            <th:block th:if="${#lists.isEmpty(availableGroups)}">
+                <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
+            </th:block>
+            <div class="mb-4" th:each="group:${availableGroups}">
+                <div th:replace="shared/card_group :: card(group=${group}, myGroup='false')"></div>
+            </div>
+        </div>
+
     </div>
-</main>
-
-<!-- Footer -->
-<div th:replace="shared/footer :: copy"></div>
-
-<!-- Bootstrap core JavaScript -->
-<div th:replace="shared/head :: script"></div>
+</th:block>
 
 </body>
 </html>

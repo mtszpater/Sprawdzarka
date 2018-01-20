@@ -1,79 +1,58 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-<!-- Head -->
-<div th:replace="shared/head :: head(title='Sprawdzarka UWr: Listy zadań')"></div>
-
-<body>
-
-<!-- Navigation -->
-<div th:replace="shared/head :: header"></div>
 
 <!--Page Content-->
-<main role="main" class="container">
-    <div class="row justify-content-center">
-        <div class="col-10">
-            <div class="card mx-10">
 
-                <h5 class="card-header" th:text="${group.name}">Grupa</h5>
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
 
-                <div class="card-body">
-                    <div class="tab-content col-12 align-self-center">
+    <div id="header" th:remove="tag">
+        <h5 class="card-header" th:text="${group.name}">Grupa</h5>
+    </div>
 
-                        <div class="row">
-                            <div class="col-10"><a th:text="${group.description}"></a></div>
-                            <div class="col-2">
-                                <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#test-modal">
-                                        Dodaj listę
+    <div id="body" th:remove="tag">
+        <div class="row">
+            <div class="col-10"><a th:text="${group.description}"></a></div>
+            <div class="col-2">
+                <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#test-modal">
+                        Dodaj listę
+                    </button>
+
+                    <div class="modal fade" id="test-modal" tabindex="-1" role="dialog"
+                         aria-labelledby="test-modal"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Tworzenie nowej listy</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
                                     </button>
-
-                                    <div class="modal fade" id="test-modal" tabindex="-1" role="dialog"
-                                         aria-labelledby="test-modal"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Tworzenie nowej listy</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div th:replace="forms/add_list :: form"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div th:replace="forms/add_list :: form"></div>
                                 </div>
                             </div>
                         </div>
-
-                        <th:block th:if="${#lists.isEmpty(taskList)}">
-                            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych list')"></div>
-                        </th:block>
-
-                        <div class="card my-4" th:each="list:${taskList}">
-                            <div role="tablist">
-                                <div th:replace="shared/card_list :: title(list=${list})"></div>
-                                <div th:replace="shared/card_list :: description(list=${list})"></div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
+
+        <th:block th:if="${#lists.isEmpty(taskList)}">
+            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych list')"></div>
+        </th:block>
+
+        <div class="card my-4" th:each="list:${taskList}">
+            <div role="tablist">
+                <div th:replace="shared/card_list :: title(list=${list})"></div>
+                <div th:replace="shared/card_list :: description(list=${list})"></div>
+            </div>
+        </div>
+
     </div>
-</main>
-
-<!-- Footer -->
-<div th:replace="shared/footer :: copy"></div>
-
-<!-- Bootstrap core JavaScript -->
-<div th:replace="shared/head :: script"></div>
-
-</body>
+</th:block>
 </html>
