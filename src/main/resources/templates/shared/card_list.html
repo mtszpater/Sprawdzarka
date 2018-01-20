@@ -27,24 +27,26 @@
 </div>
 
 <!-- Description -->
-<div th:fragment="description(list)" th:id="'collapse'+${list.id}" class="collapse" role="tabpanel">
+<div th:fragment="description(list)" th:id="'collapse'+${list.id}" class="" role="tabpanel">
     <div class="card-body">
-
-        <p class="card-text" th:text="${list.description}"></p>
 
         <th:blockquote th:if="${#lists.isEmpty(list.getTasks())}">
             <div th:replace="shared/fragments :: default_info(message='Brak dostępnych zadań')"></div>
         </th:blockquote>
 
         <div th:each="task:${list.getTasks()}">
-            <div class="row">
-                <div class="col">
-                    Zadanie:
+            <div class="row mb-2">
+                <div class="col-7">
                     <a th:text="${task.name}" th:href="@{/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a>
                 </div>
-                <div data-toggle="tooltip" data-placement="top" th:title="${task.deadline}" class="col">
-                    <p class="text-right text-primary" th:text="${#calendars.format(task.deadline,'hh:mm dd-MM-yyyy')}">
-                        17.11.2015</p>
+                <div class="col-1">
+                    <span class="badge badge-pill badge-danger">JAVA</span>
+                </div>
+                <div data-toggle="tooltip" data-placement="top" th:title="${task.deadline}" class="col-4">
+                    <div class="progress mt-1">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                             aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
         </div>
