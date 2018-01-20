@@ -3,59 +3,15 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{},body = ~{::div#body})">
     <div id="body" th:remove="tag">
-        <h5 class="card-header">Rejestracja</h5>
+        <h5 class="card-header mb-4">Rejestracja</h5>
 
         <form th:action="@{/registration}" th:object="${userForm}" method="post">
 
-            <div class="form-group">
-                <label class="col-form-label" for="firstName">Imię</label>
-                <input type="text" class="form-control" id="firstName" required="required"
-                       th:field="*{firstname}"
-                       th:classappend="(${#fields.hasErrors('firstname')})?' is-invalid':''"/>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" for="secondName">Nazwisko</label>
-                <input type="text" class="form-control" id="secondName" required="required"
-                       th:field="*{secondname}"
-                       th:classappend="(${#fields.hasErrors('secondname')})?' is-invalid':''"/>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('secondname')}" th:errors="*{secondname}"></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" for="email">Email</label>
-                <input type="email" class="form-control" id="email" required="required"
-                       th:field="*{email}"
-                       th:classappend="(${#fields.hasErrors('email')})?' is-invalid':''"/>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" for="password">Hasło</label>
-                <input type="password" class="form-control" id="password" required="required"
-                       th:field="*{password}"
-                       th:classappend="(${#fields.hasErrors('password')})?' is-invalid':''"/>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-form-label" for="passwordConfirm">Hasło</label>
-                <input type="password" class="form-control" id="passwordConfirm" required="required"
-                       th:field="*{passwordConfirm}"
-                       th:classappend="(${#fields.hasErrors('passwordConfirm')})?' is-invalid':''"/>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></p>
-                </div>
-            </div>
+            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='firstname', fieldValue=*{firstname}, name='Imię', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='secondname', fieldValue=*{secondname}, name='Nazwisko', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='email', fieldName='email', fieldValue=*{email}, name='Email', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='password', fieldValue=*{password}, name='Hasło', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='passwordConfirm', fieldValue=*{passwordConfirm}, name='Powtórz hasło', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
 
             <button type="submit" class="btn btn-primary">Zarejestruj</button>
         </form>

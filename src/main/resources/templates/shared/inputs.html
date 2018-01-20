@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<body>
+
+<th:block th:fragment="input_with_errors(fieldName, fieldValue, name, type)">
+    <div class="form-group row">
+        <label class="col-form-label" th:classappend="${labelClass}" th:text="${name}">Nazwa</label>
+        <div th:classappend="${divClass}">
+            <input th:type="${type}" th:classappend="(${#fields.hasErrors('__${fieldName}__')})?' is-invalid':''" class="form-control" th:name="${fieldName}" th:required="required" th:value="${fieldValue}"/>
+            <div th:if="${#fields.hasErrors('__${fieldName}__')}" class="invalid-feedback">
+                <p th:each="error : ${#fields.errors('__${fieldName}__')}" th:text="${error}"/>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>
