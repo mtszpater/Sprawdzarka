@@ -3,67 +3,34 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 
-<div th:fragment="history">
-    <div class="table-responsive">
-        <table class="table table-hover text-center">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Data wysłania</th>
-                <th scope="col">Rozwiązanie</th>
-                <th scope="col">Uzyskane punkty</th>
-                <th scope="col">Język</th>
-                <th scope="col">Szczegóły</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="solution,solutionIter: ${solutions}">
-
-                <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
-                <td>
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1"
-                         th:id="'solution_code'+${solution.id}+'-modal'" role="dialog"
-                         aria-labelledby="myLargeModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content p-3">
-                                <pre class="prettyprint border-0 text-left" th:text="${solution.solution}"></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
-                            th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
+<th:block th:fragment="tab(solutions)">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Przesylanie nowego
+                        zadania</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                </td>
-
-                <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
-                    <div class="progress mt-2" data-toggle="tooltip" data-placement="right"
-                         th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-                        <div role="progressbar"
-                             th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
-                             th:attrappend="style='width: ' + ${percent} + '%;'"
-                             th:aria-valuenow="${value}" aria-valuemin="0"
-                             th:aria-valuemax="${max}">
-                        </div>
-                    </div>
-                </td>
-
-                <td>
-                    <span class="badge" th:classappend="${solution.language.badgeClass}"
-                          th:text="${solution.language.name}">PHP</span>
-                </td>
-
-                <td>
-                    <div class="btn btn-light btn-sm" data-toggle="modal"
-                         th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl
-                    </div>
-                    <div th:replace="shared/task/history :: modal"></div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+                <div class="modal-body">
+                    <div th:replace="forms/solution_form :: form"></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+            data-target="#exampleModal">
+        Prześlij rozwiązanie
+    </button>
+    <div class="mt-4">
+        <th:block th:include="shared/tables :: history(solutions = ${solutions})"/>
+    </div>
+</th:block>
 
 <div th:fragment="modal" class="modal fade" th:id="'solution'+${solution.id}+'-modal'" tabindex="-1"
      role="dialog"
@@ -77,41 +44,9 @@
                 </button>
             </div>
             <div class="modal-body">
-
-                <table class="table table-hover text-center">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Czas wykonania</th>
-                        <th scope="col">Punkty</th>
-                        <th scope="col">Stan testu</th>
-                        <th scope="col">Wynik</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="score,scoreIter: ${solution.scores}">
-                        <td>
-                            <th:block th:text="${score.executionTime}">150</th:block>
-                            <small>ms</small>
-                        </td>
-                        <td th:text="${score.point}"></td>
-                        <div th:switch="${score.state.id}" class="font-weight: 500;">
-                            <td th:case="0" th:text="${score.state}" class="text-info"></td>
-                            <td th:case="1" th:text="${score.state}" class="text-warning"></td>
-                            <td th:case="3" th:text="${score.state}" class="text-success"></td>
-                            <td th:case="*" th:text="${score.state}" class="text-danger"></td>
-                        </div>
-
-                        <td>
-                            <a th:href="@{/wynik_testu/{id}(id=${score.id})}">
-                                <div class="btn btn-primary btn-sm">
-                                    Wyświetl
-                                </div>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
+                <th:block th:replace="shared/tables :: scores(scores=${solution.scores}, outputButton=true)">
+                    Tabela z wynikami
+                </th:block>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
@@ -120,7 +55,5 @@
     </div>
 </div>
 
-
-<div th:replace="shared/head :: script"></div>
 </body>
 </html>

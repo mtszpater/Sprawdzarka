@@ -6,5 +6,45 @@
     <p class="text-muted" th:text="${message}">.text-muted</p>
 </th:block>
 
+
+<th:block th:fragment="test_state(state)">
+    <span data-toggle="tooltip" data-placement="right" th:text="${state}" th:title="${state.title}" th:classappend="${state.textClass}">
+        RE
+    </span>
+</th:block>
+
+<th:block th:fragment="test_timeFormat(time)">
+    <span>
+        <th:block th:text="${time}">150</th:block><small>ms</small>
+    </span>
+</th:block>
+
+<th:block th:fragment="language_format(language)">
+    <p class="badge" th:classappend="${language.badgeClass}" th:text="${language.name}">PHP</p>
+</th:block>
+
+<th:block th:fragment="date_format_small(date)">
+    <small class="text-muted" th:text="${#calendars.format(date,'dd MMMM hh:mm')}">20 stycznia 12:23</small>
+</th:block>
+
+<th:block th:fragment="date_format_strong(date)">
+    <strong th:text="${#calendars.format(date,'dd MMMM hh:mm')}">20 stycznia 12:23</strong>
+</th:block>
+
+<th:block th:fragment="progress_bar(scores)">
+    <th:block th:with="value=${#aggregates.sum(scores.![point])},max=${#aggregates.sum(scores.![test.point])}">
+        <div class="progress m-2" data-toggle="tooltip" data-placement="right" th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
+            <div role="progressbar"
+                 th:with="percent = ${max} ? ${value} * 100 / ${max} : 0"
+                 class="progress-bar text-dark"
+                 th:attrappend="style='width: ' + ${percent} + '%;'"
+                 th:aria-valuenow="${value}" aria-valuemin="0"
+                 th:aria-valuemax="${max}">
+            </div>
+        </div>
+    </th:block>
+</th:block>
+
+
 </body>
 </html>

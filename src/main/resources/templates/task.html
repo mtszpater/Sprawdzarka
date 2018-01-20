@@ -3,9 +3,7 @@
 
 <!-- Head -->
 <div th:replace="shared/head :: head('Sprawdzarka UWr: Zadania')"></div>
-
 <body>
-
 <!-- Navigation -->
 <div th:replace="shared/head :: header"></div>
 
@@ -14,20 +12,16 @@
     <div class="row justify-content-center">
         <div class="col-10">
             <div class="card mx-10">
-
                 <h5 class="card-header" th:text="${task.name}">Grupa</h5>
-
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab"
-                               aria-selected="true">
+                            <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab" aria-selected="true">
                                 Szczegóły zadania
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab"
-                               aria-selected="true">
+                            <a class="nav-link" data-toggle="tab" href="#taskSolution" role="tab" aria-selected="true">
                                 Prześlij rozwiązanie
                             </a>
                         </li>
@@ -38,163 +32,16 @@
                         </li>
                     </ul>
                 </div>
-
                 <div class="card-body">
                     <div class="tab-content col-12 align-self-center">
-
                         <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
-                            <div th:if="${task.comment != ''}" class="card mb-4">
-                                <div class="card-body">
-                                    <blockquote class="blockquote">
-                                        <div th:text="${task.comment}"></div>
-                                        <footer class="blockquote-footer text-right"><span
-                                                th:text="${task.user.firstname}">Admin</span></footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-7">
-                                    <div th:text="${task.taskDescription.content}"></div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-5">
-                                    <ul class="list-group ">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Termin <strong
-                                                th:text="${#calendars.format(task.deadline,'dd MMMM hh:mm')}">2018-02-01
-                                            17:23</strong>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            Wysłanych rozwiązań
-                                            <span class="badge badge-primary badge-pill"
-                                                  th:text="${solutions.size()}">1</span>
-                                        </li>
-                                        <li class="list-group-item text-center" th:if="${lastSolution}">
-                                            <h5>Ostatnie rozwiązanie</h5>
-                                            <div id="loader"/>
-                                            <div id="last_solution">
-                                                <small class="text-muted"
-                                                       th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></small>
-                                                <p class="badge" th:classappend="${lastSolution.language.badgeClass}"
-                                                   th:text="${lastSolution.language.name}">PHP</p>
-                                                <th:block
-                                                        th:with="value=${#aggregates.sum(lastSolution.scores.![point])},max=${#aggregates.sum(lastSolution.scores.![test.point])}">
-                                                    <div class="progress mb-4" data-toggle="tooltip"
-                                                         data-placement="right"
-                                                         th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-                                                        <div role="progressbar"
-                                                             th:with="percent = ${max} ? ${value} * 100 / ${max} : 0"
-                                                             class="progress-bar text-dark"
-                                                             th:attrappend="style='width: ' + ${percent} + '%;'"
-                                                             th:aria-valuenow="${value}" aria-valuemin="0"
-                                                             th:aria-valuemax="${max}">
-                                                        </div>
-                                                    </div>
-                                                </th:block>
-
-                                                <table class="table table-hover text-center">
-                                                    <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">Czas</th>
-                                                        <th scope="col">Punkty</th>
-                                                        <th scope="col">Stan</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr th:each="score,scoreIter: ${lastSolution.scores}">
-                                                        <td>
-                                                            <th:block th:text="${score.executionTime}">150</th:block>
-                                                            <small>ms</small>
-                                                        </td>
-                                                        <td th:text="${score.point}"></td>
-                                                        <div th:switch="${score.state.id}" class="font-weight: 500;">
-                                                            <td th:case="0" th:text="${score.state}"
-                                                                class="text-info"></td>
-                                                            <td th:case="1" th:text="${score.state}"
-                                                                class="text-warning"></td>
-                                                            <td th:case="3" th:text="${score.state}"
-                                                                class="text-success"></td>
-                                                            <td th:case="*" th:text="${score.state}"
-                                                                class="text-danger"></td>
-                                                        </div>
-
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <a href="#" class="btn btn-primary">Wyświetl kod</a>
-                                            </div>
-
-                                        </li>
-                                    </ul>
-
-                                </div>
-                            </div>
-
-
+                            <th:block th:include="shared/task/description :: tab(task = ${task}, solutions = ${solutions})"/>
                         </div>
-
                         <div class="tab-pane fade" id="taskSolution" role="tabpanel">
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog  modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Przesylanie nowego
-                                                zadania</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div th:replace="forms/solution_form :: form"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                Prześlij rozwiązanie
-                            </button>
-
-
-                            <div class="mt-4">
-                                <div th:replace="shared/task/history :: history"></div>
-                            </div>
+                            <th:block th:include="shared/task/history :: tab(solutions = ${solutions})"/>
                         </div>
-
-                        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest"
-                             role="tabpanel">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-8">
-                                    <div th:replace="shared/task/tests :: tests"></div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4>Dostępne języki</h4>
-                                            <form>
-                                                <div class="mt-4 p-3">
-                                                    <div class="form-group" th:each="language:${allPossibleLanguages}">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   checked="true"/>
-                                                            <label class="form-check-label"
-                                                                   th:text="${language.name}">
-                                                                C
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Zaktualizuj</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="tab-pane fade" id="taskTest" role="tabpanel">
+                            <th:block th:include="shared/task/tests :: tab(tests = ${tests}, allPossibleLanguages = ${allPossibleLanguages})"/>
                         </div>
                     </div>
                 </div>
@@ -208,21 +55,6 @@
 
 <!-- Bootstrap core JavaScript -->
 <div th:replace="shared/head :: script"></div>
-
-<script type="text/javascript">
-    $('#test-modal').on('show.bs.modal', function (event) {
-        var myVal = $(event.relatedTarget).data('val');
-        var myId = $(event.relatedTarget).data('id');
-        $(this).find(".modal-body").text(myVal);
-        $(this).find(".modal-title").text(myId);
-    });
-
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-
-
-</script>
 
 </body>
 </html>

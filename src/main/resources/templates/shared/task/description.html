@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<th:block th:fragment="tab(task, solutions)">
+
+
+    <div th:if="${task.comment != ''}" class="card mb-4">
+        <div class="card-body">
+            <blockquote class="blockquote">
+                <div th:text="${task.comment}"></div>
+                <footer class="blockquote-footer text-right"><span th:text="${task.user.firstname}">Admin</span></footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+            <div th:text="${task.taskDescription.content}"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+            <ul class="list-group ">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Termin
+                    <th:block th:include="shared/fragments :: date_format_strong(date = ${task.deadline})">Data</th:block>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Wysłanych rozwiązań <span class="badge badge-primary badge-pill" th:text="${solutions.size()}">1</span>
+                </li>
+                <li class="list-group-item text-center" th:if="${lastSolution}">
+                    <h5>Ostatnie rozwiązanie</h5>
+                    <div id="loader"/>
+                    <div id="last_solution">
+                        <th:block th:include="shared/fragments :: date_format_small(date = ${lastSolution.DateOfSending})">Data</th:block>
+                        <th:block th:include="shared/fragments :: language_format(language = ${lastSolution.language})">Język</th:block>
+                        <div class="mb-3" th:include="shared/fragments :: progress_bar(scores = ${lastSolution.scores})">progress bar</div>
+                        <th:block th:replace="shared/tables :: scores(scores=${lastSolution.scores}, outputButton=false)">Tabela z wynikami</th:block>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</th:block>
+
+
+</body>
+</html>

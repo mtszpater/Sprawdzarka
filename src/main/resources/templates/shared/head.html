@@ -39,18 +39,6 @@
                             Grupy
                         </a>
                     </li>
-                    <!--<li class="nav-item" sec:authorize="isAuthenticated()">-->
-                    <!--<a class="nav-link" th:href="@{/historia}"-->
-                    <!--th:classappend="${#strings.contains(url,'/historia')} ? 'active'">-->
-                    <!--Historia-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item" sec:authorize="isAuthenticated()">-->
-                    <!--<a class="nav-link" th:href="@{/statystyki}"-->
-                    <!--th:classappend="${#strings.contains(url,'/statystyki')} ? 'active'">-->
-                    <!--Statystyki-->
-                    <!--</a>-->
-                    <!--</li>-->
                 </ul>
 
                 <a th:href="@{/login}" sec:authorize="not isAuthenticated()">
@@ -73,20 +61,6 @@
                 </a>
             </div>
         </div>
-
-        <!--Breadcrumbs-->
-        <div th:if="${session.breadCrumb} and ${breadcrumb}" class="container">
-            <ol class="breadcrumb mb-0">
-                <li th:each="entry, iterStatus : ${session.breadCrumb}" class="breadcrumb-item"
-                    th:classappend="(${iterStatus.last})?'active'">
-                    <a th:href="@{${entry.url}}"
-                       th:text="${entry.label}"
-                       th:unless="${iterStatus.last}"></a>
-                    <span th:text="${entry.label}"
-                          th:if="${iterStatus.last}"></span>
-                </li>
-            </ol>
-        </div>
     </div>
     <th:block th:if="${alertMessage != null}">
         <div th:replace="shared/message :: alert"></div>
@@ -101,6 +75,14 @@
     <script th:src="@{/js/run_prettify.js}"></script>
     <script th:src="@{/js/prettify_textarea.js}"></script>
     <script th:if="${onlineJudge}" th:src="@{/js/onlinejudge.js}"></script>
+
+    <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    </script>
+
 </div>
 </body>
 </html>

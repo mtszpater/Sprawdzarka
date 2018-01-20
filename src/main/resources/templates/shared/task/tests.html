@@ -3,93 +3,47 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <body>
 
-<div th:fragment="tests">
-    <div class="table-responsive">
-        <table class="table table-hover text-center">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Input</th>
-                <th scope="col">Output</th>
-                <th scope="col">Timeout</th>
-                <th scope="col">Score</th>
-                <th scope="col">Type</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="test,testIter: ${tests}">
-                <td>
-                    <a th:if="${#strings.length(test.inputArgument)} > 100"
-                       th:href="@{/testy/{id}/argumenty_wejsciowe (id = ${test.id})}">
-                        <div class="btn btn-light btn-sm">
-                            Wyświetl
-                        </div>
-                    </a>
-                    <div th:unless="${#strings.length(test.inputArgument)} > 100"
-                         th:attrappend="data-val=${test.inputArgument}" data-id='Argumenty wejściowe'
-                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
-                    </div>
-                </td>
-                <td>
-                    <a th:if="${#strings.length(test.expectedAnswer)} > 100"
-                       th:href="@{/testy/{id}/oczekiwana_odpowiedz (id = ${test.id})}">
-                        <div class="btn btn-light btn-sm">
-                            Wyświetl
-                        </div>
-                    </a>
-                    <div th:unless="${#strings.length(test.expectedAnswer)} > 100"
-                         th:attrappend="data-val=${test.expectedAnswer}" data-id='Oczekiwana odpowiedź'
-                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
-                    </div>
-                </td>
-                <td>
-                    <th:block th:text="${test.timeRequired}">150</th:block>
-                    <small>ms</small>
-                </td>
-                <td th:text="${test.point}"></td>
-                <td>
-                    <th:block th:switch="${test.type.id}">
-                    <span th:case="0" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          th:title="${test.type.title}" class="badge badge-primary">Public</span>
-                        <span th:case="1" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                              th:title="${test.type.title}" class="badge badge-secondary">Private</span>
-                        <span th:case="*" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                              th:title="${test.type.title}" class="badge badge-dark">Hidden</span>
-                    </th:block>
-                </td>
-                <td>
-                    <a data-toggle="tooltip" data-placement="top" title="Usuń test"
-                       th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">
-                        <div class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                        </div>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#test-modal">
-        Dodaj test
-    </button>
+<th:block th:fragment="tab(tests, allPossibleLanguages)">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-8">
+            <th:block th:include="shared/tables :: tests(tests = ${tests})"/>
 
+            <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#test-modal">
+                Dodaj test
+            </button>
 
-    <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Dodawanie testu</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div th:replace="forms/add_test :: form"></div>
+            <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Dodawanie testu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div th:replace="forms/add_test :: form"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+            <div class="card p-4">
+                <h4>Dostępne języki</h4>
+                <form>
+                    <div class="form-group mx-4" th:each="language:${allPossibleLanguages}">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked="true"/>
+                            <label class="form-check-label" th:text="${language.name}">C</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Zaktualizuj</button>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+</th:block>
 
 </body>
 </html>
