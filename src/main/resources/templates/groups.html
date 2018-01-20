@@ -5,7 +5,7 @@
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
 
     <div id="header" th:remove="tag">
-        <h5>Przegląd grup</h5>
+        <th:block>Przegląd grup</th:block>
     </div>
 
     <div id="body" th:remove="tag">
@@ -21,7 +21,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Tworzenie nowej grupy</h5>
+                            <th:block class="modal-title">Tworzenie nowej grupy</th:block>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

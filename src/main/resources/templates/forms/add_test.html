@@ -4,7 +4,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5>Dodawanie testu</h5>
+        <th:block>Dodawanie testu</th:block>
     </div>
     <div id="body" th:remove="tag">
         <div th:replace="forms/modal/add_test :: form"></div>

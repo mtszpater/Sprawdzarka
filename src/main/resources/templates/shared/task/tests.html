@@ -8,25 +8,19 @@
         <div class="col-12 col-sm-12 col-md-6 col-lg-8">
             <th:block th:include="shared/tables :: tests(tests = ${tests})"/>
 
-            <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#test-modal">
+            <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#add_test_form">
                 Dodaj test
             </button>
 
-            <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Dodawanie testu</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div th:replace="forms/modal/add_test :: form"></div>
-                        </div>
-                    </div>
+            <th:block th:replace="shared/fragments :: modal(id='add_test_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                <div id="modal_header">
+                    <th:block>Dodawanie testu</th:block>
                 </div>
-            </div>
+                <div id="modal_body">
+                    <div th:replace="forms/modal/add_test :: form"></div>
+                </div>
+            </th:block>
+
         </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-4">
             <div class="card p-4">

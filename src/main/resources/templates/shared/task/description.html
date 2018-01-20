@@ -22,7 +22,7 @@
         <div class="col-12 col-sm-12 col-md-6 col-lg-5">
             <ul class="list-group ">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <h5 th:text="${task.name}">Nazwa</h5>
+                    <th:block th:text="${task.name}">Nazwa</th:block>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Termin
@@ -32,7 +32,7 @@
                     Wysłanych rozwiązań <span class="badge badge-primary badge-pill" th:text="${solutions.size()}">1</span>
                 </li>
                 <li class="list-group-item text-center" th:if="${lastSolution}">
-                    <h5>Ostatnie rozwiązanie</h5>
+                    <th:block>Ostatnie rozwiązanie</th:block>
                     <div id="loader"/>
                     <div id="last_solution">
                         <th:block th:include="shared/fragments :: date_format_small(date = ${lastSolution.DateOfSending})">Data</th:block>

@@ -6,11 +6,14 @@ import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.util.Languages;
 
+import javax.validation.constraints.NotNull;
+
 public class SolutionForm {
     private User user;
     private Task task;
     @Length(min = 3, message = "Nie możesz wysłać pustego programu")
     private String solution;
+    @NotNull(message = "Język musi być wybrany")
     private Languages language;
     private String comment;
 

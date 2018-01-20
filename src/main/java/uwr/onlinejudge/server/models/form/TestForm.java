@@ -5,6 +5,7 @@ import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.util.TestType;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class TestForm {
     private Task task;
@@ -16,6 +17,7 @@ public class TestForm {
     private String expectedAnswer;
     @Min(value = 1, message = "Czemu nie chcesz mu dać przynajmniej jednego punktu?")
     private int point;
+    @NotNull(message = "Typ musi być wybrany")
     private TestType type;
 
     public TestForm() {

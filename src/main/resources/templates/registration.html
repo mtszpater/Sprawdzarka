@@ -3,7 +3,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{},body = ~{::div#body})">
     <div id="body" th:remove="tag">
-        <h5 class="card-header mb-4">Rejestracja</h5>
+        <th:block>Rejestracja</th:block>
 
         <form th:action="@{/registration}" th:object="${userForm}" method="post">
 

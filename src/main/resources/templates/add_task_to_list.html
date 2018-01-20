@@ -3,7 +3,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5>Gotowe opisy zadań</h5>
+        <th:block>Gotowe opisy zadań</th:block>
         <div>
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item">
@@ -39,8 +39,9 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Zdefiniuj treść nowego
-                            zadania</h5>
+                        <th:block class="modal-title" id="exampleModalLongTitle">Zdefiniuj treść nowego
+                            zadania
+                        </th:block>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

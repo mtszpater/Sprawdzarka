@@ -92,3 +92,7 @@
   right: 10px;
   left: auto;
 }
+
+.display-small {
+font-size: 1.3rem;
+}
