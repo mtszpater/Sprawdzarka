@@ -1,43 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="form">
-    <div class="card-body">
-        <form method="POST" th:action="@{/dodaj_opis_zadania/{id}(id=${taskListId})}" th:object="${taskDescription}">
 
-            <div class="form-group row">
-                <label for="nameTask" class="col-3 col-form-label">Nazwa</label>
-                <div class="col-9">
-                    <input type="text" class="form-control" id="nameTask" th:field="*{name}"/>
-                    <div class="invalid-feedback">
-                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="descriptionTask">Treść zadania</label>
-                <textarea class="form-control" id="descriptionTask" rows="5"
-                          th:field="*{content}"></textarea>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
-                </div>
-            </div>
-
-            <div class="form-check">
-                <label class="form-check-label" th:for="${#ids.next('personal')}">
-                    <input class="form-check-input" type="checkbox" th:field="*{personal}"/>
-                    Prywatne zadanie
-                </label>
-                <div class="invalid-feedback">
-                    <p th:if="${#fields.hasErrors('personal')}" th:errors="*{personal}"></p>
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Dodaj</button>
-        </form>
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+    <div id="header" th:remove="tag">
+        <h5 class="card-header">Dodawanie opisu zadania</h5>
+    </div>
+    <div id="body" th:remove="tag">
+        <div th:replace="forms/modal/add_task_description :: form"></div>
     </div>
 </th:block>
-
-
 </html>

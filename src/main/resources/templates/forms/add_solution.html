@@ -4,10 +4,10 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5 class="card-header">Dodawanie listy</h5>
+        <h5 class="card-header">Wysyłanie rozwiązania zadania</h5>
     </div>
     <div id="body" th:remove="tag">
-        <div th:replace="forms/modal/add_list :: form"></div>
+        <div th:replace="forms/modal/add_solution :: form"></div>
     </div>
 </th:block>
 </html>

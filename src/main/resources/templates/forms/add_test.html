@@ -1,74 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!-- Head -->
-<div th:replace="shared/head :: head('Sprawdzarka UWr: Nowy test')"></div>
 
-<body>
-
-<!-- Navigation -->
-<div th:replace="shared/head :: header"></div>
-
-<div th:fragment="form" class="container">
-
-    <form th:action="@{/dodaj_test/{id}(id = ${task.id})}" th:object="${test}" method="post">
-
-        <div class="form-row">
-            <div class="form-group row col-6">
-                <label for="point" class="col-5 col-form-label">Score</label>
-                <div class="col-6">
-                    <input type="number" class="form-control" id="point" th:field="*{point}"/>
-                </div>
-            </div>
-            <div class="form-group row col-6">
-                <label class="col-4 col-form-label" for="testType">Type</label>
-                <div class="col-8">
-                    <select class="custom-select" id="testType" th:field="*{type}">
-                        <option th:each="testType : ${T(uwr.onlinejudge.server.util.TestType).values()}"
-                                th:value="${testType}"
-                                th:text="${testType}">
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="inputArgument">Input</label>
-            <textarea class="form-control" id="inputArgument" rows="3"
-                      th:field="*{inputArgument}">
-                            </textarea>
-            <div class="invalid-feedback">
-                <p th:if="${#fields.hasErrors('inputArgument')}" th:errors="*{inputArgument}"></p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="expectedAnswer">Output</label>
-            <textarea class="form-control" id="expectedAnswer" rows="3"
-                      th:field="*{expectedAnswer}">
-                            </textarea>
-            <div class="invalid-feedback">
-                <p th:if="${#fields.hasErrors('expectedAnswer')}" th:errors="*{expectedAnswer}"></p>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="point" class="col-3 col-form-label">Timeout</label>
-            <div class="col-3">
-                <input type="number" class="form-control" id="timeRequired" th:field="*{timeRequired}"/>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Dodaj</button>
-    </form>
-</div>
-
-<!-- Footer -->
-<div th:replace="shared/footer :: copy"></div>
-
-<!-- Bootstrap core JavaScript -->
-<div th:replace="shared/head :: script"></div>
-
-</body>
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+    <div id="header" th:remove="tag">
+        <h5 class="card-header">Dodawanie testu</h5>
+    </div>
+    <div id="body" th:remove="tag">
+        <div th:replace="forms/modal/add_test :: form"></div>
+    </div>
+</th:block>
 </html>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,8 +58,12 @@ public class TestController {
 
     @RequestMapping(value = "/dodaj_test/{taskId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveTest(@PathVariable("taskId") Long taskId, @ModelAttribute("test") @Valid TestForm testForm, RedirectAttributes redirectAttributes) {
+    public String saveTest(@PathVariable("taskId") Long taskId, @ModelAttribute("test") @Valid TestForm testForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         Task task = taskService.getTask(taskId);
+
+        if (bindingResult.hasErrors()) {
+            return "forms/add_test";
+        }
 
         if (task == null)
             return "error_page";

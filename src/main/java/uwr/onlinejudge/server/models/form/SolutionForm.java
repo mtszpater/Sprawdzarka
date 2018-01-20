@@ -1,6 +1,7 @@
 package uwr.onlinejudge.server.models.form;
 
 
+import org.hibernate.validator.constraints.Length;
 import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.User;
 import uwr.onlinejudge.server.util.Languages;
@@ -8,6 +9,7 @@ import uwr.onlinejudge.server.util.Languages;
 public class SolutionForm {
     private User user;
     private Task task;
+    @Length(min = 3, message = "Nie możesz wysłać pustego programu")
     private String solution;
     private Languages language;
     private String comment;

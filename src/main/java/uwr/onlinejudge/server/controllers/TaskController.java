@@ -58,7 +58,10 @@ public class TaskController {
 
     @RequestMapping(value = "/dodaj_opis_zadania/{id}", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskDescription(@PathVariable("id") Long id, @ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, Principal principal, RedirectAttributes redirectAttributes) {
+    public String addTaskDescription(@PathVariable("id") Long id, @ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "forms/add_task_description";
+        }
 
         taskDescriptionForm.setUser(userService.findByEmail(principal.getName()));
         taskService.save(taskDescriptionForm);
@@ -89,7 +92,7 @@ public class TaskController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String saveTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, @ModelAttribute("task") @Valid TaskForm taskForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/dodaj_zadanie/" + taskListId + "/" + taskDescriptionId;
+            return "forms/add_task";
         }
 
         TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
@@ -149,7 +152,9 @@ public class TaskController {
         model.addAttribute("task", task);
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
-        model.addAttribute("solutionForm", new SolutionForm());
+        SolutionForm solutionForm = new SolutionForm();
+        solutionForm.setTask(task);
+        model.addAttribute("solutionForm", solutionForm);
         model.addAttribute("languages", languages);
         model.addAttribute("allPossibleLanguages", allPossibleLanguages);
         model.addAttribute("lastSolution", lastSolution);
@@ -175,21 +180,19 @@ public class TaskController {
         return "log";
     }
 
-    @RequestMapping(value = "/wyslij_zadanie/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/wyslij_zadanie", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String saveSolution(@PathVariable("id") Long id, @ModelAttribute("solutionForm") @Valid SolutionForm solutionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
-        Task task = taskService.getTask(id);
+    public String saveSolution(@ModelAttribute("solutionForm") @Valid SolutionForm solutionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/zadanie/" + task.getId();
+            return "forms/add_solution";
         }
 
-        solutionForm.setTask(task);
         solutionForm.setUser(userService.findByEmail(principal.getName()));
         long solutionId = solutionService.save(solutionForm).getId();
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
         redirectAttributes.addFlashAttribute("onlineJudge", true);
-        return "redirect:/zadanie/" + task.getId() + "?s=" + solutionId;
+        return "redirect:/zadanie/" + solutionForm.getTask().getId() + "?s=" + solutionId;
     }
 
 

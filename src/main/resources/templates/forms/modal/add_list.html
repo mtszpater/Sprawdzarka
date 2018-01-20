@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="form" class="container">
+    <form th:action="@{/dodaj_liste}" th:object="${taskListForm}" method="post">
+        <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='name', fieldValue=*{name}, name='Nazwa', labelClass='col-sm-3', divClass='col-sm-9' )"></div>
+        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='description', fieldValue=*{description}, name='Opis listy' )"></div>
+
+        <input type="hidden" th:field="*{group}"/>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
+</div>
+
+</html>

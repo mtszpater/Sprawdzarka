@@ -20,8 +20,6 @@ public class Group {
 
     private String password;
 
-    @Column(nullable = false)
-    private Boolean open;
 
     public long getId() {
         return id;
@@ -63,11 +61,4 @@ public class Group {
         this.description = description;
     }
 
-    public Boolean getOpen() {
-        return open;
-    }
-
-    public void setOpen(Boolean open) {
-        this.open = open;
-    }
 }
