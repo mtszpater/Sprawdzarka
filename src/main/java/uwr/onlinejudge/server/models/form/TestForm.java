@@ -1,14 +1,22 @@
 package uwr.onlinejudge.server.models.form;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import uwr.onlinejudge.server.models.Task;
+import uwr.onlinejudge.server.util.TestType;
+
+import javax.validation.constraints.Min;
 
 public class TestForm {
     private Task task;
+    @Min(value = 1, message = "Daj mu sie wykonać")
     private int timeRequired;
+    @NotEmpty(message = "Input nie może być pusty")
     private String inputArgument;
+    @NotEmpty(message = "Output nie może być pusty")
     private String expectedAnswer;
+    @Min(value = 1, message = "Czemu nie chcesz mu dać przynajmniej jednego punktu?")
     private int point;
-    private String type;
+    private TestType type;
 
     public Task getTask() {
         return task;
@@ -50,11 +58,11 @@ public class TestForm {
         this.point = point;
     }
 
-    public String getType() {
+    public TestType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TestType type) {
         this.type = type;
     }
 }

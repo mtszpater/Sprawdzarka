@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="form" class="container">
-    <form method="post" th:action="@{/dodaj_opis_zadania}" th:object="${taskDescription}">
+    <form method="post" th:action="@{/dodaj_opis_zadania/{id}(id=${taskListId})}" th:object="${taskDescription}">
 
         <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='name', fieldValue=*{name}, name='Nazwa', labelClass='col-sm-3', divClass='col-sm-9' )"></div>
         <div th:replace="shared/inputs :: textarea_with_errors(fieldName='content', fieldValue=*{content}, name='Opis zadania' )"></div>

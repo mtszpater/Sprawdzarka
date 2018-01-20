@@ -21,18 +21,16 @@
         </div>
     </div>
 
+
     <a th:if="${taskListId}" class="btn btn-outline-dark btn-sm pull-right ml-1"
-       th:href="@{'/dodaj_zadanie/' + ${taskListId} +'/' + ${task.id} }">
-        Wybierz</a>
+       th:href="@{'/dodaj_zadanie/' + ${taskListId} +'/' + ${task.id} }">Wybierz</a>
 
 </div>
 
 <!-- Description -->
 <div th:fragment="description(task)" th:id="'collapse'+${task.id}" class="collapse" role="tabpanel">
     <div class="card-body">
-
         <p class="card-text" th:text="${task.content}"></p>
-
     </div>
 </div>
 

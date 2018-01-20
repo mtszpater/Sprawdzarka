@@ -56,23 +56,16 @@ public class TestController {
         return "log";
     }
 
-    @RequestMapping(value = "/dodaj_test/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/dodaj_test", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveTest(@PathVariable("taskId") Long taskId, @ModelAttribute("test") @Valid TestForm testForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        Task task = taskService.getTask(taskId);
+    public String saveTest(@ModelAttribute("testForm") @Valid TestForm testForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "forms/add_test";
         }
-
-        if (task == null)
-            return "error_page";
-
-        testForm.setTask(task);
         testService.save(testForm);
-
         redirectAttributes.addFlashAttribute("alertMessage", "Test został dodany");
-        return "redirect:/zadanie/" + task.getId();
+        return "redirect:/zadanie/" + testForm.getTask().getId();
     }
 
     @RequestMapping(value = "/usun_test/{taskId}/{testId}", method = RequestMethod.GET)

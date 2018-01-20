@@ -7,7 +7,6 @@
         <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='name', fieldValue=*{name}, name='Nazwa', labelClass='col-sm-3', divClass='col-sm-9' )"></div>
         <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='password', fieldValue=*{password}, name='Hasło', labelClass='col-sm-3', divClass='col-sm-6' )"></div>
         <div th:replace="shared/inputs :: textarea_with_errors(fieldName='description', fieldValue=*{description}, name='Opis grupy' )"></div>
-
         <button type="submit" class="btn btn-primary">Dodaj</button>
     </form>
 </div>

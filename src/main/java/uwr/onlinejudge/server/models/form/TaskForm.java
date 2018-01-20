@@ -1,18 +1,24 @@
 package uwr.onlinejudge.server.models.form;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import uwr.onlinejudge.server.models.TaskDescription;
 import uwr.onlinejudge.server.models.TaskList;
 import uwr.onlinejudge.server.models.User;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class TaskForm {
 
     private TaskList taskList;
+    @Length(min = 3, message = "Tytuł zadania musi mieć conajmniej 3 znaki")
     private String name;
     private TaskDescription taskDescription;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Future(message = "Zadanie nie może być na wczoraj")
+    @NotNull(message = "Musisz uzupełnić datę")
     private Date deadline;
     private User user;
     private String comment;

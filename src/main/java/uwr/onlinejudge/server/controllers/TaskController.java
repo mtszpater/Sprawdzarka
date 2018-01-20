@@ -84,32 +84,23 @@ public class TaskController {
         taskForm.setTaskList(taskList);
         taskForm.setName(taskDescription.getName());
 
-        model.addAttribute("task", taskForm);
+        model.addAttribute("taskForm", taskForm);
         return "forms/add_task";
     }
 
-    @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/dodaj_zadanie", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String saveTask(@PathVariable("taskListId") Long taskListId, @PathVariable("taskDescriptionId") Long taskDescriptionId, @ModelAttribute("task") @Valid TaskForm taskForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String saveTask(@ModelAttribute("taskForm") @Valid TaskForm taskForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "forms/add_task";
         }
 
-        TaskDescription taskDescription = taskService.getTaskDescription(taskDescriptionId);
-        TaskList taskList = taskService.getTaskList(taskListId);
-
-        if (taskDescription == null || taskList == null)
-            return "error_page";
-
-        taskForm.setTaskDescription(taskDescription);
         taskForm.setUser(userService.findByEmail(principal.getName()));
-        taskForm.setTaskList(taskList);
-
         taskService.save(taskForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało dodane");
 
-        return "redirect:/grupa/" + taskList.getGroup().getId();
+        return "redirect:/grupa/" + taskForm.getTaskList().getGroup().getId();
 
     }
 
@@ -158,7 +149,9 @@ public class TaskController {
         model.addAttribute("languages", languages);
         model.addAttribute("allPossibleLanguages", allPossibleLanguages);
         model.addAttribute("lastSolution", lastSolution);
-        model.addAttribute("test", new TestForm());
+        TestForm testForm = new TestForm();
+        testForm.setTask(task);
+        model.addAttribute("testForm", testForm);
 
         if (tests.isEmpty() || languages.isEmpty()) {
             model.addAttribute("alertMessage", "Nie zostały zdefiniowane żadne testy lub języki zadania nie zostały sprecyzowane.");

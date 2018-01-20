@@ -4,15 +4,16 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5 class="card-header">Nowe zadanie w liście: <span th:text="${task.taskList.name}"></span></h5>
+        <h5 class="card-header">Nowe zadanie w liście: <span th:text="${taskForm.taskList.name}"></span></h5>
     </div>
     <div id="body" th:remove="tag">
-        <form th:action="@{'/dodaj_zadanie/'+${task.taskList.id}+'/'+${task.taskDescription.id}}" method="post" th:object="${task}">
+        <form th:action="@{/dodaj_zadanie}" method="post" th:object="${taskForm}">
 
             <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='name', fieldValue=*{name}, name='Tytuł', labelClass='col-sm-3', divClass='col-sm-4' )"></div>
             <div th:replace="shared/inputs :: input_with_errors(type='date', fieldName='deadline', fieldValue=*{deadline}, name='Termin oddania', labelClass='col-sm-3', divClass='col-sm-4' )"></div>
             <div th:replace="shared/inputs :: textarea_with_errors(fieldName='comment', fieldValue=*{comment}, name='Komentarz' )"></div>
-
+            <input type="hidden" th:field="*{taskList}"/>
+            <input type="hidden" th:field="*{taskDescription}"/>
             <button type="submit" class="btn btn-primary">Dodaj</button>
         </form>
     </div>
