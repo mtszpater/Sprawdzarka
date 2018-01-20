@@ -37,7 +37,7 @@
                 </td>
 
                 <td th:with="value=${#aggregates.sum(solution.scores.![point])},max=${#aggregates.sum(solution.scores.![test.point])}">
-                    <div class="progress" data-toggle="tooltip" data-placement="right"
+                    <div class="progress mt-2" data-toggle="tooltip" data-placement="right"
                          th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
                         <div role="progressbar"
                              th:with="percent = ${max} ? ${value} * 100 / ${max} : 0" class="progress-bar text-dark"
@@ -49,7 +49,8 @@
                 </td>
 
                 <td>
-                    <th:block th:text="${solution.language.name}"></th:block>
+                    <span class="badge" th:classappend="${solution.language.badgeClass}"
+                          th:text="${solution.language.name}">PHP</span>
                 </td>
 
                 <td>
@@ -88,7 +89,10 @@
                     </thead>
                     <tbody>
                     <tr th:each="score,scoreIter: ${solution.scores}">
-                        <td th:text="${score.executionTime}"></td>
+                        <td>
+                            <th:block th:text="${score.executionTime}">150</th:block>
+                            <small>ms</small>
+                        </td>
                         <td th:text="${score.point}"></td>
                         <div th:switch="${score.state.id}" class="font-weight: 500;">
                             <td th:case="0" th:text="${score.state}" class="text-info"></td>

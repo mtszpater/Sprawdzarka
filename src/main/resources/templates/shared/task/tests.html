@@ -42,7 +42,10 @@
                          class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
                     </div>
                 </td>
-                <td th:text="${test.timeRequired}"></td>
+                <td>
+                    <th:block th:text="${test.timeRequired}">150</th:block>
+                    <small>ms</small>
+                </td>
                 <td th:text="${test.point}"></td>
                 <td>
                     <th:block th:switch="${test.type.id}">

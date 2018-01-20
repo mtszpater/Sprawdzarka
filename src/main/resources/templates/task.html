@@ -70,14 +70,13 @@
                                                   th:text="${solutions.size()}">1</span>
                                         </li>
                                         <li class="list-group-item text-center" th:if="${lastSolution}">
-                                            <h5 class="card-title">Ostatnie rozwiązanie</h5>
+                                            <h5>Ostatnie rozwiązanie</h5>
                                             <div id="loader"/>
                                             <div id="last_solution">
-                                                <p class="card-text">
-                                                    <span th:text="${lastSolution.language.name}">php</span>
-                                                    <span th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></span>
-                                                </p>
-
+                                                <small class="text-muted"
+                                                       th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></small>
+                                                <p class="badge" th:classappend="${lastSolution.language.badgeClass}"
+                                                   th:text="${lastSolution.language.name}">PHP</p>
                                                 <th:block
                                                         th:with="value=${#aggregates.sum(lastSolution.scores.![point])},max=${#aggregates.sum(lastSolution.scores.![test.point])}">
                                                     <div class="progress mb-4" data-toggle="tooltip"
@@ -103,7 +102,10 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr th:each="score,scoreIter: ${lastSolution.scores}">
-                                                        <td th:text="${score.executionTime}"></td>
+                                                        <td>
+                                                            <th:block th:text="${score.executionTime}">150</th:block>
+                                                            <small>ms</small>
+                                                        </td>
                                                         <td th:text="${score.point}"></td>
                                                         <div th:switch="${score.state.id}" class="font-weight: 500;">
                                                             <td th:case="0" th:text="${score.state}"
