@@ -70,12 +70,12 @@
                                                   th:text="${solutions.size()}">1</span>
                                         </li>
                                         <li class="list-group-item text-center" th:if="${lastSolution}">
-                                            <h4 class="card-title">Ostatnie rozwiązanie</h4>
-                                            <img id="loader" class="hidden" th:src="@{/images/loader.gif}"/>
+                                            <h5 class="card-title">Ostatnie rozwiązanie</h5>
+                                            <div id="loader"/>
                                             <div id="last_solution">
                                                 <p class="card-text">
-                                                    <span th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></span>
                                                     <span th:text="${lastSolution.language.name}">php</span>
+                                                    <span th:text="${#calendars.format(lastSolution.DateOfSending,'dd MMMM hh:mm')}"></span>
                                                 </p>
 
                                                 <th:block

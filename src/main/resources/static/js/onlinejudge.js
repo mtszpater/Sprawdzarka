@@ -16,7 +16,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var s = getUrlParameter('s');
 
 $(function(){
-$( "#loader" ).removeClass("hidden");
+$( "#loader" ).html("<i class=\"fa fa-cog fa-spin fa-4x fa-fw\"></i> <span class=\"sr-only\">Loading...</span>");
 $( "#last_solution" ).text("Kompiluję...");
     if( s ) {
         $.ajax({
@@ -28,6 +28,14 @@ $( "#last_solution" ).text("Kompiluję...");
             $( "#loader" ).addClass("hidden");
             location.reload();
           }
-        });
+        })
+        .fail(function() {
+            $( ".alert").removeClass("alert-info");
+            $( ".alert").addClass("alert-danger");
+            $( ".alert").text("Utracono połączenie z serwerem kompilatora. Spróbuj ponownie za jakiś czas.");
+
+            $( "#last_solution" ).html("<i class=\"fa fa-exclamation-circle fa-4x text-danger\" aria-hidden=\"true\"></i> <p class=\"font-weight-bold text-danger\"> Kompilator umarł</p>");
+            $( "#loader" ).addClass("hidden");
+          });
     }
 });

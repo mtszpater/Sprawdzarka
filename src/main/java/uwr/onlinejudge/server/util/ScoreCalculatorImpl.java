@@ -19,14 +19,16 @@ public class ScoreCalculatorImpl implements ScoreCalculator {
     }
 
     public Score calculate(Solution solution, Test test, CompileResult compileResult) {
-
         int executionTime = compileResultTimeConverter.convert(compileResult.getTime());
-
         Score score = new Score(solution, test, compileResult.getOutput(), executionTime);
 
         TestState testState = answerChecker.check(compileResult, test);
-
         score.setState(testState);
+
+        if (score.getState().compareTo(TestState.RE) == 0) {
+            score.setTestResult(compileResult.getErrors());
+        }
+
         if (score.getState().compareTo(TestState.OK) == 0) {
             score.setPoint(test.getPoint());
         }
