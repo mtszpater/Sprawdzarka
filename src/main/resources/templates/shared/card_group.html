@@ -5,7 +5,7 @@
 
 <div th:fragment="card(group,myGroup)" class=" card bg-light">
     <div class="card-body">
-        <th:block th:text="${group.name}">Nazwa grupy</th:block>
+        <h5 th:text="${group.name}">Nazwa grupy</h5>
         <h6 th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa
             prywatna</h6>
         <h6 th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</h6>

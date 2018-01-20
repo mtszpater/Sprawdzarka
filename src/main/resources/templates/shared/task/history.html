@@ -4,57 +4,23 @@
 <body>
 
 <th:block th:fragment="tab(solutions)">
-    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
-            data-target="#exampleModal">
+    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#add_solution_form">
         Prześlij rozwiązanie
     </button>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <th:block class="modal-title" id="exampleModalLabel">Przesylanie nowego
-                        zadania
-                    </th:block>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div th:replace="forms/modal/add_solution :: form"></div>
-                </div>
-            </div>
+    <th:block th:replace="shared/fragments :: modal(id='add_solution_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+        <div id="modal_header">
+            <th:block>Przesylanie nowego zadania</th:block>
         </div>
-    </div>
+        <div id="modal_body">
+            <div th:replace="forms/modal/add_solution :: form"></div>
+        </div>
+    </th:block>
 
     <div class="mt-4">
         <th:block th:include="shared/tables :: history(solutions = ${solutions})"/>
     </div>
 </th:block>
-
-<div th:fragment="modal" class="modal fade" th:id="'solution'+${solution.id}+'-modal'" tabindex="-1"
-     role="dialog"
-     aria-labelledby="solution-modal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <th:block class="modal-title">Testy</th:block>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <th:block th:replace="shared/tables :: scores(scores=${solution.scores}, outputButton=true)">
-                    Tabela z wynikami
-                </th:block>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

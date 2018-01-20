@@ -1,17 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="shared/container :: common_container(header = ~{},body = ~{::div#body})">
-    <div id="body" th:remove="tag">
+<th:block th:replace="shared/container :: login_container(header = ~{::div#header},body = ~{::div#body})">
+    <div id="header" th:remove="tag">
         <th:block>Rejestracja</th:block>
+    </div>
 
+    <div id="body" th:remove="tag">
         <form th:action="@{/registration}" th:object="${userForm}" method="post">
 
-            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='firstname', fieldValue=*{firstname}, name='Imię', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
-            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='secondname', fieldValue=*{secondname}, name='Nazwisko', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
-            <div th:replace="shared/inputs :: input_with_errors(type='email', fieldName='email', fieldValue=*{email}, name='Email', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
-            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='password', fieldValue=*{password}, name='Hasło', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
-            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='passwordConfirm', fieldValue=*{passwordConfirm}, name='Powtórz hasło', labelClass='col-sm-2', divClass='col-sm-10' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='firstname', fieldValue=*{firstname}, name='Imię', labelClass='col-sm-4', divClass='col-sm-8' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='text', fieldName='secondname', fieldValue=*{secondname}, name='Nazwisko', labelClass='col-sm-4', divClass='col-sm-8' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='email', fieldName='email', fieldValue=*{email}, name='Email', labelClass='col-sm-4', divClass='col-sm-8' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='password', fieldValue=*{password}, name='Hasło', labelClass='col-sm-4', divClass='col-sm-8' )"></div>
+            <div th:replace="shared/inputs :: input_with_errors(type='password', fieldName='passwordConfirm', fieldValue=*{passwordConfirm}, name='Powtórz hasło', labelClass='col-sm-4', divClass='col-sm-8' )"></div>
 
             <button type="submit" class="btn btn-primary">Zarejestruj</button>
         </form>

@@ -48,28 +48,36 @@
 
                 <td th:text="${#calendars.format(solution.DateOfSending,'dd MMMM hh:mm')}"></td>
                 <td>
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1"
-                         th:id="'solution_code'+${solution.id}+'-modal'" role="dialog"
-                         aria-labelledby="myLargeModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content p-3">
-                                <pre class="prettyprint border-0 text-left" th:text="${solution.solution}"></pre>
-                            </div>
-                        </div>
-                    </div>
-
                     <button type="button" class="btn btn-light btn-sm" data-toggle="modal"
                             th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
                     </button>
+
+                    <th:block th:replace="shared/fragments :: modal(id='solution_code'+${solution.id}+'-modal', header = ~{::div#code_modal_header},body = ~{::div#code_modal_body})">
+                        <div id="code_modal_header">
+                            <th:block>Kod</th:block>
+                        </div>
+                        <div id="code_modal_body">
+                            <pre class="prettyprint border-0 text-left" th:text="${solution.solution}"></pre>
+                        </div>
+                    </th:block>
                 </td>
 
                 <td th:include="shared/fragments :: progress_bar(scores = ${solution.scores})">progress bar</td>
                 <td th:include="shared/fragments :: language_format(language = ${solution.language})">Język</td>
 
                 <td>
-                    <div class="btn btn-light btn-sm" data-toggle="modal" th:attrappend="data-target='#solution' + ${solution.id} + '-modal'">Wyświetl</div>
-                    <div th:replace="shared/task/history :: modal"></div>
+                    <div class="btn btn-light btn-sm" data-toggle="modal" th:attrappend="data-target='#' + ${solution.id}">Wyświetl</div>
+
+                    <th:block th:replace="shared/fragments :: modal(id=${solution.id}, header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                        <div id="modal_header">
+                            <th:block>Testy</th:block>
+                        </div>
+                        <div id="modal_body">
+                            <th:block th:replace="shared/tables :: scores(scores=${solution.scores}, outputButton=true)">
+                                Tabela z wynikami
+                            </th:block>
+                        </div>
+                    </th:block>
                 </td>
             </tr>
             </tbody>
@@ -118,16 +126,7 @@
                 </td>
                 <td th:include="shared/fragments :: test_timeFormat(time = ${test.timeRequired})">150ms</td>
                 <td th:text="${test.point}"></td>
-                <td>
-                    <th:block th:switch="${test.type.id}">
-                    <span th:case="0" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                          th:title="${test.type.title}" class="badge badge-primary">Public</span>
-                        <span th:case="1" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                              th:title="${test.type.title}" class="badge badge-secondary">Private</span>
-                        <span th:case="*" th:text="${test.type}" data-toggle="tooltip" data-placement="top"
-                              th:title="${test.type.title}" class="badge badge-dark">Hidden</span>
-                    </th:block>
-                </td>
+                <td><span th:text="${test.type}" data-toggle="tooltip" data-placement="top" th:title="${test.type.title}" class="badge" th:classappend="${test.type.badgeClass}">Public</span></td>
                 <td>
                     <a data-toggle="tooltip" data-placement="top" title="Usuń test"
                        th:href="@{'/usun_test/'+${task.id}+'/'+${test.id}}">

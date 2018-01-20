@@ -3,8 +3,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <th:block>Gotowe opisy zadań</th:block>
-        <div>
+        <div style="font-size: 1rem !important;">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#private" role="tab"
@@ -23,7 +22,7 @@
     <div id="body" th:remove="tag">
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-light" role="alert">
+                <div class="alert alert-light effect7" role="alert">
                     Poniżej znajdują się gotowe treści zadań zdefiniowane wcześniej przez kogoś innego.
                     W tym momencie możesz wybrać jedno z gotowych zadań znajdujących się na dole lub
                     dodać własną treść zadania
