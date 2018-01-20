@@ -4,8 +4,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5 class="card-header" th:text="${task.name}">Grupa</h5>
-        <div class="card-header">
+        <div>
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab" aria-selected="true">

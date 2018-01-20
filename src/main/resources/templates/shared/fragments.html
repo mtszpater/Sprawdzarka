@@ -45,5 +45,11 @@
     </th:block>
 </th:block>
 
+<div th:fragment="alert">
+    <div class="alert" th:classappend="${type} ? alert-danger : alert-info">
+        <span th:text="${alertMessage}">Informacja</span>
+    </div>
+</div>
+
 </body>
 </html>

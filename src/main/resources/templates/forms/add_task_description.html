@@ -4,7 +4,7 @@
 
 <th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
     <div id="header" th:remove="tag">
-        <h5 class="card-header">Dodawanie opisu zadania</h5>
+        <h5>Dodawanie opisu zadania</h5>
     </div>
     <div id="body" th:remove="tag">
         <div th:replace="forms/modal/add_task_description :: form"></div>
