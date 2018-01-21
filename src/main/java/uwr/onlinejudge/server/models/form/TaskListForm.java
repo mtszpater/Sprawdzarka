@@ -11,8 +11,6 @@ public class TaskListForm {
     @NotEmpty(message = "To pole nie moze być puste")
     private String name;
 
-    private String description;
-
     private Group group;
 
     public TaskListForm() {
@@ -46,11 +44,4 @@ public class TaskListForm {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
