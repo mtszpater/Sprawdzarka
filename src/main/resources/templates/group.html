@@ -16,28 +16,20 @@
             <div class="col-2">
                 <div sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#test-modal">
+                            data-target="#add_list_form">
                         Dodaj listę
                     </button>
 
-                    <div class="modal fade" id="test-modal" tabindex="-1" role="dialog"
-                         aria-labelledby="test-modal"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <th:block class="modal-title">Tworzenie nowej listy</th:block>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div th:replace="forms/modal/add_list :: form"></div>
-                                </div>
-                            </div>
+
+                    <th:block th:replace="shared/fragments :: modal(id='add_list_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                        <div id="modal_header">
+                            <th:block>Tworzenie nowej listy</th:block>
                         </div>
-                    </div>
+                        <div id="modal_body">
+                            <div th:replace="forms/modal/add_list :: form"></div>
+                        </div>
+                    </th:block>
+
                 </div>
             </div>
         </div>

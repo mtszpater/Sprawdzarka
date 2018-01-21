@@ -11,27 +11,20 @@
     <div id="body" th:remove="tag">
 
         <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-                    data-target="#test-modal">
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_group_form">
                 Dodaj grupę
             </button>
 
-            <div class="modal fade" id="test-modal" tabindex="-1" role="dialog" aria-labelledby="test-modal"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <th:block class="modal-title">Tworzenie nowej grupy</th:block>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div th:replace="forms/modal/add_group :: form"></div>
-                        </div>
-                    </div>
+            <th:block th:replace="shared/fragments :: modal(id='add_group_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                <div id="modal_header">
+                    <th:block>Tworzenie nowej grupy</th:block>
                 </div>
-            </div>
+                <div id="modal_body">
+                    <div th:replace="forms/modal/add_group :: form"></div>
+                </div>
+            </th:block>
+
         </div>
 
         <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
