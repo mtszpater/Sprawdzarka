@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
-<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body}, globalWidth='col-7')">
     <div id="header" th:remove="tag">
         <th:block>Wysyłanie rozwiązania zadania</th:block>
     </div>
