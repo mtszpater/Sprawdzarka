@@ -46,14 +46,14 @@
                     <div class="col-6">
                         <th:block th:each="group, iter:${myGroups}">
                             <div class="mb-4" th:if="${iter.odd}">
-                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                                <div th:replace="shared/card_group :: my_group(group=${group})"></div>
                             </div>
                         </th:block>
                     </div>
                     <div class="col-6">
                         <th:block th:each="group, iter:${myGroups}">
                             <div class="mb-4" th:if="${iter.even}">
-                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                                <div th:replace="shared/card_group :: my_group(group=${group})"></div>
                             </div>
                         </th:block>
                     </div>
@@ -69,14 +69,14 @@
                     <div class="col-6">
                         <th:block th:each="group, iter:${availableGroups}">
                             <div class="mb-4" th:if="${iter.odd}">
-                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='false')"></div>
+                                <div th:replace="shared/card_group :: available_group(group=${group})"></div>
                             </div>
                         </th:block>
                     </div>
                     <div class="col-6">
                         <th:block th:each="group, iter:${availableGroups}">
                             <div class="mb-4" th:if="${iter.even}">
-                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='true')"></div>
+                                <div th:replace="shared/card_group :: available_group(group=${group})"></div>
                             </div>
                         </th:block>
                     </div>
