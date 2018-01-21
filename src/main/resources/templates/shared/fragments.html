@@ -32,18 +32,25 @@
 </th:block>
 
 <th:block th:fragment="progress_bar(scores)">
-    <th:block th:with="value=${#aggregates.sum(scores.![point])},max=${#aggregates.sum(scores.![test.point])}">
+    <th:block th:with="value=${#aggregates.sum(scores.![point])},max=${#aggregates.sum(scores.![test.point])}, percent = ${max} ? ${value} * 100 / ${max} : 0">
         <div class="progress m-2" data-toggle="tooltip" data-placement="right" th:title="(${value} ? ${value} : 0) + '/' + (${max} ? ${max} : 0)">
-            <div role="progressbar"
-                 th:with="percent = ${max} ? ${value} * 100 / ${max} : 0"
-                 class="progress-bar text-dark"
-                 th:attrappend="style='width: ' + ${percent} + '%;'"
-                 th:aria-valuenow="${value}" aria-valuemin="0"
-                 th:aria-valuemax="${max}">
-            </div>
+            <th:block th:if="${percent}>=0 and ${percent}<25">
+                <th:block th:replace=" :: progressbar(style = 'bg-danger')"></th:block>
+            </th:block>
+            <th:block th:if="${percent}>=25 and ${percent}<50">
+                <th:block th:replace=" :: progressbar(style = 'bg-warning')"></th:block>
+            </th:block>
+            <th:block th:if="${percent}>=50 and ${percent}<75">
+                <th:block th:replace=" :: progressbar(style = 'bg-info')"></th:block>
+            </th:block>
+            <th:block th:if="${percent}>=75 and ${percent}<=100">
+                <th:block th:replace=" :: progressbar(style = 'bg-success')"></th:block>
+            </th:block>
         </div>
     </th:block>
 </th:block>
+
+<div th:fragment="progressbar(style)" role="progressbar" th:class="'progress-bar text-dark '+${style}" th:attrappend="style='width: ' + ${percent} + '%;'" th:aria-valuenow="${value}" aria-valuemin="0" th:aria-valuemax="${max}"></div>
 
 <div th:fragment="alert">
     <div class="alert" th:classappend="${type} ? alert-danger : alert-info">
@@ -71,6 +78,7 @@
         </div>
     </div>
 </th:block>
+
 
 </body>
 </html>
