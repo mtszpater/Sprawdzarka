@@ -52,12 +52,12 @@
                             th:attrappend="data-target='#solution_code' + ${solution.id} + '-modal'">Wyświetl
                     </button>
 
-                    <th:block th:replace="shared/fragments :: modal(id='solution_code'+${solution.id}+'-modal', header = ~{::div#code_modal_header},body = ~{::div#code_modal_body})">
+                    <th:block th:replace="shared/fragments :: modal(id='solution_code'+${solution.id}+'-modal', header = ~{::div#code_modal_header},body = ~{::div#code_modal_body}, modalDialogClass='modal-lg')">
                         <div id="code_modal_header">
                             <th:block>Kod</th:block>
                         </div>
                         <div id="code_modal_body">
-                            <pre class="prettyprint border-0 text-left" th:text="${solution.solution}"></pre>
+                            <pre class="prettyprint border-0 text-left" style="font-size: 0.75rem;" th:text="${solution.solution}"></pre>
                         </div>
                     </th:block>
                 </td>
