@@ -3,27 +3,35 @@
 >
 <body>
 
-<div th:fragment="card(group,myGroup)" class=" card bg-light">
+<div th:fragment="my_group(group,myGroup)">
     <div class="card-body">
-        <h5 th:text="${group.name}">Nazwa grupy</h5>
-        <h6 th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa
-            prywatna</h6>
-        <h6 th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</h6>
-        <p class="card-text"
-           th:text="${#strings.length(group.description)}>100 ? ${#strings.substring(group.description,0,99)} + '...': ${group.description}">
-            Opis grupy.</p>
-
-        <div th:if="${myGroup} == 'true' ">
-            <a class="mr-4" th:href="@{/grupa/{id}(id=${group.id})}">Wejdz</a>
-            <a th:unless="${#authentication.name} == ${group.user.email}"
-               th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}">
-                Wypisz
-            </a>
+        <div class="float-right">
+            <a th:href="@{/wypisz_z_grupy/{id}(id=${group.id})}" class="fa fa-sign-out" aria-hidden="true"></a>
         </div>
+        <a class="font-weight-bold" th:href="@{/grupa/{id}(id=${group.id})}" th:text="${group.name}">Nazwa grupy</a>
+        <p th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa prywatna</p>
+        <p th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</p>
+        <p class="card-text" th:text="${#strings.length(group.description)}>100 ? ${#strings.substring(group.description,0,99)} + '...': ${group.description}">
+            Opis grupy.
+        </p>
 
-        <a th:unless="${myGroup} == 'true' " th:href="@{/zapisz_do_grupy/{id}(id=${group.id})}">
-            Zapisz
-        </a>
+        <p class="card-text pull-right">
+            <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>
+        </p>
+    </div>
+</div>
+
+<div th:fragment="available_group(group)">
+    <div class="card-body">
+        <div class="float-right">
+            <a class="fa fa-sign-in" th:href="@{/zapisz_do_grupy/{id}(id=${group.id})}" aria-hidden="true"></a>
+        </div>
+        <a class="font-weight-bold" th:text="${group.name}">Nazwa grupy</a>
+        <p th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupaprywatna</p>
+        <p th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</p>
+        <p class="card-text" th:text="${#strings.length(group.description)}>100 ? ${#strings.substring(group.description,0,99)} + '...': ${group.description}">
+            Opis grupy.
+        </p>
 
         <p class="card-text pull-right">
             <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>

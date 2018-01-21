@@ -27,24 +27,62 @@
 
         </div>
 
-        <div class="tab-pane fade show active" id="myGroup" role="tabpanel">
-            <th:block th:if="${#lists.isEmpty(myGroups)}">
-                <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
-            </th:block>
-            <div class="mb-4" th:each="group:${myGroups}">
-                <div th:replace="shared/card_group :: card(group=${group},myGroup='true')"></div>
+        <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#my_groups" role="tab" aria-controls="pills-home" aria-selected="true">Moje</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#available_groups" role="tab" aria-controls="pills-profile" aria-selected="false">Dostępne</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="my_groups" role="tabpanel">
+                <th:block th:if="${#lists.isEmpty(myGroups)}">
+                    <div th:replace="shared/fragments :: default_info(message='Brak wybranych grup')"></div>
+                </th:block>
+
+                <div class="row">
+                    <div class="col-6">
+                        <th:block th:each="group, iter:${myGroups}">
+                            <div class="mb-4" th:if="${iter.odd}">
+                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="col-6">
+                        <th:block th:each="group, iter:${myGroups}">
+                            <div class="mb-4" th:if="${iter.even}">
+                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade show" id="available_groups" role="tabpanel">
+                <th:block th:if="${#lists.isEmpty(availableGroups)}">
+                    <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
+                </th:block>
+
+                <div class="row">
+                    <div class="col-6">
+                        <th:block th:each="group, iter:${availableGroups}">
+                            <div class="mb-4" th:if="${iter.odd}">
+                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='false')"></div>
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="col-6">
+                        <th:block th:each="group, iter:${availableGroups}">
+                            <div class="mb-4" th:if="${iter.even}">
+                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='true')"></div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="tab-pane fade" id="availableGroups" role="tabpanel">
-            <th:block th:if="${#lists.isEmpty(availableGroups)}">
-                <div th:replace="shared/fragments :: default_info(message='Brak dostępnych grup')"></div>
-            </th:block>
-            <div class="mb-4" th:each="group:${availableGroups}">
-                <div th:replace="shared/card_group :: card(group=${group}, myGroup='false')"></div>
-            </div>
-        </div>
-
     </div>
 </th:block>
 
