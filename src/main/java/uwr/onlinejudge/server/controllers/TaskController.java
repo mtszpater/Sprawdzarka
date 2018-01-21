@@ -94,10 +94,11 @@ public class TaskController {
         return "redirect:/grupa/" + taskListForm.getGroup().getId();
     }
 
-    @RequestMapping(value = "/dodaj_opis_zadania/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/dodaj_opis_zadania/{taskListId}", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addTaskDescription(@PathVariable("id") Long id, @ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes) {
+    public String addTaskDescription(@PathVariable("taskListId") Long taskListId, @ModelAttribute("taskDescription") @Valid TaskDescriptionForm taskDescriptionForm, BindingResult bindingResult, Principal principal, RedirectAttributes redirectAttributes, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("taskListId", taskListId);
             return "forms/add_task_description";
         }
 
@@ -105,7 +106,7 @@ public class TaskController {
         taskService.save(taskDescriptionForm);
 
         redirectAttributes.addFlashAttribute("alertMessage", "Opis zadania został zdefiniowany");
-        return "redirect:/dodaj_zadanie_do_listy/" + id;
+        return "redirect:/dodaj_zadanie_do_listy/" + taskListId;
     }
 
     @RequestMapping(value = "/dodaj_zadanie/{taskListId}/{taskDescriptionId}", method = RequestMethod.GET)

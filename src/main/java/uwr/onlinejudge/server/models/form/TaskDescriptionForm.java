@@ -1,13 +1,14 @@
 package uwr.onlinejudge.server.models.form;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import uwr.onlinejudge.server.models.User;
 
 public class TaskDescriptionForm {
     private User user;
     @Length(min = 3, message = "Tytuł zadania powinien mieć conajmniej 3 znaki")
     private String name;
-    @Length(min = 3, message = "Treść zadania nie powinna być pusta")
+    @NotEmpty(message = "Treść zadania nie powinna być pusta")
     private String content;
     private boolean personal;
 
