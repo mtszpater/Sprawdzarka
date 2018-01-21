@@ -6,11 +6,12 @@
 <th:block th:fragment="tab(tests, allPossibleLanguages)">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-6 col-lg-8">
-            <th:block th:include="shared/tables :: tests(tests = ${tests})"/>
 
-            <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#add_test_form">
-                Dodaj test
-            </button>
+            <div class="card mb-4">
+
+                <th:block th:unless="${tests.isEmpty()}" th:include="shared/tables :: tests(tests = ${tests})"/>
+                <div class="card-body" th:if="${tests.isEmpty()}" th:include="shared/fragments :: default_info(message='Nie zostały zdefiniowane żadne testy')"></div>
+            </div>
 
             <th:block th:replace="shared/fragments :: modal(id='add_test_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
                 <div id="modal_header">
@@ -23,17 +24,25 @@
 
         </div>
         <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-            <div class="card p-4">
-                <h4>Dostępne języki</h4>
-                <form>
-                    <div class="form-group mx-4" th:each="this_language:${allPossibleLanguages}">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" th:checked="${this_language.value}"/>
-                            <label class="form-check-label" th:text="${this_language.key.name}">C</label>
+            <button type="button" class="btn btn-primary mb-4 btn-lg btn-block" data-toggle="modal" data-target="#add_test_form">
+                Dodaj test
+            </button>
+
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    Dostępne języki
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mx-4" th:each="this_language:${allPossibleLanguages}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:checked="${this_language.value}"/>
+                                <label class="form-check-label" th:text="${this_language.key.name}">C</label>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Zaktualizuj</button>
-                </form>
+                        <button type="submit" class="btn btn-primary">Zaktualizuj</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

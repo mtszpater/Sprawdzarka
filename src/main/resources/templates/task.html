@@ -1,11 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
+<style>
+    .card-header {
+padding: 0.30rem 0.55rem !important;
+}
 
-<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+
+
+</style>
+
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body}, withoutCard=true)">
     <div id="header" th:remove="tag">
-        <div style="font-size: 1rem !important;">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+        <th:block th:text="${task.name}">Nazwa</th:block>
+        <span style="font-size: 1rem !important;"><th:block th:include="shared/fragments :: date_format_strong(date = ${task.deadline})">Data</th:block></span>
+    </div>
+
+    <div id="body" th:remove="tag">
+        <div class="p-2 mb-4">
+            <ul class="nav nav-tabs card-header-tabs" style="border-bottom: 1px solid #CCCC" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#taskDescription" role="tab" aria-selected="true">
                         Szczegóły zadania
@@ -23,9 +36,6 @@
                 </li>
             </ul>
         </div>
-    </div>
-
-    <div id="body" th:remove="tag">
         <div class="tab-pane fade show active" id="taskDescription" role="tabpanel">
             <th:block th:include="shared/task/description :: tab(task = ${task}, solutions = ${solutions})"/>
         </div>

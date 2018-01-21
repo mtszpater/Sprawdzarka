@@ -4,21 +4,38 @@
 <body>
 
 <th:block th:fragment="tab(solutions)">
-    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#add_solution_form">
-        Prześlij rozwiązanie
-    </button>
-
-    <th:block th:replace="shared/fragments :: modal(id='add_solution_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
-        <div id="modal_header">
-            <th:block>Przesylanie nowego zadania</th:block>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <th:block th:unless="${solutions.isEmpty()}" th:include="shared/tables :: history(solutions = ${solutions})"/>
+                <div class="card-body" th:if="${solutions.isEmpty()}" th:include="shared/fragments :: default_info(message='Nie wyslałeś jeszcze żadnego rozwiązania')"></div>
+            </div>
         </div>
-        <div id="modal_body">
-            <div th:replace="forms/modal/add_solution :: form"></div>
-        </div>
-    </th:block>
 
-    <div class="mt-4">
-        <th:block th:include="shared/tables :: history(solutions = ${solutions})"/>
+        <div class="col-4">
+            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#add_solution_form">
+                Prześlij rozwiązanie
+            </button>
+
+            <div class="card mt-4">
+                <div class="card-header font-weight-bold">
+                    Podsumowanie
+                </div>
+                <div class="card-body">
+                    asdasdasd
+                </div>
+            </div>
+        </div>
+
+        <th:block th:replace="shared/fragments :: modal(id='add_solution_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+            <div id="modal_header">
+                <th:block>Przesylanie nowego zadania</th:block>
+            </div>
+            <div id="modal_body">
+                <div th:replace="forms/modal/add_solution :: form"></div>
+            </div>
+        </th:block>
+
     </div>
 </th:block>
 
