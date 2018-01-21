@@ -11,4 +11,6 @@ public interface ScoreRepository extends JpaRepository<Score, Long> {
     List<Score> findBySolution(Solution test);
 
     Score findBySolutionAndTest(Solution solution, Test test);
+
+    void deleteByTest(Test test);
 }

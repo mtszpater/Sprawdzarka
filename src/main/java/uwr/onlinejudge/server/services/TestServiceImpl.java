@@ -7,15 +7,19 @@ import uwr.onlinejudge.server.models.Test;
 import uwr.onlinejudge.server.models.form.TestForm;
 import uwr.onlinejudge.server.repositories.TestRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class TestServiceImpl implements TestService {
     private TestRepository testRepository;
     private ObjectMapper objectMapper;
+    private TaskService taskService;
 
     @Autowired
-    public TestServiceImpl(TestRepository testRepository, ObjectMapper objectMapper) {
+    public TestServiceImpl(TestRepository testRepository, ObjectMapper objectMapper, TaskService taskService) {
         this.testRepository = testRepository;
         this.objectMapper = objectMapper;
+        this.taskService = taskService;
     }
 
     @Override
@@ -29,7 +33,9 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    @Transactional
     public void deleteTest(Long id) {
+        taskService.deleteScores(getTest(id));
         testRepository.delete(id);
     }
 }

@@ -104,12 +104,12 @@
                          th:attrappend="data-target='#input' + ${test.id} + '-modal'"
                          class="btn btn-light btn-sm" data-toggle="modal">Wyświetl
 
-                        <th:block th:replace="shared/fragments :: modal(id='input'+${test.id}+'-modal', header = ~{::div#input_modal_header},body = ~{::div#input_modal_body})">
+                        <th:block th:replace="shared/fragments :: modal(id='input'+${test.id}+'-modal', header = ~{::div#input_modal_header},body = ~{::div#input_modal_body}, modalDialogClass = 'modal-sm')">
                             <div id="input_modal_header">
                                 <th:block>Input</th:block>
                             </div>
                             <div id="input_modal_body">
-                                <p th:text="${test.inputArgument}"></p>
+                                <pre class="text-left" th:text="${test.inputArgument}"></pre>
                             </div>
                         </th:block>
 
@@ -128,12 +128,12 @@
                          class="btn btn-light btn-sm" data-toggle="modal">
                         Wyświetl
 
-                        <th:block th:replace="shared/fragments :: modal(id='output'+${test.id}+'-modal', header = ~{::div#output_modal_header},body = ~{::div#output_modal_body})">
+                        <th:block th:replace="shared/fragments :: modal(id='output'+${test.id}+'-modal', header = ~{::div#output_modal_header},body = ~{::div#output_modal_body}, modalDialogClass = 'modal-sm')">
                             <div id="output_modal_header">
                                 <th:block>Output</th:block>
                             </div>
                             <div id="output_modal_body">
-                                <p th:text="${test.expectedAnswer}"></p>
+                                <pre class="text-left" th:text="${test.expectedAnswer}"></pre>
                             </div>
                         </th:block>
 

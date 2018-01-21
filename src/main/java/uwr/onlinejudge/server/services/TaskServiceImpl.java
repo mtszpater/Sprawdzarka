@@ -109,5 +109,10 @@ public class TaskServiceImpl implements TaskService {
         return solutionRepository.findOne(id);
     }
 
+    @Override
+    public void deleteScores(Test test) {
+        scoreRepository.deleteByTest(test);
+    }
+
 
 }

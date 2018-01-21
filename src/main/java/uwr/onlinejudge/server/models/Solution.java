@@ -39,7 +39,7 @@ public class Solution {
 
     private int bonus;
 
-    @OneToMany(mappedBy = "solution")
+    @OneToMany(mappedBy = "solution", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Score> scores;
 
