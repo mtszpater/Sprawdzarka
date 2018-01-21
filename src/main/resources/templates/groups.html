@@ -2,30 +2,24 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
       xmlns="http://www.w3.org/1999/xhtml">
 
-<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body}, withoutCard=true)">
 
     <div id="header" th:remove="tag">
-        <th:block>Przegląd grup</th:block>
+        <div class="row">
+            <div class="col-10">
+                <th:block>Przegląd grup</th:block>
+            </div>
+            <div class="col-2">
+                <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_group_form">
+                        Dodaj grupę
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="body" th:remove="tag">
-
-        <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_group_form">
-                Dodaj grupę
-            </button>
-
-            <th:block th:replace="shared/fragments :: modal(id='add_group_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
-                <div id="modal_header">
-                    <th:block>Tworzenie nowej grupy</th:block>
-                </div>
-                <div id="modal_body">
-                    <div th:replace="forms/modal/add_group :: form"></div>
-                </div>
-            </th:block>
-
-        </div>
 
         <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item">
@@ -46,14 +40,14 @@
                     <div class="col-6">
                         <th:block th:each="group, iter:${myGroups}">
                             <div class="mb-4" th:if="${iter.odd}">
-                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                                <div class="card rounded-0" th:include="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
                             </div>
                         </th:block>
                     </div>
                     <div class="col-6">
                         <th:block th:each="group, iter:${myGroups}">
                             <div class="mb-4" th:if="${iter.even}">
-                                <div th:replace="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
+                                <div class="card rounded-0" th:include="shared/card_group :: my_group(group=${group},myGroup='true')"></div>
                             </div>
                         </th:block>
                     </div>
@@ -69,19 +63,29 @@
                     <div class="col-6">
                         <th:block th:each="group, iter:${availableGroups}">
                             <div class="mb-4" th:if="${iter.odd}">
-                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='false')"></div>
+                                <div class="card rounded-0" th:include="shared/card_group :: available_group(group=${group},myGroup='false')"></div>
                             </div>
                         </th:block>
                     </div>
                     <div class="col-6">
                         <th:block th:each="group, iter:${availableGroups}">
                             <div class="mb-4" th:if="${iter.even}">
-                                <div th:replace="shared/card_group :: available_group(group=${group},myGroup='true')"></div>
+                                <div class="card rounded-0" th:include="shared/card_group :: available_group(group=${group},myGroup='true')"></div>
                             </div>
                         </th:block>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <th:block th:replace="shared/fragments :: modal(id='add_group_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                <div id="modal_header">
+                    <th:block>Tworzenie nowej grupy</th:block>
+                </div>
+                <div id="modal_body">
+                    <div th:replace="forms/modal/add_group :: form"></div>
+                </div>
+            </th:block>
         </div>
     </div>
 </th:block>

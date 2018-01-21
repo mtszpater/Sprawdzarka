@@ -4,34 +4,27 @@
 
 <!--Page Content-->
 
-<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body})">
+<th:block th:replace="shared/container :: common_container(header = ~{::div#header},body = ~{::div#body}, withoutCard=true)">
 
     <div id="header" th:remove="tag">
-        <th:block th:text="${group.name}">Grupa</th:block>
-    </div>
-
-    <div id="body" th:remove="tag">
         <div class="row">
-            <div class="col-10"><a th:text="${group.description}"></a></div>
+            <div class="col-10">
+                <th:block th:text="${group.name}">Przegląd grup</th:block>
+            </div>
             <div class="col-2">
                 <div sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                             data-target="#add_list_form">
                         Dodaj listę
                     </button>
-
-
-                    <th:block th:replace="shared/fragments :: modal(id='add_list_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
-                        <div id="modal_header">
-                            <th:block>Tworzenie nowej listy</th:block>
-                        </div>
-                        <div id="modal_body">
-                            <div th:replace="forms/modal/add_list :: form"></div>
-                        </div>
-                    </th:block>
-
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="body" th:remove="tag">
+        <div class="row">
+            <div class="col-10"><a th:text="${group.description}"></a></div>
         </div>
 
         <th:block th:if="${#lists.isEmpty(taskList)}">
@@ -43,6 +36,17 @@
                 <div th:replace="shared/card_list :: title(list=${list})"></div>
                 <div th:replace="shared/card_list :: description(list=${list})"></div>
             </div>
+        </div>
+
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <th:block th:replace="shared/fragments :: modal(id='add_list_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+                <div id="modal_header">
+                    <th:block>Tworzenie nowej listy</th:block>
+                </div>
+                <div id="modal_body">
+                    <div th:replace="forms/modal/add_list :: form"></div>
+                </div>
+            </th:block>
         </div>
 
     </div>

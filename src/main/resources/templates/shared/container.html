@@ -15,9 +15,9 @@
                 <th:block th:if="${alertMessage != null}">
                     <div th:replace="shared/fragments :: alert"></div>
                 </th:block>
-                <div class="card effect1">
-                    <div class="card-header">
-                        <span class="display-4 display-small">
+                <div th:classappend="${withoutCard} ? '' : 'card effect1'">
+                    <div th:classappend="${withoutCard} ? '' : 'card-header'">
+                        <span th:classappend="${withoutCard} ? 'display-large' : 'display-small'" class="display-4">
                             <th:block th:replace="${header}"/>
                         </span>
                     </div>
