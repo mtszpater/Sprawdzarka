@@ -108,9 +108,20 @@
                         </div>
                     </a>
                     <div th:unless="${#strings.length(test.inputArgument)} > 100"
-                         th:attrappend="data-val=${test.inputArgument}" data-id='Argumenty wejściowe'
-                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
+                         th:attrappend="data-target='#input' + ${test.id} + '-modal'"
+                         class="btn btn-light btn-sm" data-toggle="modal">Wyświetl
+
+                        <th:block th:replace="shared/fragments :: modal(id='input'+${test.id}+'-modal', header = ~{::div#input_modal_header},body = ~{::div#input_modal_body})">
+                            <div id="input_modal_header">
+                                <th:block>Input</th:block>
+                            </div>
+                            <div id="input_modal_body">
+                                <p th:text="${test.inputArgument}"></p>
+                            </div>
+                        </th:block>
+
                     </div>
+
                 </td>
                 <td>
                     <a th:if="${#strings.length(test.expectedAnswer)} > 100"
@@ -120,8 +131,19 @@
                         </div>
                     </a>
                     <div th:unless="${#strings.length(test.expectedAnswer)} > 100"
-                         th:attrappend="data-val=${test.expectedAnswer}" data-id='Oczekiwana odpowiedź'
-                         class="btn btn-light btn-sm" data-toggle="modal" data-target="#test-modal">Wyświetl
+                         th:attrappend="data-target='#output' + ${test.id} + '-modal'"
+                         class="btn btn-light btn-sm" data-toggle="modal">
+                        Wyświetl
+
+                        <th:block th:replace="shared/fragments :: modal(id='output'+${test.id}+'-modal', header = ~{::div#output_modal_header},body = ~{::div#output_modal_body})">
+                            <div id="output_modal_header">
+                                <th:block>Output</th:block>
+                            </div>
+                            <div id="output_modal_body">
+                                <p th:text="${test.expectedAnswer}"></p>
+                            </div>
+                        </th:block>
+
                     </div>
                 </td>
                 <td th:include="shared/fragments :: test_timeFormat(time = ${test.timeRequired})">150ms</td>
