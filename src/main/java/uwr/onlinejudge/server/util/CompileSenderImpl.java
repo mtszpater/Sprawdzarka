@@ -24,6 +24,7 @@ public class CompileSenderImpl implements CompileSender {
     @Override
     public CompileResult send(CodeToCompile codeToCompile) {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        codeToCompile.setStdin(codeToCompile.getStdin().replaceAll("\r\n", "\n"));
         HttpEntity<?> request = new HttpEntity<>(codeToCompile, httpHeaders);
 
         ResponseEntity<CompileResult> response = restTemplate.postForEntity(COMPILE_URL, request, CompileResult.class);

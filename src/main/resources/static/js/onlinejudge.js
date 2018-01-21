@@ -16,15 +16,15 @@ var getUrlParameter = function getUrlParameter(sParam) {
 var s = getUrlParameter('s');
 
 $(function(){
-$( "#loader" ).html("<i class=\"fa fa-cog fa-spin fa-4x fa-fw\"></i> <span class=\"sr-only\">Loading...</span>");
-$( "#last_solution" ).text("Kompiluję...");
+$( "#loader" ).html("<i class=\"fa fa-cog fa-spin fa-4x fa-fw\"></i> <span class=\"sr-only\">Loading...</span> <p class=\"font-weight-bold\"> Kompiluję...</p>");
+$( "#last_solution" ).html("Kompiluję...");
     if( s ) {
         $.ajax({
           url: "http://localhost:8080/api/compile/" + s,
           context: document.body
         }).done(function(data) {
           if( data ){
-            $( "#last_solution" ).text("Gotowe, odśwież stronę");
+            $( "#last_solution" ).html("Gotowe, odśwież stronę");
             $( "#loader" ).addClass("hidden");
             location.reload();
           }
