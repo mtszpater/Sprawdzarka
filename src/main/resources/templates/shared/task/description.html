@@ -5,14 +5,14 @@
 
 <th:block th:fragment="tab(task, solutions)">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <pre th:text="${task.taskDescription.content}"></pre>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
 
             <div th:if="${task.comment != ''}" class="card mb-4">
                 <div class="card-header">
@@ -29,13 +29,10 @@
                     <th:block>Ostatnie rozwiązanie</th:block>
                 </div>
                 <div class="card-body">
-                    <div id="loader"></div>
-                    <div id="last_solution text-center" th:if="${lastSolution}">
-
-                        <div class="mb-3" th:include="shared/fragments :: progress_bar(scores = ${lastSolution.scores})">progress bar</div>
-                        <p class="text-center">
-                            <th:block th:include="shared/fragments :: date_format_small(date = ${lastSolution.DateOfSending})">Data</th:block>
-                        </p>
+                    <div id="loader" class="text-center"></div>
+                    <div id="last_solution" class="text-center" th:if="${lastSolution}">
+                        <th:block th:include="shared/fragments :: date_format_small(date = ${lastSolution.DateOfSending})">Data</th:block>
+                        <div class="m-3" th:include="shared/fragments :: progress_bar(scores = ${lastSolution.scores})">progress bar</div>
                         <th:block th:replace="shared/tables :: scores(scores=${lastSolution.scores})">Tabela z wynikami</th:block>
                     </div>
                     <div th:unless="${lastSolution}" th:include="shared/fragments :: default_info(message='Nie wyslałeś jeszcze żadnego rozwiązania')">

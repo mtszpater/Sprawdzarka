@@ -17,14 +17,14 @@ var s = getUrlParameter('s');
 
 $(function(){
 $( "#loader" ).html("<i class=\"fa fa-cog fa-spin fa-4x fa-fw\"></i> <span class=\"sr-only\">Loading...</span> <p class=\"font-weight-bold\"> Kompiluję...</p>");
-$( "#last_solution" ).html("Kompiluję...");
+$( "#last_solution" ).addClass("hidden");
     if( s ) {
         $.ajax({
           url: "http://localhost:8080/api/compile/" + s,
           context: document.body
         }).done(function(data) {
           if( data ){
-            $( "#last_solution" ).html("Gotowe, odśwież stronę");
+            $( "#last_solution" ).removeClass("hidden");
             $( "#loader" ).addClass("hidden");
             location.reload();
           }
@@ -34,8 +34,7 @@ $( "#last_solution" ).html("Kompiluję...");
             $( ".alert").addClass("alert-danger");
             $( ".alert").text("Utracono połączenie z serwerem kompilatora. Spróbuj ponownie za jakiś czas.");
 
-            $( "#last_solution" ).html("<i class=\"fa fa-exclamation-circle fa-4x text-danger\" aria-hidden=\"true\"></i> <p class=\"font-weight-bold text-danger\"> Kompilator umarł</p>");
-            $( "#loader" ).addClass("hidden");
+            $( "#loader" ).html("<i class=\"fa fa-exclamation-circle fa-4x text-danger\" aria-hidden=\"true\"></i> <p class=\"font-weight-bold text-danger\"> Kompilator umarł</p>");
           });
     }
 });
