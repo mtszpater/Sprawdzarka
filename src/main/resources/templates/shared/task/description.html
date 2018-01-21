@@ -38,7 +38,7 @@
                         <th:block th:include="shared/fragments :: date_format_small(date = ${lastSolution.DateOfSending})">Data</th:block>
                         <th:block th:include="shared/fragments :: language_format(language = ${lastSolution.language})">Język</th:block>
                         <div class="mb-3" th:include="shared/fragments :: progress_bar(scores = ${lastSolution.scores})">progress bar</div>
-                        <th:block th:replace="shared/tables :: scores(scores=${lastSolution.scores}, outputButton=false)">Tabela z wynikami</th:block>
+                        <th:block th:replace="shared/tables :: scores(scores=${lastSolution.scores})">Tabela z wynikami</th:block>
                     </div>
                 </li>
             </ul>
