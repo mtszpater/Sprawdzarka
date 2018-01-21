@@ -20,10 +20,11 @@ import uwr.onlinejudge.server.util.Languages;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -56,9 +57,17 @@ public class TaskController {
         Collection<Test> tests = taskService.getTests(task);
         Collection<Solution> solutions = taskService.getSolutions(user, task);
         Collection<Languages> languages = task.getLanguages();
-        ArrayList<Languages> allPossibleLanguages = new ArrayList<>(Arrays.asList(Languages.values()));
+
+
+        Map<Languages, Boolean> allPossibleLanguages = Arrays.asList(Languages.values()).
+                stream().
+                collect(Collectors.toMap(Function.identity(), l -> languages.stream().anyMatch(s -> s.getId() == l.getId())));
+
+
+
         SolutionForm solutionForm = new SolutionForm(task);
         TestForm testForm = new TestForm(task);
+        TaskLanguagesForm taskLanguagesForm = new TaskLanguagesForm(allPossibleLanguages);
 
         solutions = solutions.stream().sorted(Comparator.comparing(Solution::getDateOfSending).reversed()).collect(Collectors.toList());
         Solution lastSolution = solutions.stream().findFirst().orElse(null);
