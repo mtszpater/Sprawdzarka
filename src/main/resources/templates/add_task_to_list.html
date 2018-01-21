@@ -27,30 +27,20 @@
                     W tym momencie możesz wybrać jedno z gotowych zadań znajdujących się na dole lub
                     dodać własną treść zadania
                     przechodząc do
-                    <a href="#" data-toggle="modal" data-target=".bd-example-modal-sm">tego okna</a>.
+                    <a href="#" data-toggle="modal" data-target="#add_task_description_form">tego okna</a>.
                     Ten tekst jest oczywiście do zmiany.
                 </div>
             </div>
         </div>
 
-        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
-             aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <th:block class="modal-title" id="exampleModalLongTitle">Zdefiniuj treść nowego
-                            zadania
-                        </th:block>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div th:replace="forms/modal/add_task_description :: form"></div>
-                    </div>
-                </div>
+        <th:block th:replace="shared/fragments :: modal(id='add_task_description_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+            <div id="modal_header">
+                <th:block>Zdefiniuj treść nowego zadania</th:block>
             </div>
-        </div>
+            <div id="modal_body">
+                <div th:replace="forms/modal/add_task_description :: form"></div>
+            </div>
+        </th:block>
 
         <div class="tab-pane fade show active" id="private" role="tabpanel">
 

@@ -1,7 +1,6 @@
 package uwr.onlinejudge.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +8,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.form.UserForm;
 import uwr.onlinejudge.server.services.UserService;
@@ -19,7 +17,7 @@ import java.security.Principal;
 
 
 @Controller
-public class HomeController implements ErrorController {
+public class HomeController {//implements ErrorController {
     private UserService userService;
 
     @Autowired
@@ -37,10 +35,10 @@ public class HomeController implements ErrorController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if( userService.findByEmail(userForm.getEmail()) != null ) {
-            bindingResult.addError(new FieldError("email", "email", userForm.getEmail(), true, null, null,"Email zajęty"));
+        if (userService.findByEmail(userForm.getEmail()) != null) {
+            bindingResult.addError(new FieldError("email", "email", userForm.getEmail(), true, null, null, "Email zajęty"));
         }
-        if( userForm.getPassword().compareTo(userForm.getPasswordConfirm()) != 0) {
+        if (userForm.getPassword().compareTo(userForm.getPasswordConfirm()) != 0) {
             bindingResult.addError(new FieldError("password", "password", "Hasła nie są identyczne"));
         }
 
@@ -49,7 +47,7 @@ public class HomeController implements ErrorController {
         }
 
         userService.save(userForm);
-        redirectAttributes.addFlashAttribute("alertMessage" , "Rejestracja przebiegła pomyślnie");
+        redirectAttributes.addFlashAttribute("alertMessage", "Rejestracja przebiegła pomyślnie");
 
         return "redirect:/login";
     }
@@ -68,7 +66,7 @@ public class HomeController implements ErrorController {
         return "index";
     }
 
-    @RequestMapping(value = "/error")
+/*    @RequestMapping(value = "/error")
     public String error() {
         return "error_page";
     }
@@ -76,5 +74,5 @@ public class HomeController implements ErrorController {
     @Override
     public String getErrorPath() {
         return "/error";
-    }
+    }*/
 }
