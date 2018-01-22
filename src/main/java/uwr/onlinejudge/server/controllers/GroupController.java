@@ -88,6 +88,12 @@ public class GroupController {
         taskList.forEach(t -> t.setTasks(t.getTasks().stream().sorted(Comparator.comparing(Task::getDeadline).reversed()).collect(Collectors.toList())));
         TaskListForm taskListForm = new TaskListForm(group);
 
+        GroupForm groupForm = new GroupForm();
+        groupForm.setDescription(group.getDescription());
+        groupForm.setName(group.getName());
+        groupForm.setPassword(group.getPassword());
+
+        model.addAttribute("groupForm", groupForm);
         model.addAttribute("taskListForm", taskListForm);
         model.addAttribute("taskList", taskList);
         model.addAttribute("group", group);
@@ -169,4 +175,29 @@ public class GroupController {
         redirectAttributes.addFlashAttribute("alertMessage", "Zostałeś wypisany z grupy");
         return "redirect:/grupy";
     }
+
+    @RequestMapping(value = "/edytuj_grupe/{groupId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String editGroup(@PathVariable("groupId") Long groupId, @ModelAttribute("groupForm") @Valid GroupForm groupForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        Group group = groupService.getGroup(groupId);
+
+        if (group == null) {
+            return "error_page";
+        }
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("groupId", groupId);
+            return "forms/edit/edit_group";
+        }
+
+        group.setDescription(groupForm.getDescription());
+        group.setName(groupForm.getName());
+        group.setPassword(groupForm.getPassword());
+        groupService.save(group);
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Grupa została zmieniona");
+        return "redirect:/grupa/" + groupId;
+    }
+
+
 }

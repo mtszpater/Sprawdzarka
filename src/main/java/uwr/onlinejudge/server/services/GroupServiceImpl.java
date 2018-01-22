@@ -58,6 +58,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public Group save(Group group) {
+        return groupRepository.save(group);
+    }
+
+    @Override
     public void registerUser(User user, Group group, UserRole userRole) {
         Registration registration = new Registration();
         registration.setGroup(group);

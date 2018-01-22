@@ -83,7 +83,7 @@
                     <th:block>Tworzenie nowej grupy</th:block>
                 </div>
                 <div id="modal_body">
-                    <div th:replace="forms/modal/add_group :: form"></div>
+                    <div th:replace="forms/modal/group :: form(link= @{/dodaj_grupe}, button_name = 'Dodaj')"></div>
                 </div>
             </th:block>
         </div>

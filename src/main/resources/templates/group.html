@@ -8,17 +8,31 @@
 
     <div id="header" th:remove="tag">
         <div class="row">
-            <div class="col-10">
+            <div class="col-8">
                 <th:block th:text="${group.name}">Przegląd grup</th:block>
             </div>
-            <div class="col-2">
+
+            <div class="col-4">
                 <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#add_list_form">
-                        Dodaj listę
-                    </button>
+
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_list_form">Dodaj listę</button>
+                        </div>
+
+                        <div class="btn-group" role="group" aria-label="Second group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ustawienia grupy</button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#edit_group_form">Edytuj</button>
+                                <button class="dropdown-item" type="button">Usuń</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -39,12 +53,21 @@
         </div>
 
         <div sec:authorize="hasAuthority('ROLE_ADMIN')">
-            <th:block th:replace="shared/fragments :: modal(id='add_list_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
-                <div id="modal_header">
+            <th:block th:replace="shared/fragments :: modal(id='add_list_form', header = ~{::div#add_list_modal_header},body = ~{::div#add_list_modal_body})">
+                <div id="add_list_modal_header">
                     <th:block>Tworzenie nowej listy</th:block>
                 </div>
-                <div id="modal_body">
+                <div id="add_list_modal_body">
                     <div th:replace="forms/modal/add_list :: form"></div>
+                </div>
+            </th:block>
+
+            <th:block th:replace="shared/fragments :: modal(id='edit_group_form', header = ~{::div#edit_group_modal_header},body = ~{::div#edit_group_modal_body})">
+                <div id="edit_group_modal_header">
+                    <th:block>Edycja grupy</th:block>
+                </div>
+                <div id="edit_group_modal_body">
+                    <div th:replace="forms/modal/group :: form(link= @{/edytuj_grupe/{id}(id = ${group.id})}, button_name = 'Edytuj')"></div>
                 </div>
             </th:block>
         </div>

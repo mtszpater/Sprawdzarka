@@ -19,6 +19,8 @@ public interface GroupService {
 
     Group save(GroupForm groupForm);
 
+    Group save(Group group);
+
     void registerUser(User user, Group group, UserRole userRole);
 
     boolean isUserRegistered(User user, Group group);
