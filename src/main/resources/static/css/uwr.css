@@ -105,3 +105,42 @@ font-size: 2.4rem;
 	   -moz-box-shadow: 0 10px 6px -6px #777;
 	        box-shadow: 0 10px 6px -6px #777;
 }
+
+.navbar {
+    flex-wrap: nowrap;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+.nav-tabs .nav-item {
+    margin-top: 2px;
+    margin-right: 2px;
+    line-height: 2;
+}
+
+.nav-tabs .nav-link {
+    padding: 0.2rem 1.5rem;
+}
+
+.nav-tabs .nav-link.active {
+    color: #1987cf;
+    font-weight: 600;
+    border-color: transparent;
+    border-bottom: 4px solid #1987cf;
+}
+
+.nav-tabs .nav-link.disabled {
+    color: lightgrey;
+    border-bottom: 4px solid #f9f9f9;
+}
+
+.nav-tabs > li > a, .nav-tabs > li > span {
+    color: dimgray;
+}
+
+.nav-tabs > li > a:not(.active):hover, .nav-tabs > li > a:not(.active):focus, .nav-tabs > li > span:not(.active):hover, .nav-tabs > li > span:not(.active):focus {
+    border-color: transparent;
+    border-bottom: 4px solid lightgrey;
+}
