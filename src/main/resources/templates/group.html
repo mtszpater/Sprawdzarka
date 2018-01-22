@@ -25,7 +25,7 @@
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ustawienia grupy</button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" type="button" data-toggle="modal" data-target="#edit_group_form">Edytuj</button>
-                                <button class="dropdown-item" type="button">Usuń</button>
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#delete_group_form">Usuń</button>
                             </div>
                         </div>
                     </div>
@@ -68,6 +68,19 @@
                 </div>
                 <div id="edit_group_modal_body">
                     <div th:replace="forms/modal/group :: form(link= @{/edytuj_grupe/{id}(id = ${group.id})}, button_name = 'Edytuj')"></div>
+                </div>
+            </th:block>
+
+            <th:block th:replace="shared/fragments :: modal(id='delete_group_form', header = ~{::div#delete_group_modal_header},body = ~{::div#delete_group_modal_body}, footer = ~{::div#delete_group_modal_footer})">
+                <div id="delete_group_modal_header">
+                    <th:block>Usuwanie grupy</th:block>
+                </div>
+                <div id="delete_group_modal_body">
+                    Czy jesteś pewien, że chcesz usunąć grupe: <b><a th:text="${group.name}"></a></b>? Wszystkie dane zostaną usunięte!
+                </div>
+                <div id="delete_group_modal_footer">
+                    <a class="btn btn-danger" th:href="@{/usun_grupe/{id}(id = ${group.id})}" role="button">Ok</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
                 </div>
             </th:block>
         </div>

@@ -1,6 +1,10 @@
 package uwr.onlinejudge.server.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity(name = "Groups")
 public class Group {
@@ -20,6 +24,9 @@ public class Group {
 
     private String password;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    List<Registration> registrations = new LinkedList<>();
 
     public long getId() {
         return id;
@@ -61,4 +68,11 @@ public class Group {
         this.description = description;
     }
 
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
+    }
 }

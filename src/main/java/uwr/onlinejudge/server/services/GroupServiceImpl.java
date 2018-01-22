@@ -83,5 +83,10 @@ public class GroupServiceImpl implements GroupService {
         registrationRepository.deleteByUserAndGroup(user, group);
     }
 
+    @Override
+    public void delete(Long id) {
+        groupRepository.delete(id);
+    }
+
 
 }

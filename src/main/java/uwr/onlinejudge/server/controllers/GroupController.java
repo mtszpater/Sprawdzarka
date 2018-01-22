@@ -199,5 +199,19 @@ public class GroupController {
         return "redirect:/grupa/" + groupId;
     }
 
+    @RequestMapping(value = "/usun_grupe/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String deleteGroup(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
+        Group group = groupService.getGroup(id);
+
+        if (group == null) {
+            return "error_page";
+        }
+
+        groupService.delete(id);
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Grupa została usunięta");
+        return "redirect:/grupy";
+    }
 
 }

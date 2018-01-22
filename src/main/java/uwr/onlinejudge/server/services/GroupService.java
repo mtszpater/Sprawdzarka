@@ -26,4 +26,6 @@ public interface GroupService {
     boolean isUserRegistered(User user, Group group);
 
     void unregisterUser(User user, Group group);
+
+    void delete(Long id);
 }

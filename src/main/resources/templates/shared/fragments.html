@@ -74,6 +74,9 @@
                 <div class="modal-body">
                     <th:block th:replace="${body}"/>
                 </div>
+                <div th:if="${footer}" class="modal-footer">
+                    <th:block th:replace="${footer}"/>
+                </div>
             </div>
         </div>
     </div>
