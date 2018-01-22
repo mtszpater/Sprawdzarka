@@ -69,8 +69,8 @@ public class TestController {
             return "forms/add_test";
         }
 
-        Test test = testService.save(testForm);
-
+        long id = testService.save(testForm).getId();
+        Test test = testService.getTest(id);
         return tryCompileLastSolutions(redirectAttributes, test);
     }
 
