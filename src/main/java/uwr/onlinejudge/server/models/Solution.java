@@ -39,6 +39,8 @@ public class Solution {
 
     private int bonus;
 
+    private boolean compiled;
+
     @OneToMany(mappedBy = "solution", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Score> scores;
@@ -113,5 +115,13 @@ public class Solution {
 
     public void setLanguage(Languages language) {
         this.language = language;
+    }
+
+    public boolean isCompiled() {
+        return compiled;
+    }
+
+    public void setCompiled(boolean compiled) {
+        this.compiled = compiled;
     }
 }

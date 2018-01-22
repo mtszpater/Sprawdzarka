@@ -31,6 +31,8 @@ public class Test {
     @Enumerated(EnumType.STRING)
     private TestType type;
 
+    private boolean compiled;
+
     public long getId() {
         return id;
     }
@@ -85,5 +87,13 @@ public class Test {
 
     public void setType(TestType type) {
         this.type = type;
+    }
+
+    public boolean isCompiled() {
+        return compiled;
+    }
+
+    public void setCompiled(boolean compiled) {
+        this.compiled = compiled;
     }
 }
