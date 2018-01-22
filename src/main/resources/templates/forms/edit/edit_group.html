@@ -7,7 +7,7 @@
         <th:block>Edycja grupy</th:block>
     </div>
     <div id="body" th:remove="tag">
-        <div th:replace="forms/modal/group :: form(link= @{/edytuj_grupe/{id}(id = groupId)}, button_name = 'Edytuj')"></div>
+        <div th:replace="forms/modal/group :: form(link= @{/edytuj_grupe/{id}(id = ${groupId})}, button_name = 'Edytuj')"></div>
     </div>
 </th:block>
 </html>
