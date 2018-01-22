@@ -4,7 +4,7 @@
 <div th:fragment="form" class="container">
     <form th:action="@{/wyslij_zadanie}" method="post" th:object="${solutionForm}">
         <div th:replace="shared/inputs :: select_with_errors(options=*{task.languages}, fieldName='language', fieldValue=*{language}, name='Język programowania', labelClass='col-sm-5', divClass='col-sm-6' )"></div>
-        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='solution', fieldValue=*{solution}, name='Kod' )"></div>
+        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='solution', fieldValue=*{solution}, name='Kod', clearTextarea=true )"></div>
         <div th:replace="shared/inputs :: textarea_with_errors(fieldName='comment', fieldValue=*{comment}, name='Komentarz' )"></div>
         <input type="hidden" th:field="*{task}"/>
         <button type="submit" class="btn btn-primary">Wyślij</button>

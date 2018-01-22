@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.controllers;
 
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -75,7 +76,9 @@ public class TaskController {
 
         model.addAttribute("solutionForm", solutionForm);
         model.addAttribute("testForm", testForm);
+        task.getTaskDescription().setContent(Jsoup.parse(task.getTaskDescription().getContent()).outerHtml());
         model.addAttribute("task", task);
+
         model.addAttribute("tests", tests);
         model.addAttribute("solutions", solutions);
         model.addAttribute("languages", languages);

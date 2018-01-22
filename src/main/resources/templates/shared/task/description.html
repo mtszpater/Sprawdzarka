@@ -8,7 +8,7 @@
         <div class="col-12 col-sm-12 col-md-6 col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <pre th:text="${task.taskDescription.content}"></pre>
+                    <div th:utext="${task.taskDescription.content}"></div>
                 </div>
             </div>
         </div>
@@ -19,8 +19,7 @@
                     <th:block>Komentarz od admina</th:block>
                 </div>
                 <div class="card-body">
-                    <pre th:text="${task.comment}"></pre>
-
+                    <div th:utext="${task.comment}"></div>
                 </div>
             </div>
 

@@ -38,7 +38,9 @@
 
     <div id="body" th:remove="tag">
         <div class="row">
-            <div class="col-10"><a th:text="${group.description}"></a></div>
+            <div class="col-10">
+                <div th:utext="${group.description}"></div>
+            </div>
         </div>
 
         <th:block th:if="${#lists.isEmpty(taskList)}">

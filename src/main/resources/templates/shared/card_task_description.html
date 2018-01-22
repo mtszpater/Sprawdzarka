@@ -30,7 +30,7 @@
 <!-- Description -->
 <div th:fragment="description(task)" th:id="'collapse'+${task.id}" class="collapse" role="tabpanel">
     <div class="card-body">
-        <pre class="card-text" th:text="${task.content}"></pre>
+        <div class="card-text" th:utext="${task.content}"></div>
     </div>
 </div>
 

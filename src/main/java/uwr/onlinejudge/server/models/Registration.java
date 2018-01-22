@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import uwr.onlinejudge.server.util.UserRole;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Registration {
     private User user;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(nullable = false)
     private Group group;
 

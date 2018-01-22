@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -26,10 +27,12 @@ public class Group {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @JsonManagedReference
     List<Registration> registrations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @JsonManagedReference
     List<TaskList> taskLists = new LinkedList<>();
 
     public long getId() {

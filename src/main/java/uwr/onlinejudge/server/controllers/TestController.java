@@ -68,10 +68,9 @@ public class TestController {
         if (bindingResult.hasErrors()) {
             return "forms/add_test";
         }
-
-        long id = testService.save(testForm).getId();
-        Test test = testService.getTest(id);
-        return tryCompileLastSolutions(redirectAttributes, test);
+        testService.save(testForm);
+        redirectAttributes.addFlashAttribute("alertMessage", "Test został dodany");
+        return "redirect:/zadanie/" + testForm.getTask().getId();
     }
 
     @RequestMapping(value = "/dodaj_test_ponownie/{id}", method = RequestMethod.GET)

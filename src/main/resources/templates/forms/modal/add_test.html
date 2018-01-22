@@ -4,8 +4,8 @@
 
 <div th:fragment="form" class="container">
     <form th:action="@{/dodaj_test}" th:object="${testForm}" method="post">
-        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='inputArgument', fieldValue=*{inputArgument}, name='Input' )"></div>
-        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='expectedAnswer', fieldValue=*{expectedAnswer}, name='Output' )"></div>
+        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='inputArgument', fieldValue=*{inputArgument}, name='Input', clearTextarea=true )"></div>
+        <div th:replace="shared/inputs :: textarea_with_errors(fieldName='expectedAnswer', fieldValue=*{expectedAnswer}, name='Output', clearTextarea=true )"></div>
         <div th:replace="shared/inputs :: input_with_errors(type='number', fieldName='point', fieldValue=*{point}, name='Score', labelClass='col-sm-3', divClass='col-sm-3' )"></div>
         <div th:replace="shared/inputs :: input_with_errors(type='number', fieldName='timeRequired', fieldValue=*{timeRequired}, name='Timeout', labelClass='col-sm-3', divClass='col-sm-3' )"></div>
         <div th:replace="shared/inputs :: select_with_errors(options=${T(uwr.onlinejudge.server.util.TestType).values()}, fieldName='type', fieldValue=*{type}, name='Typ', labelClass='col-sm-3', divClass='col-sm-6' )"></div>

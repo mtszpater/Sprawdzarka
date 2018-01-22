@@ -18,7 +18,7 @@
 <th:block th:fragment="textarea_with_errors(fieldName, fieldValue, name)">
     <div class="form-group">
         <label th:text="${name}">Nazwa</label>
-        <textarea id="editorTextarea" rows="3" th:type="${type}" th:classappend="(${#fields.hasErrors('__${fieldName}__')})?' is-invalid':''" class="form-control" th:name="${fieldName}" th:value="${fieldValue}" th:text="${fieldValue}"></textarea>
+        <textarea th:id="${clearTextarea} ? '' : editorTextarea" rows="3" th:type="${type}" th:classappend="(${#fields.hasErrors('__${fieldName}__')})?' is-invalid':''" class="form-control" th:name="${fieldName}" th:value="${fieldValue}" th:text="${fieldValue}"></textarea>
 
         <div th:if="${#fields.hasErrors('__${fieldName}__')}" class="invalid-feedback">
             <p th:each="error : ${#fields.errors('__${fieldName}__')}" th:text="${error}"/>

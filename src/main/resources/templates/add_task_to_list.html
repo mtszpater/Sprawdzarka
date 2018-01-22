@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <th:block th:replace="shared/fragments :: modal(id='add_task_description_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+        <th:block th:replace="shared/fragments :: modal(id='add_task_description_form', header = ~{::div#modal_header},body = ~{::div#modal_body}, modalDialogClass = 'modal-lg')">
             <div id="modal_header">
                 <th:block>Zdefiniuj treść nowego zadania</th:block>
             </div>
