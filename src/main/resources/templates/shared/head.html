@@ -12,6 +12,9 @@
     <link th:href="@{/css/font-awesome.css}" rel="stylesheet" type='text/css'/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/uwr.css}" rel="stylesheet"/>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.2/classic/ckeditor.js"></script>
+
 </head>
 <body>
 
@@ -67,6 +70,7 @@
 <!-- Bootstrap core JavaScript -->
 <div th:fragment="script">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
     <script th:src="@{/js/popper.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/run_prettify.js}"></script>
@@ -77,6 +81,13 @@
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
+
+    ClassicEditor
+        .create(document.querySelector('#editorTextarea'))
+        .catch(error = > {
+        console.error(error);
+    } )
+    ;
 
     </script>
 
