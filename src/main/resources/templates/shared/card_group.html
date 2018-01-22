@@ -11,9 +11,7 @@
         <a class="font-weight-bold" th:href="@{/grupa/{id}(id=${group.id})}" th:text="${group.name}">Nazwa grupy</a>
         <p th:unless="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa prywatna</p>
         <p th:if="${#strings.isEmpty(group.password)}" class="card-subtitle mb-2 text-muted">Grupa publiczna</p>
-        <div class="card-text" th:utext="${#strings.length(group.description)}>100 ? ${#strings.substring(group.description,0,99)} + '...': ${group.description}">
-            Opis grupy.
-        </div>
+
 
         <p class="card-text pull-right">
             <small class="text-muted">Dodane przez <span th:text="${group.user.firstname}"></span></small>

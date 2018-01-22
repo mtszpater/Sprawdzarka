@@ -37,20 +37,26 @@
     </div>
 
     <div id="body" th:remove="tag">
-        <div class="row">
-            <div class="col-10">
-                <div th:utext="${group.description}"></div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body" th:utext="${group.description}">
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <th:block th:if="${#lists.isEmpty(taskList)}">
+                    <div th:replace="shared/fragments :: default_info(message='Brak dostępnych list')"></div>
+                </th:block>
 
-        <th:block th:if="${#lists.isEmpty(taskList)}">
-            <div th:replace="shared/fragments :: default_info(message='Brak dostępnych list')"></div>
-        </th:block>
-
-        <div class="card my-4" th:each="list:${taskList}">
-            <div role="tablist">
-                <div th:replace="shared/card_list :: title(list=${list})"></div>
-                <div th:replace="shared/card_list :: description(list=${list})"></div>
+                <div class="card" th:each="list:${taskList}">
+                    <div role="tablist">
+                        <div th:replace="shared/card_list :: title(list=${list})"></div>
+                        <div th:replace="shared/card_list :: description(list=${list})"></div>
+                    </div>
+                </div>
             </div>
         </div>
 

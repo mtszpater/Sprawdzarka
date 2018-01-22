@@ -10,7 +10,6 @@
                 <th scope="col">Czas</th>
                 <th scope="col">Punkty</th>
                 <th scope="col">Status</th>
-                <th th:if="${outputButton}" scope="col">Wynik</th>
             </tr>
             </thead>
             <tbody>
@@ -95,7 +94,6 @@
                 <th scope="col">Score</th>
                 <th scope="col">Type</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -157,9 +155,9 @@
                         </div>
                     </a>
                 </td>
-                <td>
-                    <a th:unless="${test.compiled}" th:href="@{/dodaj_test_ponownie/{id} (id = ${test.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>
-                </td>
+                <!--<td>-->
+                <!--<a th:unless="${test.compiled}" th:href="@{/dodaj_test_ponownie/{id} (id = ${test.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>-->
+                <!--</td>-->
             </tr>
             </tbody>
         </table>

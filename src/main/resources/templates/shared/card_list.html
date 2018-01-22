@@ -26,15 +26,17 @@
                 <div class="col-7">
                     <a th:text="${task.name}" th:href="@{/zadanie/{id} (id = ${task.id})}">Nazwa zadania</a>
                 </div>
-                <div class="col-1">
-                    <span class="badge badge-danger">JAVA</span>
-                </div>
-                <div data-toggle="tooltip" data-placement="top" th:title="${task.deadline}" class="col-4">
-                    <div class="progress mt-1">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                             aria-valuemax="100"></div>
+                <th:block>
+                    <div class="col-1">
+                        <span class="badge badge-danger">JAVA</span>
                     </div>
-                </div>
+                    <div data-toggle="tooltip" data-placement="top" th:title="${task.deadline}" class="col-4">
+                        <div class="progress mt-1">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </th:block>
             </div>
         </div>
 

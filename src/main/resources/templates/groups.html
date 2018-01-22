@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="mb-3" sec:authorize="hasAuthority('ROLE_ADMIN')">
-            <th:block th:replace="shared/fragments :: modal(id='add_group_form', header = ~{::div#modal_header},body = ~{::div#modal_body})">
+            <th:block th:replace="shared/fragments :: modal(id='add_group_form', header = ~{::div#modal_header},body = ~{::div#modal_body}, modalDialogClass = 'modal-lg')">
                 <div id="modal_header">
                     <th:block>Tworzenie nowej grupy</th:block>
                 </div>

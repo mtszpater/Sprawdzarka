@@ -32,13 +32,12 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" th:classappend="(url=='/') ? 'active'"
-                           th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i> Aktualności
+                           th:href="@{/}">Aktualności
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" th:href="@{/grupy}"
                            th:classappend="${#strings.contains(url,'/grupy')} ? 'active'">
-                            <i class="fa fa-users" aria-hidden="true"></i>
                             Grupy
                         </a>
                     </li>
@@ -49,7 +48,7 @@
                 </a>
 
                 <form th:action="@{/logout}" method="POST" sec:authorize="isAuthenticated()">
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-sign-out"></i> Wyloguj</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Wyloguj</button>
                 </form>
 
             </div>
