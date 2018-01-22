@@ -34,6 +34,7 @@
                 <th scope="col">Uzyskane punkty</th>
                 <th scope="col">Język</th>
                 <th scope="col">Szczegóły</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -72,6 +73,9 @@
                         </div>
                     </th:block>
                 </td>
+                <td>
+                    <a th:unless="${solution.compiled}" th:href="@{/dodaj_rozwiazanie_ponownie/{id} (id = ${solution.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -88,6 +92,7 @@
                 <th scope="col">Timeout</th>
                 <th scope="col">Score</th>
                 <th scope="col">Type</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -149,6 +154,9 @@
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </div>
                     </a>
+                </td>
+                <td>
+                    <a th:unless="${test.compiled}" th:href="@{/dodaj_test_ponownie/{id} (id = ${test.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>
                 </td>
             </tr>
             </tbody>

@@ -36,8 +36,8 @@ public class CompileServiceImpl implements CompileService {
     }
 
     @Override
-    public void compileLastSolutions(Task task, Test test) throws ResourceAccessException {
-        List<Registration> registrations = registrationRepository.findByGroup(task.getTaskList().getGroup());
+    public void compileLastSolutions(Test test) throws ResourceAccessException {
+        List<Registration> registrations = registrationRepository.findByGroup(test.getTask().getTaskList().getGroup());
         List<User> users = registrations.stream().map(registration -> registration.getUser()).collect(Collectors.toList());
         List<Solution> lastSolutions = users.stream().map(user -> solutionRepository.findFirstByUserOrderByDateOfSendingDesc(user)).collect(Collectors.toList());
         lastSolutions.forEach(solution -> {

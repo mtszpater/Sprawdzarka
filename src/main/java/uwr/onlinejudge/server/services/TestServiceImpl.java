@@ -33,6 +33,11 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public Test save(Test test) {
+        return testRepository.save(test);
+    }
+
+    @Override
     @Transactional
     public void deleteTest(Long id) {
         taskService.deleteScores(getTest(id));

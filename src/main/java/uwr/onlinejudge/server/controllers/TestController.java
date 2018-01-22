@@ -71,18 +71,33 @@ public class TestController {
 
         Test test = testService.save(testForm);
 
+        return tryCompileLastSolutions(redirectAttributes, test);
+    }
+
+    @RequestMapping(value = "/dodaj_test_ponownie/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String addTestAgain(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        Test test = testService.getTest(id);
+
+        if (test == null || test.isCompiled())
+            return "error_page";
+
+        return tryCompileLastSolutions(redirectAttributes, test);
+    }
+
+    private String tryCompileLastSolutions(RedirectAttributes redirectAttributes, Test test) {
         try {
-            compileService.compileLastSolutions(testForm.getTask(), test);
+            compileService.compileLastSolutions(test);
         } catch (ResourceAccessException e) {
             e.printStackTrace();
-            testService.deleteTest(test.getId());
-            redirectAttributes.addFlashAttribute("alertMessage", "Utracono połączenie z serwerem kompilatora. Test nie został dodany.");
+            redirectAttributes.addFlashAttribute("alertMessage", "Utracono połączenie z serwerem kompilatora. Spróbuj ponownie za jakiś czas.");
             redirectAttributes.addFlashAttribute("type", "alert-danger");
-            return "redirect:/zadanie/" + testForm.getTask().getId();
+            return "redirect:/zadanie/" + test.getTask().getId();
         }
-
+        test.setCompiled(true);
+        testService.save(test);
         redirectAttributes.addFlashAttribute("alertMessage", "Test został dodany");
-        return "redirect:/zadanie/" + testForm.getTask().getId();
+        return "redirect:/zadanie/" + test.getTask().getId();
     }
 
     @RequestMapping(value = "/usun_test/{taskId}/{testId}", method = RequestMethod.GET)

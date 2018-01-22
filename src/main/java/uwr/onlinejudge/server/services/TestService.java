@@ -8,5 +8,7 @@ public interface TestService {
 
     Test save(TestForm testForm);
 
+    Test save(Test test);
+
     void deleteTest(Long id);
 }
