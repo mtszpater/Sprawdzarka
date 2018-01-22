@@ -7,9 +7,12 @@ import uwr.onlinejudge.server.models.*;
 import uwr.onlinejudge.server.repositories.RegistrationRepository;
 import uwr.onlinejudge.server.repositories.ScoreRepository;
 import uwr.onlinejudge.server.repositories.SolutionRepository;
+import uwr.onlinejudge.server.repositories.TestRepository;
 import uwr.onlinejudge.server.util.CompileSender;
 import uwr.onlinejudge.server.util.ScoreCalculator;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,14 +23,16 @@ public class CompileServiceImpl implements CompileService {
     private RegistrationRepository registrationRepository;
     private SolutionRepository solutionRepository;
     private ScoreRepository scoreRepository;
+    private TestRepository testRepository;
 
     @Autowired
-    public CompileServiceImpl(CompileSender compileSender, ScoreCalculator scoreCalculator, RegistrationRepository registrationRepository, SolutionRepository solutionRepository, ScoreRepository scoreRepository) {
+    public CompileServiceImpl(CompileSender compileSender, ScoreCalculator scoreCalculator, RegistrationRepository registrationRepository, SolutionRepository solutionRepository, ScoreRepository scoreRepository, TestRepository testRepository) {
         this.compileSender = compileSender;
         this.scoreCalculator = scoreCalculator;
         this.registrationRepository = registrationRepository;
         this.solutionRepository = solutionRepository;
         this.scoreRepository = scoreRepository;
+        this.testRepository = testRepository;
     }
 
     @Override
@@ -43,5 +48,27 @@ public class CompileServiceImpl implements CompileService {
         );
     }
 
+    @Override
+    public Collection<CompileResult> compileSolution(Long solutionId) {
+        Solution solution = solutionRepository.findOne(solutionId);
+        ArrayList<Test> tests = (ArrayList<Test>) testRepository.findByTask(solution.getTask());
+        Collection<CompileResult> compileResults = new ArrayList<>();
+        CodeToCompile codeToCompile;
+        CompileResult compileResult;
+        for (Test test : tests) {
+            boolean solutionCompiled = scoreRepository.findBySolutionAndTest(solution, test) != null;
 
+            if (solutionCompiled) {
+                continue;
+            }
+
+            codeToCompile = new CodeToCompile("" + solution.getLanguage().getId(), solution.getSolution(), test.getInputArgument());
+            compileResult = compileSender.send(codeToCompile);
+            compileResults.add(compileResult);
+
+            scoreRepository.save(scoreCalculator.calculate(solution, test, compileResult));
+        }
+
+        return compileResults;
+    }
 }

@@ -105,11 +105,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Solution getSolution(Long id) {
-        return solutionRepository.findOne(id);
-    }
-
-    @Override
     public void deleteScores(Test test) {
         scoreRepository.deleteByTest(test);
     }

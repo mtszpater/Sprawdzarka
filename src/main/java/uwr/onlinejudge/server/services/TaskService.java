@@ -30,7 +30,5 @@ public interface TaskService {
 
     Score getScore(Long id);
 
-    Solution getSolution(Long id);
-
     void deleteScores(Test test);
 }
