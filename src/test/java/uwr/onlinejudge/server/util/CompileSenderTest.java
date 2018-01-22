@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import uwr.onlinejudge.server.models.CodeToCompile;
 import uwr.onlinejudge.server.models.CompileResult;
+import uwr.onlinejudge.server.util.compiler.CompileSender;
+import uwr.onlinejudge.server.util.compiler.CompileSenderImpl;
 
 public class CompileSenderTest {
 

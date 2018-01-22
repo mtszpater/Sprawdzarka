@@ -8,8 +8,8 @@ import uwr.onlinejudge.server.repositories.RegistrationRepository;
 import uwr.onlinejudge.server.repositories.ScoreRepository;
 import uwr.onlinejudge.server.repositories.SolutionRepository;
 import uwr.onlinejudge.server.repositories.TestRepository;
-import uwr.onlinejudge.server.util.CompileSender;
-import uwr.onlinejudge.server.util.ScoreCalculator;
+import uwr.onlinejudge.server.util.compiler.CompileSender;
+import uwr.onlinejudge.server.util.compiler.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package uwr.onlinejudge.server.util;
+package uwr.onlinejudge.server.util.compiler;
 
 import uwr.onlinejudge.server.models.CodeToCompile;
 import uwr.onlinejudge.server.models.CompileResult;

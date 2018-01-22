@@ -1,4 +1,4 @@
-package uwr.onlinejudge.server.util;
+package uwr.onlinejudge.server.util.compiler;
 
 import org.springframework.stereotype.Component;
 

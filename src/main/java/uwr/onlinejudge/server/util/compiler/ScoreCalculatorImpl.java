@@ -1,4 +1,4 @@
-package uwr.onlinejudge.server.util;
+package uwr.onlinejudge.server.util.compiler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,6 +6,7 @@ import uwr.onlinejudge.server.models.CompileResult;
 import uwr.onlinejudge.server.models.Score;
 import uwr.onlinejudge.server.models.Solution;
 import uwr.onlinejudge.server.models.Test;
+import uwr.onlinejudge.server.util.TestState;
 
 @Component
 public class ScoreCalculatorImpl implements ScoreCalculator {
