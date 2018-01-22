@@ -28,6 +28,10 @@ public class Group {
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     List<Registration> registrations = new LinkedList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    List<TaskList> taskLists = new LinkedList<>();
+
     public long getId() {
         return id;
     }
@@ -74,5 +78,13 @@ public class Group {
 
     public void setRegistrations(List<Registration> registrations) {
         this.registrations = registrations;
+    }
+
+    public List<TaskList> getTaskLists() {
+        return taskLists;
+    }
+
+    public void setTaskLists(List<TaskList> taskLists) {
+        this.taskLists = taskLists;
     }
 }
