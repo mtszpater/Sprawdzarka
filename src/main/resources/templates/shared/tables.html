@@ -15,9 +15,11 @@
             </thead>
             <tbody>
             <tr th:each="score: ${scores}">
-                <td th:include="shared/fragments :: test_timeFormat(time = ${score.executionTime})">150ms</td>
-                <td th:text="${score.point}"></td>
-                <td th:include="shared/fragments :: test_state(state = ${score.state})">RE</td>
+                <th:block th:if="${score.test.type.id} != 2">
+                    <td th:include="shared/fragments :: test_timeFormat(time = ${score.executionTime})">150ms</td>
+                    <td th:text="${score.point}"></td>
+                    <td th:include="shared/fragments :: test_state(state = ${score.state})">RE</td>
+                </th:block>
             </tr>
             </tbody>
         </table>
