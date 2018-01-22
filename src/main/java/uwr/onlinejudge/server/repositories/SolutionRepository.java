@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface SolutionRepository extends JpaRepository<Solution, Long> {
     List<Solution> findByUserAndTask(User user, Task task);
+
+    Solution findFirstByUserOrderByDateOfSendingDesc(User user);
 }

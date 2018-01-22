@@ -9,25 +9,30 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uwr.onlinejudge.server.models.Task;
 import uwr.onlinejudge.server.models.Test;
 import uwr.onlinejudge.server.models.form.TestForm;
+import uwr.onlinejudge.server.services.CompileService;
 import uwr.onlinejudge.server.services.TaskService;
 import uwr.onlinejudge.server.services.TestService;
 
 import javax.validation.Valid;
 
+
 @Controller
 @RequestMapping
 public class TestController {
-    TestService testService;
-    TaskService taskService;
+    private TestService testService;
+    private TaskService taskService;
+    private CompileService compileService;
 
     @Autowired
-    public TestController(TestService testService, TaskService taskService) {
+    public TestController(TestService testService, TaskService taskService, CompileService compileService) {
         this.testService = testService;
         this.taskService = taskService;
+        this.compileService = compileService;
     }
 
     @RequestMapping(value = "/testy/{id}/argumenty_wejsciowe", method = RequestMethod.GET)
@@ -63,7 +68,19 @@ public class TestController {
         if (bindingResult.hasErrors()) {
             return "forms/add_test";
         }
-        testService.save(testForm);
+
+        Test test = testService.save(testForm);
+
+        try {
+            compileService.compileLastSolutions(testForm.getTask(), test);
+        } catch (ResourceAccessException e) {
+            e.printStackTrace();
+            testService.deleteTest(test.getId());
+            redirectAttributes.addFlashAttribute("alertMessage", "Utracono połączenie z serwerem kompilatora. Test nie został dodany.");
+            redirectAttributes.addFlashAttribute("type", "alert-danger");
+            return "redirect:/zadanie/" + testForm.getTask().getId();
+        }
+
         redirectAttributes.addFlashAttribute("alertMessage", "Test został dodany");
         return "redirect:/zadanie/" + testForm.getTask().getId();
     }
