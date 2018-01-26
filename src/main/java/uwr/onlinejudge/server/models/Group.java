@@ -31,11 +31,11 @@ public class Group {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JsonManagedReference
-    List<Registration> registrations = new LinkedList<>();
+    private List<Registration> registrations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    List<TaskList> taskLists = new LinkedList<>();
+    private List<TaskList> taskLists = new LinkedList<>();
 
     public long getId() {
         return id;

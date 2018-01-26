@@ -1,12 +1,15 @@
 package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Cascade;
 import uwr.onlinejudge.server.util.Languages;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Task.class)
@@ -40,6 +43,16 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "task_languages")
     private Collection<Languages> languages;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @JsonManagedReference
+    private List<Solution> solutions;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @JsonManagedReference
+    private List<Test> tests;
 
     public long getId() {
         return id;
@@ -103,5 +116,21 @@ public class Task {
 
     public void setLanguages(Collection<Languages> languages) {
         this.languages = languages;
+    }
+
+    public List<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
+    }
+
+    public List<Solution> getSolutions() {
+        return solutions;
+    }
+
+    public void setSolutions(List<Solution> solutions) {
+        this.solutions = solutions;
     }
 }

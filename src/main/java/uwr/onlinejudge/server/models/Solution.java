@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import uwr.onlinejudge.server.util.Languages;
@@ -20,6 +21,7 @@ public class Solution {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Task task;
 
     @Column(nullable = false)

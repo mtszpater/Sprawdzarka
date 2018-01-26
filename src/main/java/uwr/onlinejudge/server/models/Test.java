@@ -1,5 +1,6 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import uwr.onlinejudge.server.util.TestType;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Test {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Task task;
 
     private int timeRequired;

@@ -2,6 +2,7 @@ package uwr.onlinejudge.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TaskList {
     private String name;
 
     @OneToMany(mappedBy = "taskList")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Task> tasks;
 
     public long getId() {
