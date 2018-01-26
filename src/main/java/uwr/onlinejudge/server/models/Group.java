@@ -1,6 +1,8 @@
 package uwr.onlinejudge.server.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity(name = "Groups")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Group.class)
 public class Group {
     @Id
     @GeneratedValue
@@ -32,7 +35,6 @@ public class Group {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    @JsonManagedReference
     List<TaskList> taskLists = new LinkedList<>();
 
     public long getId() {

@@ -29,7 +29,8 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Test save(TestForm testForm) {
-        return testRepository.save(objectMapper.convertValue(testForm, Test.class));
+        Test test = objectMapper.convertValue(testForm, Test.class);
+        return testRepository.save(test);
     }
 
     @Override

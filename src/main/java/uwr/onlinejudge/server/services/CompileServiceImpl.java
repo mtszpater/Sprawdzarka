@@ -38,8 +38,12 @@ public class CompileServiceImpl implements CompileService {
     @Override
     public void compileLastSolutions(Test test) throws ResourceAccessException {
         List<Registration> registrations = test.getTask().getTaskList().getGroup().getRegistrations();
+
         List<User> users = registrations.stream().map(registration -> registration.getUser()).collect(Collectors.toList());
-        List<Solution> lastSolutions = users.stream().map(user -> solutionRepository.findFirstByUserOrderByDateOfSendingDesc(user)).collect(Collectors.toList());
+        List<Solution> lastSolutions = users.stream()
+                .map(user -> solutionRepository.findFirstByUserOrderByDateOfSendingDesc(user))
+                .filter(solution -> solution != null)
+                .collect(Collectors.toList());
         lastSolutions.forEach(solution -> {
                     CodeToCompile codeToCompile = new CodeToCompile("" + solution.getLanguage().getId(), solution.getSolution(), test.getInputArgument());
                     CompileResult compileResult = compileSender.send(codeToCompile);

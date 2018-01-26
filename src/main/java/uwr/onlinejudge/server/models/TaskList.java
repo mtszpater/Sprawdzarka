@@ -1,12 +1,13 @@
 package uwr.onlinejudge.server.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = TaskList.class)
 public class TaskList {
     @Id
     @GeneratedValue
@@ -14,14 +15,12 @@ public class TaskList {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonBackReference
     private Group group;
 
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "taskList")
-    @JsonManagedReference
     private List<Task> tasks;
 
     public long getId() {

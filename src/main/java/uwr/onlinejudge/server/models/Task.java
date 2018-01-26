@@ -1,6 +1,7 @@
 package uwr.onlinejudge.server.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import uwr.onlinejudge.server.util.Languages;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Task.class)
 public class Task {
     @Id
     @GeneratedValue
@@ -19,7 +21,6 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonBackReference
     private TaskList taskList;
 
     @Column(nullable = false)
