@@ -7,4 +7,7 @@ public interface SolutionService {
 
     Solution save(SolutionForm solutionForm);
 
+    Solution getSolution(Long id);
+
+    Solution save(Solution solution);
 }

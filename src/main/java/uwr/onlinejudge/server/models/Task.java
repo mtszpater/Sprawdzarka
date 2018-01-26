@@ -46,7 +46,6 @@ public class Task {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    @JsonManagedReference
     private List<Solution> solutions;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")

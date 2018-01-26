@@ -65,7 +65,6 @@ public class TaskController {
                 collect(Collectors.toMap(Function.identity(), l -> languages.stream().anyMatch(s -> s.getId() == l.getId())));
 
 
-
         SolutionForm solutionForm = new SolutionForm(task);
         TestForm testForm = new TestForm(task);
         TaskLanguagesForm taskLanguagesForm = new TaskLanguagesForm(allPossibleLanguages);
@@ -193,6 +192,19 @@ public class TaskController {
         redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
         redirectAttributes.addFlashAttribute("onlineJudge", true);
         return "redirect:/zadanie/" + solutionForm.getTask().getId() + "?s=" + solutionId;
+    }
+
+    @RequestMapping(value = "/wyslij_zadanie_ponownie/{id}", method = RequestMethod.GET)
+    @PreAuthorize("isFullyAuthenticated()")
+    public String saveSolutionAgain(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        Solution solution = solutionService.getSolution(id);
+
+        if (solution == null)
+            return "error_page";
+
+        redirectAttributes.addFlashAttribute("alertMessage", "Zadanie zostało wysłane");
+        redirectAttributes.addFlashAttribute("onlineJudge", true);
+        return "redirect:/zadanie/" + solution.getTask().getId() + "?s=" + id;
     }
 
 

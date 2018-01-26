@@ -1,7 +1,8 @@
 package uwr.onlinejudge.server.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.CreationTimestamp;
 import uwr.onlinejudge.server.util.Languages;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Solution.class)
 public class Solution {
     @Id
     @GeneratedValue
@@ -21,7 +23,6 @@ public class Solution {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    @JsonBackReference
     private Task task;
 
     @Column(nullable = false)

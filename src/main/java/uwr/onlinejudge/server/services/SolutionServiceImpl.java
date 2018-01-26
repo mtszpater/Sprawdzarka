@@ -25,4 +25,14 @@ public class SolutionServiceImpl implements SolutionService {
     public Solution save(SolutionForm solutionForm) {
         return solutionRepository.save(objectMapper.convertValue(solutionForm, Solution.class));
     }
+
+    @Override
+    public Solution getSolution(Long id) {
+        return solutionRepository.findOne(id);
+    }
+
+    @Override
+    public Solution save(Solution solution) {
+        return solutionRepository.save(solution);
+    }
 }

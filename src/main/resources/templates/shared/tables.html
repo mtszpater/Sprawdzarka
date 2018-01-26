@@ -35,7 +35,7 @@
                 <th scope="col">Punkty</th>
                 <th scope="col">Język</th>
                 <th scope="col">Szczegóły</th>
-                <!--<th scope="col"></th>-->
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -74,9 +74,9 @@
                         </div>
                     </th:block>
                 </td>
-                <!--<td>-->
-                <!--<a th:unless="${solution.compiled}" th:href="@{/dodaj_rozwiazanie_ponownie/{id} (id = ${solution.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>-->
-                <!--</td>-->
+                <td>
+                    <a th:unless="${solution.compiled}" th:href="@{/wyslij_zadanie_ponownie/{id} (id = ${solution.id})}"><i class="fa fa-repeat" aria-hidden="true"></i></a>
+                </td>
             </tr>
             </tbody>
         </table>
