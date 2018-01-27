@@ -27,3 +27,9 @@ z powrotem do aplikacji WWW.
 
 ### Widok
 ![ss1](/screens/ss1.png?raw=true "Screen1")
+![ss1](/screens/ss2.png?raw=true "Screen2")
+![ss1](/screens/ss3.png?raw=true "Screen3")
+![ss1](/screens/ss4.png?raw=true "Screen4")
+![ss1](/screens/ss5.png?raw=true "Screen5")
+![ss1](/screens/ss6.png?raw=true "Screen6")
+![ss1](/screens/ss7.png?raw=true "Screen7")
