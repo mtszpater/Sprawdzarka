@@ -24,3 +24,6 @@ Za pomocą [compilebox](https://github.com/remoteinterview/compilebox) korzystaj
 możemy skompilować nasz program na całkowicie odrębnej wirtualnej maszynie dzięki czemu nie musimy obawiać się
 niebezpiecznych fragmentów kodu w dostarczonym przez użytkownika programie. Po wszystkim wysyłamy wyniki wyprodukowane przez program
 z powrotem do aplikacji WWW.
+
+### Widok
+![ss1](/screens/ss1.png?raw=true "Screen1")
